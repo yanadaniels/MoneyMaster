@@ -1,1 +1,3 @@
 # MoneyMaster
+
+Finance accounting service
