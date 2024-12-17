@@ -2,6 +2,7 @@
 
 namespace MoneyMaster.DAL.Entities
 {
+    /// <summary>Пользователь</summary>
     public class User: TimedEntity
     {
         /// <summary>Имя пользователя</summary>

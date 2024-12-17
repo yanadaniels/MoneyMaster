@@ -2,10 +2,13 @@
 
 namespace MoneyMaster.DAL.Entities
 {
-    public  class AccountType: NamedEntity
+    /// <summary>Тип учетной записи </summary>
+    public class AccountType: NamedEntity
     {
+        /// <summary>Иконка</summary>
         public string? Icon { get; set; }
 
+        /// <summary></summary>
         public bool IsSystem { get; set; }
     }
 }
