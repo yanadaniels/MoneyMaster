@@ -10,7 +10,6 @@
     <Folder Include="Configurations\" />
     <Folder Include="Context\" />
     <Folder Include="Database\" />
-    <Folder Include="Entities\" />
     <Folder Include="Extensions\" />
     <Folder Include="Repository\" />
     <Folder Include="Service\" />
