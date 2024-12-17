@@ -2,7 +2,7 @@
 {
     /// <summary>Сущность определенная во времени</summary>
     /// <typeparam name="TKey"></typeparam>
-    public interface ITimedEntity<TKey>: IEntity<TKey>
+    public interface ITimedEntity<out TKey>: IEntity<TKey>
     {
         /// <summary>Время</summary>
         DateTime CreateAt { get; set; }
