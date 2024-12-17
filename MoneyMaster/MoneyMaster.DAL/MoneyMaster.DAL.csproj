@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
-    <Folder Include="Context\" />
     <Folder Include="Database\" />
     <Folder Include="Extensions\" />
-    <Folder Include="Repository\" />
     <Folder Include="Service\" />
   </ItemGroup>
 
