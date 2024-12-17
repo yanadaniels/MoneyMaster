@@ -1,0 +1,13 @@
+﻿namespace MoneyMaster.DAL.Interfaces
+{
+    /// <summary>Сущность определенная во времени</summary>
+    /// <typeparam name="TKey"></typeparam>
+    public interface ITimedEntity<TKey>: IEntity<TKey>
+    {
+        /// <summary>Время</summary>
+        DateTime CreateAt { get; set; }
+    }
+
+    /// <summary>Сущность определенная во времени</summary>
+    public interface ITimedEntity: ITimedEntity<Guid> { }
+}
