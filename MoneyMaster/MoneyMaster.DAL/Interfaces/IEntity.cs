@@ -2,7 +2,7 @@
 {
     /// <summary>Сущность</summary>
     /// <typeparam name="TKey"></typeparam>
-    public interface IEntity<TKey>
+    public interface IEntity<out TKey>
     {
         /// <summary>Идентификатор</summary>
         TKey Id { get; }
