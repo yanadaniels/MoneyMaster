@@ -10,5 +10,6 @@ namespace MoneyMaster.DAL.Entities.Base
         public required TKey Id { get; set; }
     }
 
-    public abstract class Entity : Entity<Guid> { } 
+    /// <summary> <inheritdoc/> </summary>
+    public abstract class Entity : Entity<Guid> , IEntity { } 
 }
