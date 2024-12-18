@@ -18,6 +18,9 @@ namespace MoneyMaster.DAL.Entities
         public ICollection<Transaction>? Transactions { get; set; }
 
         public TKey? UserId { get; set; }
+
+        /// <summary>Мягкое удаление</summary>
+        public bool IsDelete { get; set; }
         
 
         public AccountType? Type { get; set; }

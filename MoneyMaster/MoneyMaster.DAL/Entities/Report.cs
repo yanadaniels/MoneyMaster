@@ -7,7 +7,7 @@ namespace MoneyMaster.DAL.Entities
     public class Report<TKey> : NamedTimedEntity
     {
         /// <summary>Идентификатор пользователя</summary>
-        public TKey? UserId { get; set; }
+        //public TKey? UserId { get; set; }
 
         /// <summary>Тип отчета</summary>
         public ReportType Type { get; set; }
@@ -17,6 +17,9 @@ namespace MoneyMaster.DAL.Entities
 
         /// <summary>Путь к файлу</summary>
         public string? FilePath { get; set; }
+
+        /// <summary>Мягкое удаление</summary>
+        public bool IsDelete { get; set; }
     }
 
     public class Report: Report<Guid> { }

@@ -10,5 +10,8 @@ namespace MoneyMaster.DAL.Entities
 
         /// <summary></summary>
         public bool IsSystem { get; set; }
+
+        /// <summary>Мягкое удаление</summary>
+        public bool IsDelete { get; set; }
     }
 }

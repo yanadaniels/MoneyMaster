@@ -13,5 +13,10 @@ namespace MoneyMaster.DAL.Entities
 
         /// <summary>Пароль</summary>
         public required string PasswordHash { get; set; }
+
+        public  UserSettings? Settings { get; set; }
+
+        /// <summary>Мягкое удаление</summary>
+        public bool IsDelete { get; set; }
     }
 }
