@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoneyMaster.DAL.Context;
 using MoneyMaster.Web.Models;
 using System.Diagnostics;
 
@@ -8,9 +9,9 @@ namespace MoneyMaster.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DbContext _db;
+        private readonly MoneyMasterContext _db;
 
-        public HomeController(ILogger<HomeController> logger, DbContext db)
+        public HomeController(ILogger<HomeController> logger, MoneyMasterContext db)
         {
             _logger = logger;
             _db = db;
@@ -18,6 +19,12 @@ namespace MoneyMaster.Web.Controllers
 
         public IActionResult Index()
         {
+            using (var db = _db) 
+            {
+               
+            }
+
+
             return View();
         }
 
