@@ -13,5 +13,8 @@ namespace MoneyMaster.DAL.Entities
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
+
+        /// <summary>Коллекция аккаунтов</summary>
+        public ICollection<Account>? Accounts { get; set; }
     }
 }

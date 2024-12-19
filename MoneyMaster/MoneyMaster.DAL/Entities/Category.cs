@@ -4,7 +4,7 @@ using MoneyMaster.DAL.Enums;
 namespace MoneyMaster.DAL.Entities
 {
     /// <summary>Категория</summary>
-    public class Category: NamedTimedEntity
+    public class Category<TKey>: NamedTimedEntity<TKey>
     {
         /// <summary>Иконка</summary>
         public string? Icon { get; set; }
@@ -17,5 +17,11 @@ namespace MoneyMaster.DAL.Entities
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
+
+        /// <summary>Коллекция транзакций</summary>
+        public ICollection<Transaction>? Transactions {  get; set; }
     }
+
+    /// <summary><inheritdoc/> </summary>
+    public class Category:Category<Guid> { }
 }
