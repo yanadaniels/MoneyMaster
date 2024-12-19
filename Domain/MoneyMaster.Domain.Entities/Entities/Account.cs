@@ -1,6 +1,7 @@
 ﻿namespace MoneyMaster.Domain.Entities
 {
     /// <summary>Аккаунт</summary>
+    /// <typeparam name="TKey">Тип первичного ключа</typeparam>
     public class Account<TKey> : NamedTimedEntity<Guid>
     {
         /// <summary>Баланс</summary>
@@ -12,15 +13,28 @@
         /// <summary>Иконка</summary>
         public string? Icon { get; set; }
 
-        /// <summary>Коллекция транзакций </summary>
-        public ICollection<Transaction>? Transactions { get; set; }
-
+        /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
+
+        /// <summary>Пользователь</summary>
+        public User? User { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
 
+        /// <summary>Идентификатор типа учетной записи</summary>
+        public TKey? AccountId { get; set; }
 
+        /// <summary>Тип учетной записи</summary>
         public AccountType? Type { get; set; }
+
+        /// <summary>Коллекция отчетов </summary>
+        public ICollection<Report>? Reports { get; set; }
+
+        /// <summary>Коллекция транзакций </summary>
+        public ICollection<Transaction>? Transactions { get; set; }
     }
+
+    /// <summary><inheritdoc/></summary>
+    public class Account : Account<Guid> { }
 }

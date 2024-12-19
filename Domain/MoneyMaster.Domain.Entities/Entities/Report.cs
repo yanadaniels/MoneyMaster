@@ -5,8 +5,10 @@ namespace MoneyMaster.Domain.Entities
     /// <summary>Отчет</summary>
     public class Report<TKey> : NamedTimedEntity
     {
-        /// <summary>Идентификатор пользователя</summary>
-        //public TKey? UserId { get; set; }
+        /// <summary>Идентификатор Аккаунта</summary>
+        public required TKey AccountId { get; set; }
+
+        public required Account Account { get; set; }
 
         /// <summary>Тип отчета</summary>
         public ReportType Type { get; set; }
@@ -20,6 +22,6 @@ namespace MoneyMaster.Domain.Entities
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
     }
-
+    /// <summary><inheritdoc/></summary>
     public class Report : Report<Guid> { }
 }

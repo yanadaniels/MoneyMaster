@@ -12,7 +12,11 @@
         /// <summary>Пароль</summary>
         public required string PasswordHash { get; set; }
 
-        public UserSettings? Settings { get; set; }
+        /// <summary>Настройки пользователя </summary>
+        public UserSetting? Setting { get; set; }
+
+        /// <summary>Аккаунт</summary>
+        public Account? Account { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
