@@ -11,8 +11,8 @@ using MoneyMaster.DAL.Context;
 namespace MoneyMaster.DAL.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20241219102524_updateDatabase")]
-    partial class updateDatabase
+    [Migration("20241219112600_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace MoneyMaster.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid>("AccountTypeId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Balance")
@@ -53,7 +53,7 @@ namespace MoneyMaster.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("AccountTypeId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -271,9 +271,9 @@ namespace MoneyMaster.DAL.Migrations
 
             modelBuilder.Entity("MoneyMaster.DAL.Entities.Account", b =>
                 {
-                    b.HasOne("MoneyMaster.DAL.Entities.AccountType", "Type")
+                    b.HasOne("MoneyMaster.DAL.Entities.AccountType", "AccountType")
                         .WithMany("Accounts")
-                        .HasForeignKey("AccountId")
+                        .HasForeignKey("AccountTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -283,7 +283,7 @@ namespace MoneyMaster.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Type");
+                    b.Navigation("AccountType");
 
                     b.Navigation("User");
                 });

@@ -21,10 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Database\MoneyMasterDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

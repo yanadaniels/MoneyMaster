@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using MoneyMaster.DAL.Configurations;
 
 namespace MoneyMaster.DAL.Context
@@ -6,7 +7,11 @@ namespace MoneyMaster.DAL.Context
     /// <summary>Контекст базы данных </summary>
     public class MoneyMasterContext : DbContext
     {
-        public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options) { }
+        public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options) 
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreatedAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

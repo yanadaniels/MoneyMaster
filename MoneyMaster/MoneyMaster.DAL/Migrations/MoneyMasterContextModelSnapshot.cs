@@ -23,7 +23,7 @@ namespace MoneyMaster.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid>("AccountTypeId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Balance")
@@ -50,7 +50,7 @@ namespace MoneyMaster.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("AccountTypeId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -268,9 +268,9 @@ namespace MoneyMaster.DAL.Migrations
 
             modelBuilder.Entity("MoneyMaster.DAL.Entities.Account", b =>
                 {
-                    b.HasOne("MoneyMaster.DAL.Entities.AccountType", "Type")
+                    b.HasOne("MoneyMaster.DAL.Entities.AccountType", "AccountType")
                         .WithMany("Accounts")
-                        .HasForeignKey("AccountId")
+                        .HasForeignKey("AccountTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -280,7 +280,7 @@ namespace MoneyMaster.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Type");
+                    b.Navigation("AccountType");
 
                     b.Navigation("User");
                 });

@@ -27,20 +27,19 @@ namespace MoneyMaster.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "TransactionTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Icon = table.Column<string>(type: "TEXT", nullable: true),
-                    IsSystem = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSystem = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_TransactionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,6 +59,29 @@ namespace MoneyMaster.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Icon = table.Column<string>(type: "TEXT", nullable: true),
+                    IsSystem = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TransactionTypeId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsDelete = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_TransactionTypes_TransactionTypeId",
+                        column: x => x.TransactionTypeId,
+                        principalTable: "TransactionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -71,14 +93,14 @@ namespace MoneyMaster.DAL.Migrations
                     Icon = table.Column<string>(type: "TEXT", nullable: true),
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccountId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    AccountTypeId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_AccountTypes_AccountId",
-                        column: x => x.AccountId,
+                        name: "FK_Accounts_AccountTypes_AccountTypeId",
+                        column: x => x.AccountTypeId,
                         principalTable: "AccountTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -143,7 +165,7 @@ namespace MoneyMaster.DAL.Migrations
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     CategoryId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    TransactionTypeId = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsDelete = table.Column<bool>(type: "INTEGER", nullable: false),
                     AccountId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
@@ -162,18 +184,29 @@ namespace MoneyMaster.DAL.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_TransactionTypes_TransactionTypeId",
+                        column: x => x.TransactionTypeId,
+                        principalTable: "TransactionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_AccountId",
+                name: "IX_Accounts_AccountTypeId",
                 table: "Accounts",
-                column: "AccountId");
+                column: "AccountTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_UserId",
                 table: "Accounts",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_TransactionTypeId",
+                table: "Categories",
+                column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_AccountId",
@@ -189,6 +222,11 @@ namespace MoneyMaster.DAL.Migrations
                 name: "IX_Transactions_CategoryId",
                 table: "Transactions",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_TransactionTypeId",
+                table: "Transactions",
+                column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSettings_UserId",
@@ -220,6 +258,9 @@ namespace MoneyMaster.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "TransactionTypes");
         }
     }
 }
