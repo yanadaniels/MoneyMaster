@@ -17,8 +17,11 @@ namespace MoneyMaster.DAL.Entities
         /// <summary>Описание</summary>
         public string? Description { get; set; }
 
+        /// <summary>Идентификатор типа транзакции</summary>
+        public required TKey TransactionTypeId { get; set; }
+
         /// <summary>Тип транзакции</summary>
-        public TransactionType Type { get; set; }
+        public required TransactionType TransactionType { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
