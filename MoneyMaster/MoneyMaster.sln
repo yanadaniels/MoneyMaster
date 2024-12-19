@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.DAL", "MoneyMaster.DAL\MoneyMaster.DAL.csproj", "{37664649-1612-40CE-988D-C5F4FA148EC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Web", "MoneyMaster.Web\MoneyMaster.Web.csproj", "{E0195CEB-952A-4C77-BFE7-943F1C0FD4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{37664649-1612-40CE-988D-C5F4FA148EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37664649-1612-40CE-988D-C5F4FA148EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37664649-1612-40CE-988D-C5F4FA148EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0195CEB-952A-4C77-BFE7-943F1C0FD4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0195CEB-952A-4C77-BFE7-943F1C0FD4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0195CEB-952A-4C77-BFE7-943F1C0FD4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0195CEB-952A-4C77-BFE7-943F1C0FD4E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
