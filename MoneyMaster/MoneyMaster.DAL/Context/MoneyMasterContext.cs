@@ -19,6 +19,7 @@ namespace MoneyMaster.DAL.Context
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
+            builder.ApplyConfiguration(new TransactionTypeConfiguration());
         }
     }
 }
