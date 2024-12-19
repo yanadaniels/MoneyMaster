@@ -4,7 +4,7 @@ namespace MoneyMaster.DAL.Entities
 {
     /// <summary>Аккаунт</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class Account<TKey>: NamedTimedEntity<Guid>
+    public class Account<TKey>: NamedTimedEntity<TKey>
     {
        /// <summary>Баланс</summary>
         public decimal Balance { get; set; }

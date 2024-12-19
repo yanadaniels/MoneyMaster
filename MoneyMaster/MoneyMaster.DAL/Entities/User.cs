@@ -15,7 +15,7 @@ namespace MoneyMaster.DAL.Entities
         public required string PasswordHash { get; set; }
 
         /// <summary>Настройки пользователя </summary>
-        public  UserSetting? Setting { get; set; }
+        public  UserSetting? UserSetting { get; set; }
 
         /// <summary>Аккаунт</summary>
         public Account? Account { get; set; }

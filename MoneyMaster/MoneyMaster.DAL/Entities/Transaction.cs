@@ -10,7 +10,7 @@ namespace MoneyMaster.DAL.Entities
         public decimal Amount { get; set; }
 
         /// <summary>Идентификатор категории</summary>
-        public required TKey? CategoryId { get; set; }
+        public TKey? CategoryId { get; set; }
 
         public required Category Category { get; set; }
 
@@ -18,7 +18,7 @@ namespace MoneyMaster.DAL.Entities
         public string? Description { get; set; }
 
         /// <summary>Идентификатор типа транзакции</summary>
-        public required TKey TransactionTypeId { get; set; }
+        public TKey? TransactionTypeId { get; set; }
 
         /// <summary>Тип транзакции</summary>
         public required TransactionType TransactionType { get; set; }
@@ -27,7 +27,7 @@ namespace MoneyMaster.DAL.Entities
         public bool IsDelete { get; set; }
 
         /// <summary>Идентификатор аккаунта</summary>
-        public required TKey AccountId { get; set; }
+        public  TKey? AccountId { get; set; }
 
         /// <summary>Аккаунт</summary>
         public required Account Account { get; set; }

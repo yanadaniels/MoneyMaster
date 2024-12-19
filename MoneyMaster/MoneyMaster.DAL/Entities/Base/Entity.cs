@@ -7,7 +7,7 @@ namespace MoneyMaster.DAL.Entities.Base
     public abstract class Entity<TKey> : IEntity<TKey>
     {
         /// <summary>Первичный ключ </summary>
-        public required TKey Id { get; set; }
+        public TKey? Id { get; set; }
     }
 
     /// <summary> <inheritdoc/> </summary>
