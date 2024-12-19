@@ -34,7 +34,7 @@ namespace MoneyMaster.DAL.Migrations
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateTable(
-                name: "TransactionType",
+                name: "TransactionTypes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -46,7 +46,7 @@ namespace MoneyMaster.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransactionType", x => x.Id);
+                    table.PrimaryKey("PK_TransactionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -60,18 +60,18 @@ namespace MoneyMaster.DAL.Migrations
                 column: "TransactionTypeId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Categories_TransactionType_TransactionTypeId",
+                name: "FK_Categories_TransactionTypes_TransactionTypeId",
                 table: "Categories",
                 column: "TransactionTypeId",
-                principalTable: "TransactionType",
+                principalTable: "TransactionTypes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Transactions_TransactionType_TransactionTypeId",
+                name: "FK_Transactions_TransactionTypes_TransactionTypeId",
                 table: "Transactions",
                 column: "TransactionTypeId",
-                principalTable: "TransactionType",
+                principalTable: "TransactionTypes",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -80,15 +80,15 @@ namespace MoneyMaster.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Categories_TransactionType_TransactionTypeId",
+                name: "FK_Categories_TransactionTypes_TransactionTypeId",
                 table: "Categories");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Transactions_TransactionType_TransactionTypeId",
+                name: "FK_Transactions_TransactionTypes_TransactionTypeId",
                 table: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "TransactionType");
+                name: "TransactionTypes");
 
             migrationBuilder.DropIndex(
                 name: "IX_Transactions_TransactionTypeId",

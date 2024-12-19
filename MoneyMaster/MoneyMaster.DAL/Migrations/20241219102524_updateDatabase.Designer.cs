@@ -11,7 +11,7 @@ using MoneyMaster.DAL.Context;
 namespace MoneyMaster.DAL.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20241219093820_updateDatabase")]
+    [Migration("20241219102524_updateDatabase")]
     partial class updateDatabase
     {
         /// <inheritdoc />
@@ -214,7 +214,7 @@ namespace MoneyMaster.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionType");
+                    b.ToTable("TransactionTypes", (string)null);
                 });
 
             modelBuilder.Entity("MoneyMaster.DAL.Entities.User", b =>

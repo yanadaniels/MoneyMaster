@@ -211,7 +211,7 @@ namespace MoneyMaster.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionType");
+                    b.ToTable("TransactionTypes", (string)null);
                 });
 
             modelBuilder.Entity("MoneyMaster.DAL.Entities.User", b =>
