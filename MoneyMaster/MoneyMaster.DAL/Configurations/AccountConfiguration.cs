@@ -1,6 +1,25 @@
-﻿namespace MoneyMaster.DAL.Configurations
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MoneyMaster.DAL.Entities;
+
+namespace MoneyMaster.DAL.Configurations
 {
-    public class AccountConfiguration
+    /// <summary>Конфигурация для таблицы Аккаунта</summary>
+    public class AccountConfiguration : IEntityTypeConfiguration<Account>
     {
+        public void Configure(EntityTypeBuilder<Account> builder)
+        {
+            builder.ToTable("Accounts").HasKey(x => x.Id);
+
+            //Связь с таблицей Report один к многим
+            builder.HasMany(x => x.Reports)
+                   .WithOne(x => x.Account)
+                   .HasForeignKey(x => x.AccountId);
+
+            //Связь с таблицей Transaction один к многим
+            builder.HasMany(x => x.Transactions)
+                   .WithOne(x => x.Account)
+                   .HasForeignKey(x => x.AccountId);
+        }
     }
 }
