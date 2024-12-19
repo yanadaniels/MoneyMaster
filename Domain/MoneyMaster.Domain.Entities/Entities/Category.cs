@@ -13,7 +13,7 @@ namespace MoneyMaster.Domain.Entities
         public bool IsSystem { get; set; }
 
         /// <summary>Идентификатор типа транзакции</summary>
-        public required TKey TransactionTypeId { get; set; }
+        public TKey? TransactionTypeId { get; set; }
 
         /// <summary>Тип транзакции</summary>
         public required TransactionType TransactionType { get; set; }

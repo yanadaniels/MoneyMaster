@@ -2,7 +2,7 @@
 {
     /// <summary>Аккаунт</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class Account<TKey> : NamedTimedEntity<Guid>
+    public class Account<TKey> : NamedTimedEntity<TKey>
     {
         /// <summary>Баланс</summary>
         public decimal Balance { get; set; }
@@ -23,10 +23,10 @@
         public bool IsDelete { get; set; }
 
         /// <summary>Идентификатор типа учетной записи</summary>
-        public TKey? AccountId { get; set; }
+        public TKey? AccountTypeId { get; set; }
 
         /// <summary>Тип учетной записи</summary>
-        public AccountType? Type { get; set; }
+        public AccountType? AccountType { get; set; }
 
         /// <summary>Коллекция отчетов </summary>
         public ICollection<Report>? Reports { get; set; }

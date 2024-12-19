@@ -5,7 +5,7 @@
     public class UserSetting<TKey> : Entity<Guid>
     {
         /// <summary>Идентификатор пользователя</summary>
-        public required TKey UserId { get; set; }
+        public TKey? UserId { get; set; }
 
         /// <summary>Пользователь</summary>
         public User? User { get; set; }

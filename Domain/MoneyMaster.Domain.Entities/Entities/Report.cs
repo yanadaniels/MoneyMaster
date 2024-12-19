@@ -6,7 +6,7 @@ namespace MoneyMaster.Domain.Entities
     public class Report<TKey> : NamedTimedEntity
     {
         /// <summary>Идентификатор Аккаунта</summary>
-        public required TKey AccountId { get; set; }
+        public TKey? AccountId { get; set; }
 
         public required Account Account { get; set; }
 

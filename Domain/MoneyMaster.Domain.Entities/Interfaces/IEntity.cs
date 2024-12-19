@@ -5,7 +5,7 @@
     public interface IEntity<out TKey>
     {
         /// <summary>Идентификатор</summary>
-        TKey Id { get; }
+        TKey? Id { get; }
     }
 
     /// <summary>Сущность</summary>
