@@ -11,8 +11,8 @@ using MoneyMaster.DAL.Context;
 namespace MoneyMaster.DAL.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20241219112600_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241219153127_updateDatabase")]
+    partial class updateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,7 +340,7 @@ namespace MoneyMaster.DAL.Migrations
             modelBuilder.Entity("MoneyMaster.DAL.Entities.UserSetting", b =>
                 {
                     b.HasOne("MoneyMaster.DAL.Entities.User", "User")
-                        .WithOne("Setting")
+                        .WithOne("UserSetting")
                         .HasForeignKey("MoneyMaster.DAL.Entities.UserSetting", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -376,7 +376,7 @@ namespace MoneyMaster.DAL.Migrations
                 {
                     b.Navigation("Account");
 
-                    b.Navigation("Setting");
+                    b.Navigation("UserSetting");
                 });
 #pragma warning restore 612, 618
         }
