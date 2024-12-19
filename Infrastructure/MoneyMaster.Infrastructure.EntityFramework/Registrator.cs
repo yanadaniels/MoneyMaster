@@ -29,7 +29,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework
                                         );
                        break;
                    case "SQLite":
-                       opt.UseSqlite(Configuration.GetConnectionString(type), b => b.MigrationsAssembly("MoneyMaster.Infrastructure.EntityFramework.SQLite"));
+                       opt.UseSqlite(Configuration.GetConnectionString(type), b => b.MigrationsAssembly("MoneyMaster.Infrastructure.EntityFramework"));
                        break;
                };
                opt.EnableSensitiveDataLogging(false);

@@ -1,6 +1,6 @@
-@MoneyMaster.WebAPI_HostAddress = http://localhost:5186
+@WebApplication1_HostAddress = http://localhost:5295
 
-GET {{MoneyMaster.WebAPI_HostAddress}}/weatherforecast/
+GET {{MoneyMaster.WebAPI_HostAddress}}/Test/
 Accept: application/json
 
 ###
