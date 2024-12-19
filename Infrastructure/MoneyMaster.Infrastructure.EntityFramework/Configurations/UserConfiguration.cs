@@ -12,7 +12,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Configurations
             builder.ToTable("Users").HasKey(x => x.Id);
 
             //Связь с таблицей UserSetting один к одному
-            builder.HasOne(x => x.Setting)
+            builder.HasOne(x => x.UserSetting)
                    .WithOne(p => p.User)
                    .HasForeignKey<UserSetting>(p => p.UserId);
 

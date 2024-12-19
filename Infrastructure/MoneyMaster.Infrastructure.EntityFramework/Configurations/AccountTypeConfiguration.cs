@@ -13,8 +13,8 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Configurations
 
             //Связь с таблицей Account один к многим
             builder.HasMany(x => x.Accounts)
-                .WithOne(x => x.Type)
-                .HasForeignKey(x => x.AccountId);
+                .WithOne(x => x.AccountType)
+                .HasForeignKey(x => x.AccountTypeId);
         }
     }
 }
