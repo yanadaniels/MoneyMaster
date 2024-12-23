@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MoneyMaster.Domain.Entities;
+﻿using MoneyMaster.Domain.Entities;
+using MoneyMaster.Infrastructure.EntityFramework.Context;
 using MoneyMaster.Infrastructure.Repositories.Implementations.Base;
 using MoneyMaster.Services.Repositories.Abstractions;
 
@@ -10,6 +10,6 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Repositories
     {
         /// <summary><inheritdoc cref="IReportRepository"/></summary>
         /// <param name="context">Контекст БД</param>
-        public ReportRepository(DbContext context) : base(context) { }
+        public ReportRepository(MoneyMasterContext context) : base(context) { }
     }
 }
