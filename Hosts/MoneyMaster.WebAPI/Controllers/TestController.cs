@@ -2,6 +2,7 @@
 using MoneyMaster.Domain.Entities.Entities;
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
+using MoneyMaster.Services.Repositories.Abstractions;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -10,101 +11,95 @@ namespace MoneyMaster.WebAPI.Controllers
     public class TestController : ControllerBase
     {
         private readonly ILogger<TestController> _logger;
-        private readonly MoneyMasterContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TestController(ILogger<TestController> logger, MoneyMasterContext db)
+        public TestController(ILogger<TestController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         [HttpGet]
        // [Route("/[controller]/[action]/{id}")]
         public IActionResult Index()
         {
+            User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
+            User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
+            User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
 
-            using (var db = _db)
-            {
+            UserSetting userSetting1 = new UserSetting() { Language = "ru" };
+            UserSetting userSetting2 = new UserSetting() { Language = "eng" };
+            UserSetting userSetting3 = new UserSetting() { Language = "ru" };
+            user1.UserSetting = userSetting1;
+            user2.UserSetting = userSetting2;
+            user3.UserSetting = userSetting3;
 
-
-                User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
-                User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
-                User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
-
-                UserSetting userSetting1 = new UserSetting() { Language = "ru" };
-                UserSetting userSetting2 = new UserSetting() { Language = "eng" };
-                UserSetting userSetting3 = new UserSetting() { Language = "ru" };
-                user1.UserSetting = userSetting1;
-                user2.UserSetting = userSetting2;
-                user3.UserSetting = userSetting3;
-
-                db.Set<User>().Add(user1);
-                db.Set<User>().Add(user2);
-                db.Set<User>().Add(user3);
-                db.SaveChanges();
-
-                AccountType accountType1 = new AccountType() { Name = "User" };
-                AccountType accountType2 = new AccountType() { Name = "Admin" };
-
-                db.Set<AccountType>().Add(accountType1);
-                db.Set<AccountType>().Add(accountType2);
-                db.SaveChanges();
+            _unitOfWork.UserRepository.Add(user1);
+            _unitOfWork.UserRepository.Add(user2);
+            _unitOfWork.UserRepository.Add(user3);
+            _unitOfWork.SaveChangesAsync();
 
 
-                Account account1 = new Account() { Name = "Петр", AccountType = accountType1, User = user1 };
+            AccountType accountType1 = new AccountType() { Name = "User" };
+            AccountType accountType2 = new AccountType() { Name = "Admin" };
 
-                Account account2 = new Account() { Name = "Иван", AccountType = accountType1, User = user2 };
-
-                Account account3 = new Account() { Name = "Вася", AccountType = accountType2, User = user3 };
-
-                db.Set<Account>().Add(account1);
-                db.Set<Account>().Add(account2);
-                db.Set<Account>().Add(account3);
-                db.SaveChanges();
+            _unitOfWork.AccountTypeRepository.Add(accountType1);
+            _unitOfWork.AccountTypeRepository.Add(accountType2);
+            _unitOfWork.SaveChangesAsync();
 
 
-                TransactionType transactionType1 = new TransactionType() { Name = "Приход", CreateAt = DateTime.Now };
-                TransactionType transactionType2 = new TransactionType() { Name = "Расход", CreateAt = DateTime.Now };
-                TransactionType transactionType3 = new TransactionType() { Name = "Перевод", CreateAt = DateTime.Now };
-                db.Set<TransactionType>().Add(transactionType1);
-                db.Set<TransactionType>().Add(transactionType2);
-                db.Set<TransactionType>().Add(transactionType3);
-                db.SaveChanges();
+            Account account1 = new Account() { Name = "Петр", AccountType = accountType1, User = user1 };
 
-                Category category1 = new Category() { Name = "Зарплата", TransactionType = transactionType1 };
-                Category category2 = new Category() { Name = "Покупка", TransactionType = transactionType2 };
-                Category category3 = new Category() { Name = "ЖКХ", TransactionType = transactionType3 };
+            Account account2 = new Account() { Name = "Иван", AccountType = accountType1, User = user2 };
 
-                db.Set<Category>().Add(category1);
-                db.Set<Category>().Add(category2);
-                db.Set<Category>().Add(category3);
+            Account account3 = new Account() { Name = "Вася", AccountType = accountType2, User = user3 };
 
-                db.SaveChanges();
-
-                Transaction transaction1 = new Transaction() { Account = account1, Category = category1, TransactionType = category1.TransactionType };
-                Transaction transaction2 = new Transaction() { Account = account1, Category = category2, TransactionType = category2.TransactionType };
-                Transaction transaction3 = new Transaction() { Account = account1, Category = category3, TransactionType = category3.TransactionType };
-
-                Transaction transaction4 = new Transaction() { Account = account2, Category = category1, TransactionType = category1.TransactionType };
-                Transaction transaction5 = new Transaction() { Account = account2, Category = category3, TransactionType = category3.TransactionType };
+            _unitOfWork.AccountRepository.Add(account1);
+            _unitOfWork.AccountRepository.Add(account2);
+            _unitOfWork.AccountRepository.Add(account3);
+            _unitOfWork.SaveChangesAsync();
 
 
-                Transaction transaction6 = new Transaction() { Account = account3, Category = category1, TransactionType = category1.TransactionType };
+            TransactionType transactionType1 = new TransactionType() { Name = "Приход", CreateAt = DateTime.Now };
+            TransactionType transactionType2 = new TransactionType() { Name = "Расход", CreateAt = DateTime.Now };
+            TransactionType transactionType3 = new TransactionType() { Name = "Перевод", CreateAt = DateTime.Now };
+            _unitOfWork.TransactionTypeRepository.Add(transactionType1);
+            _unitOfWork.TransactionTypeRepository.Add(transactionType2);
+            _unitOfWork.TransactionTypeRepository.Add(transactionType3);
+            _unitOfWork.SaveChangesAsync();
 
-                db.Set<Transaction>().Add(transaction1);
-                db.Set<Transaction>().Add(transaction2);
-                db.Set<Transaction>().Add(transaction3);
-                db.Set<Transaction>().Add(transaction4);
-                db.Set<Transaction>().Add(transaction5);
-                db.Set<Transaction>().Add(transaction6);
+            Category category1 = new Category() { Name = "Зарплата", TransactionType = transactionType1 };
+            Category category2 = new Category() { Name = "Покупка", TransactionType = transactionType2 };
+            Category category3 = new Category() { Name = "ЖКХ", TransactionType = transactionType3 };
 
-                db.SaveChanges();
+            _unitOfWork.CategoryRepository.Add(category1);
+            _unitOfWork.CategoryRepository.Add(category2);
+            _unitOfWork.CategoryRepository.Add(category3);
+            _unitOfWork.SaveChangesAsync();
 
-                var accountType = db.Set<AccountType>().ToList();
+            Transaction transaction1 = new Transaction() { Account = account1, Category = category1, TransactionType = category1.TransactionType };
+            Transaction transaction2 = new Transaction() { Account = account1, Category = category2, TransactionType = category2.TransactionType };
+            Transaction transaction3 = new Transaction() { Account = account1, Category = category3, TransactionType = category3.TransactionType };
 
-                var users = db.Set<User>().ToList();
+            Transaction transaction4 = new Transaction() { Account = account2, Category = category1, TransactionType = category1.TransactionType };
+            Transaction transaction5 = new Transaction() { Account = account2, Category = category3, TransactionType = category3.TransactionType };
 
-                var category = db.Set<Category>().ToList();
-            }
+
+            Transaction transaction6 = new Transaction() { Account = account3, Category = category1, TransactionType = category1.TransactionType };
+
+            _unitOfWork.TransactionRepository.Add(transaction1);
+            _unitOfWork.TransactionRepository.Add(transaction2);
+            _unitOfWork.TransactionRepository.Add(transaction3);
+            _unitOfWork.TransactionRepository.Add(transaction4);
+            _unitOfWork.TransactionRepository.Add(transaction5);
+            _unitOfWork.TransactionRepository.Add(transaction6);
+            _unitOfWork.SaveChangesAsync();
+
+            var accountType = _unitOfWork.AccountTypeRepository.GetAll().ToList();
+
+            var users = _unitOfWork.UserRepository.GetAll().ToList();
+
+            var category = _unitOfWork.CategoryRepository.GetAll().ToList();
+
 
             return StatusCode(StatusCodes.Status200OK);
         }
