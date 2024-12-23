@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Ignore Spelling: Registrator
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
@@ -13,7 +15,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework
 
                var type = Configuration["Type"];
 
-               var t = Configuration.GetConnectionString(type);
+               var t = Configuration.GetConnectionString(type!);
 
                switch (type)
                {
