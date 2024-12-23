@@ -18,28 +18,20 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations
 
         private readonly MoneyMasterContext _context;
 
-        /// <summary><inheritdoc cref="IUserRepository"/></summary>
         public IUserRepository UserRepository => _userRepository;
 
-        /// <summary><inheritdoc cref="IUserSettingRepository"/></summary>
         public IUserSettingRepository UserSettingRepository => _userSettingRepository;
 
-        /// <summary><inheritdoc cref="IAccountTypeRepository"/></summary>
         public IAccountTypeRepository AccountTypeRepository => _accountTypeRepository;
 
-        /// <summary><inheritdoc cref="IAccountRepository"/></summary>
         public IAccountRepository AccountRepository => _accountRepository;
 
-        /// <summary><inheritdoc cref="ICategoryRepository"/></summary>
         public ICategoryRepository CategoryRepository => _categoryRepository;
 
-        /// <summary><inheritdoc cref="ITransactionRepository"/></summary>
         public ITransactionRepository TransactionRepository => _transactionRepository;
 
-        /// <summary><inheritdoc cref="IReportRepository"/></summary>
         public IReportRepository ReportRepository => _reportRepository;
 
-        /// <summary><inheritdoc cref="ITransactionTypeRepository"/></summary>
         public ITransactionTypeRepository TransactionTypeRepository => _transactionTypeRepository;
 
         /// <summary><inheritdoc cref="IUnitOfWork"/></summary>
