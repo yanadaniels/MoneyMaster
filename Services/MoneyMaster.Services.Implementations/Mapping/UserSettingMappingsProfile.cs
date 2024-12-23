@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using MoneyMaster.Domain.Entities;
+using MoneyMaster.Services.Contracts.User;
+using MoneyMaster.Services.Contracts.UserSetting;
 
 namespace MoneyMaster.Services.Implementations.Mapping
 {
@@ -8,7 +11,7 @@ namespace MoneyMaster.Services.Implementations.Mapping
         /// <summary><inheritdoc cref="UserSettingMappingsProfile"/> </summary>
         public UserSettingMappingsProfile()
         {
-
+            CreateMap<UserSetting, UserSettingDto>();
         }
     }
 }
