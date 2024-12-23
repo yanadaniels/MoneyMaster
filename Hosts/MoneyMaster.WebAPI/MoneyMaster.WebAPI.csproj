@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\Domain\MoneyMaster.Domain.Entities\MoneyMaster.Domain.Entities.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MoneyMaster.Infrastructure.EntityFramework\MoneyMaster.Infrastructure.EntityFramework.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MoneyMaster.Infrastructure.Repositories.Implementations\MoneyMaster.Infrastructure.Repositories.Implementations.csproj" />
+    <ProjectReference Include="..\..\Services\MoneyMaster.Services.Implementations\MoneyMaster.Services.Implementations.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using MoneyMaster.Infrastructure.EntityFramework;
 using MoneyMaster.Infrastructure.Repositories.Implementations.Service;
+using MoneyMaster.Services.Implementations.Service;
 namespace MoneyMaster.WebAPI
 {
     public class Program
@@ -16,8 +17,10 @@ namespace MoneyMaster.WebAPI
             builder.Services.AddSwaggerGen();
 
             builder.Services
+                   .AddMapper()
                    .AddDatabase(builder.Configuration.GetSection("Database"))
                    .AddRepositories()
+                   .AddServices()
                    ;
             
             var app = builder.Build();
