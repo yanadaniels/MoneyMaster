@@ -26,9 +26,9 @@ namespace MoneyMaster.WebAPI.Controllers
             {
 
 
-                User user1 = new User() { UserName = "Ïåòð", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
-                User user2 = new User() { UserName = "Èâàí", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
-                User user3 = new User() { UserName = "Âàñÿ", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
+                User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
+                User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
+                User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
 
                 UserSetting userSetting1 = new UserSetting() { Language = "ru" };
                 UserSetting userSetting2 = new UserSetting() { Language = "eng" };
@@ -49,11 +49,12 @@ namespace MoneyMaster.WebAPI.Controllers
                 db.Set<AccountType>().Add(accountType2);
                 db.SaveChanges();
 
-                Account account1 = new Account() { Name = "Ïåòð", AccountType = accountType1, User = user1 };
 
-                Account account2 = new Account() { Name = "Èâàí", AccountType = accountType1, User = user2 };
+                Account account1 = new Account() { Name = "Петр", AccountType = accountType1, User = user1 };
 
-                Account account3 = new Account() { Name = "Âàñÿ", AccountType = accountType2, User = user3 };
+                Account account2 = new Account() { Name = "Иван", AccountType = accountType1, User = user2 };
+
+                Account account3 = new Account() { Name = "Вася", AccountType = accountType2, User = user3 };
 
                 db.Set<Account>().Add(account1);
                 db.Set<Account>().Add(account2);
@@ -61,17 +62,17 @@ namespace MoneyMaster.WebAPI.Controllers
                 db.SaveChanges();
 
 
-                TransactionType transactionType1 = new TransactionType() { Name = "Ïðèõîä", CreateAt = DateTime.Now };
-                TransactionType transactionType2 = new TransactionType() { Name = "Ðàñõîä", CreateAt = DateTime.Now };
-                TransactionType transactionType3 = new TransactionType() { Name = "Ïåðåâîä", CreateAt = DateTime.Now };
+                TransactionType transactionType1 = new TransactionType() { Name = "Приход", CreateAt = DateTime.Now };
+                TransactionType transactionType2 = new TransactionType() { Name = "Расход", CreateAt = DateTime.Now };
+                TransactionType transactionType3 = new TransactionType() { Name = "Перевод", CreateAt = DateTime.Now };
                 db.Set<TransactionType>().Add(transactionType1);
                 db.Set<TransactionType>().Add(transactionType2);
                 db.Set<TransactionType>().Add(transactionType3);
                 db.SaveChanges();
 
-                Category category1 = new Category() { Name = "Çàðïëàòà", TransactionType = transactionType1 };
-                Category category2 = new Category() { Name = "Ïîêóïêà", TransactionType = transactionType2 };
-                Category category3 = new Category() { Name = "ÆÊÕ", TransactionType = transactionType3 };
+                Category category1 = new Category() { Name = "Зарплата", TransactionType = transactionType1 };
+                Category category2 = new Category() { Name = "Покупка", TransactionType = transactionType2 };
+                Category category3 = new Category() { Name = "ЖКХ", TransactionType = transactionType3 };
 
                 db.Set<Category>().Add(category1);
                 db.Set<Category>().Add(category2);
