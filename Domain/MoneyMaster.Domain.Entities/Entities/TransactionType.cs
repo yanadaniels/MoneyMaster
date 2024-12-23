@@ -19,5 +19,6 @@
         public ICollection<Transaction>? Transactions { get; set; }
     }
 
+    /// <summary><inheritdoc/></summary>
     public class TransactionType : TransactionType<Guid> { }
 }

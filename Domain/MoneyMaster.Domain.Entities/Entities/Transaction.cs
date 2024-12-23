@@ -1,5 +1,4 @@
 ﻿using MoneyMaster.Domain.Entities.Entities;
-using MoneyMaster.Domain.Entities.Enums;
 
 namespace MoneyMaster.Domain.Entities
 {
