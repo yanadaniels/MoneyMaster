@@ -1,4 +1,6 @@
-﻿using MoneyMaster.Domain.Entities.Enums;
+﻿// Ignore Spelling: Dto
+
+using MoneyMaster.Domain.Entities.Enums;
 using MoneyMaster.Services.Contracts.Account;
 
 namespace MoneyMaster.Services.Contracts.Report

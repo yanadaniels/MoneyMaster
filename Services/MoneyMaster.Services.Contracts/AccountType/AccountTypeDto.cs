@@ -1,4 +1,6 @@
-﻿using MoneyMaster.Services.Contracts.Account;
+﻿// Ignore Spelling: Dto
+
+using MoneyMaster.Services.Contracts.Account;
 
 namespace MoneyMaster.Services.Contracts.AccountType
 {

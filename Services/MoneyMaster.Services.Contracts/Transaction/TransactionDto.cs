@@ -1,4 +1,6 @@
-﻿using MoneyMaster.Services.Contracts.Account;
+﻿// Ignore Spelling: Dto
+
+using MoneyMaster.Services.Contracts.Account;
 using MoneyMaster.Services.Contracts.Category;
 using MoneyMaster.Services.Contracts.TransactionType;
 

@@ -1,4 +1,6 @@
-﻿using MoneyMaster.Services.Contracts.Category;
+﻿// Ignore Spelling: Dto
+
+using MoneyMaster.Services.Contracts.Category;
 using MoneyMaster.Services.Contracts.Transaction;
 
 namespace MoneyMaster.Services.Contracts.TransactionType
