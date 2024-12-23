@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MoneyMaster.Services.Contracts\MoneyMaster.Services.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

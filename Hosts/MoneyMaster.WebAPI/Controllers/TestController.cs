@@ -3,6 +3,7 @@ using MoneyMaster.Domain.Entities.Entities;
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
 using MoneyMaster.Services.Repositories.Abstractions;
+using MoneyMaster.Services.Abstractions;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -12,15 +13,17 @@ namespace MoneyMaster.WebAPI.Controllers
     {
         private readonly ILogger<TestController> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public TestController(ILogger<TestController> logger, IUnitOfWork unitOfWork)
+        public TestController(ILogger<TestController> logger, IUnitOfWork unitOfWork, IUserService userService)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
         [HttpGet]
        // [Route("/[controller]/[action]/{id}")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
             User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
@@ -100,6 +103,7 @@ namespace MoneyMaster.WebAPI.Controllers
 
             var category = _unitOfWork.CategoryRepository.GetAll().ToList();
 
+            var dtoUser = await _userService.GetAllAsync();
 
             return StatusCode(StatusCodes.Status200OK);
         }

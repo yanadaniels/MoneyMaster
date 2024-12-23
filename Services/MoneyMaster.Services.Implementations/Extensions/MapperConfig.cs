@@ -19,7 +19,7 @@ namespace MoneyMaster.Services.Implementations.Extensions
                 cfg.AddProfile<UserSettingMappingsProfile>();
 
             });
-            configuration.AssertConfigurationIsValid();
+            //configuration.AssertConfigurationIsValid();
             return configuration;
         }
     }

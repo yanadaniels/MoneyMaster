@@ -11,17 +11,19 @@ namespace MoneyMaster.WebAPI
 
             // Add services to the container.
 
+            builder.Services
+                  .AddMapper()
+                  .AddDatabase(builder.Configuration.GetSection("Database"))
+                  .AddRepositories()
+                  .AddServices()
+                  ;
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services
-                   .AddMapper()
-                   .AddDatabase(builder.Configuration.GetSection("Database"))
-                   .AddRepositories()
-                   .AddServices()
-                   ;
+           
             
             var app = builder.Build();
 
