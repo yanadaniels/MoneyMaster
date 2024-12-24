@@ -1,6 +1,8 @@
 using MoneyMaster.Infrastructure.EntityFramework;
 using MoneyMaster.Infrastructure.Repositories.Implementations.Service;
+using MoneyMaster.Services.Contracts.User;
 using MoneyMaster.Services.Implementations.Service;
+using System.Reflection;
 namespace MoneyMaster.WebAPI
 {
     public class Program
@@ -21,10 +23,18 @@ namespace MoneyMaster.WebAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
 
-           
-            
+            builder.Services.AddSwaggerGen(opt =>
+            {
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xml = $"{Assembly.GetAssembly(typeof(UserDto)).GetName().Name}.xml";
+                var T = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xml);
+                opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName), includeControllerXmlComments: true);
+                opt.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xml));
+                opt.SupportNonNullableReferenceTypes();
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,6 +42,10 @@ namespace MoneyMaster.WebAPI
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                //app.UseSwaggerUI(o =>
+                //{
+                //    o.InjectStylesheet("/css/swagger-custom.css");
+                //});
             }
 
             app.UseHttpsRedirection();

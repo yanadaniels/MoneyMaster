@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\Marat\source\repos\MoneyMaster\Hosts\MoneyMaster.WebAPI\bin\Debug\net9.0\MoneyMaster.WebAPI.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
