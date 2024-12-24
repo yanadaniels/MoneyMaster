@@ -17,7 +17,7 @@ namespace MoneyMaster.Services.Abstractions
         /// </summary>
         /// <param name="userName">UserName пользователя . </param>
         /// <returns> ДТО пользователя. </returns>
-        Task<UserDto> GetByIdAsync(string userName);
+        Task<UserDto> GetByUserNameAsync(string userName);
 
         /// <summary>
         /// Получить список пользователей.

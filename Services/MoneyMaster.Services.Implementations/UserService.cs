@@ -12,6 +12,9 @@ namespace MoneyMaster.Services.Implementations
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
+        /// <summary><inheritdoc cref="UserService"/> </summary>
+        /// <param name="mapper">Маппер</param>
+        /// <param name="userRepository">Репозиторий</param>
         public UserService(IMapper mapper, IUserRepository userRepository)
         {
             _mapper = mapper;
@@ -19,16 +22,17 @@ namespace MoneyMaster.Services.Implementations
         }
         public async Task<ICollection<UserDto>> GetAllAsync()
         {
-            ICollection<User> entities = _userRepository.GetAll().ToList();
+            ICollection<User> entities =  _userRepository.GetAll().ToList();
             return _mapper.Map<ICollection<User>, ICollection<UserDto>>(entities);
         }
 
-        public Task<UserDto> GetByIdAsync(Guid id)
+        public async Task<UserDto> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetAsync(id, CancellationToken.None);
+            return _mapper.Map<User, UserDto>(user);
         }
 
-        public Task<UserDto> GetByIdAsync(string userName)
+        public Task<UserDto> GetByUserNameAsync(string userName)
         {
             throw new NotImplementedException();
         }
