@@ -8,8 +8,8 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Context
     {
         public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreatedAsync();
+           //Database.EnsureDeleted();
+           // Database.EnsureCreatedAsync();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
