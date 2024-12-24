@@ -4,10 +4,14 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\Marat\source\repos\MoneyMaster\Services\MoneyMaster.Services.Contracts\bin\Debug\net9.0\MoneyMaster.Services.Contracts.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\MoneyMaster.Domain.Entities\MoneyMaster.Domain.Entities.csproj" />
   </ItemGroup>
-
+  <Target Name="InheritDoc" AfterTargets="PostBuildEvent" Condition="$(GenerateDocumentationFile)">
+    <Exec Command="InheritDoc -o" IgnoreExitCode="True" ContinueOnError="true"/>
+  </Target>
 </Project>

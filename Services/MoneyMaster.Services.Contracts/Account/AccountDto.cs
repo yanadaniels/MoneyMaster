@@ -48,6 +48,6 @@ namespace MoneyMaster.Services.Contracts.Account
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO аккаунта </summary>
     public class AccountDto:AccountDto<Guid>;
 }

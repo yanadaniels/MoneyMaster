@@ -40,6 +40,6 @@ namespace MoneyMaster.Services.Contracts.Transaction
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO транзакции</summary>
     public class TransactionDto: TransactionDto<Guid>;
 }

@@ -24,6 +24,6 @@ namespace MoneyMaster.Services.Contracts.AccountType
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO Типа учетной записи </summary>
     public class AccountTypeDto: AccountTypeDto<Guid>;
 }

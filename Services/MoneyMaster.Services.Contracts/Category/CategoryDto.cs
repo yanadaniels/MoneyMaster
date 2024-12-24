@@ -31,6 +31,6 @@ namespace MoneyMaster.Services.Contracts.Category
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO категорий</summary>
     public class CategoryDto : CategoryDto<Guid>;
 }

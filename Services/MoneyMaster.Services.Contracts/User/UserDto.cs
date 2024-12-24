@@ -31,7 +31,7 @@ namespace MoneyMaster.Services.Contracts.User
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO пользователя</summary>
     public class UserDto : UserDto<Guid>;
 
 }

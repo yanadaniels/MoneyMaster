@@ -1,4 +1,6 @@
-﻿using MoneyMaster.Services.Contracts.User;
+﻿// Ignore Spelling: Dto
+
+using MoneyMaster.Services.Contracts.User;
 
 namespace MoneyMaster.Services.Contracts.UserSetting
 {
@@ -23,6 +25,6 @@ namespace MoneyMaster.Services.Contracts.UserSetting
 
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO настроек пользователя</summary>
     public class UserSettingDto : UserSettingDto<Guid>;
 }

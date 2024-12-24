@@ -33,6 +33,6 @@ namespace MoneyMaster.Services.Contracts.Report
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary><inheritdoc/></summary>
+    /// <summary>DTO отчета</summary>
     public class ReportDto: ReportDto<Guid>;
 }
