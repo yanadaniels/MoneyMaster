@@ -1,6 +1,6 @@
 ﻿namespace MoneyMaster.Domain.Entities
 {
-    /// <summary>Тип учетной записи </summary>
+    /// <summary>Тип счета </summary>
     public class AccountType : NamedEntity
     {
         /// <summary>Иконка</summary>
@@ -12,7 +12,7 @@
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
 
-        /// <summary>Коллекция аккаунтов</summary>
+        /// <summary>Коллекция счетов</summary>
         public ICollection<Account>? Accounts { get; set; }
     }
 }

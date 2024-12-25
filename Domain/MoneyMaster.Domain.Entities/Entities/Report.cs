@@ -5,9 +5,10 @@ namespace MoneyMaster.Domain.Entities
     /// <summary>Отчет</summary>
     public class Report<TKey> : NamedTimedEntity
     {
-        /// <summary>Идентификатор Аккаунта</summary>
+        /// <summary>Идентификатор счета</summary>
         public TKey? AccountId { get; set; }
 
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.Account"/></summary>
         public required Account Account { get; set; }
 
         /// <summary>Тип отчета</summary>

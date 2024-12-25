@@ -1,6 +1,6 @@
 ﻿namespace MoneyMaster.Domain.Entities
 {
-    /// <summary>Аккаунт</summary>
+    /// <summary>Счет пользователя</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
     public class Account<TKey> : NamedTimedEntity<TKey>
     {
@@ -16,16 +16,16 @@
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
 
-        /// <summary>Пользователь</summary>
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.User"/></summary>
         public User? User { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
 
-        /// <summary>Идентификатор типа учетной записи</summary>
+        /// <summary>Идентификатор типа счета записи</summary>
         public TKey? AccountTypeId { get; set; }
 
-        /// <summary>Тип учетной записи</summary>
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.AccountType"/></summary>
         public AccountType? AccountType { get; set; }
 
         /// <summary>Коллекция отчетов </summary>

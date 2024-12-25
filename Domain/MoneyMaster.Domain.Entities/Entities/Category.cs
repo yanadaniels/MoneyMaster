@@ -15,7 +15,7 @@ namespace MoneyMaster.Domain.Entities
         /// <summary>Идентификатор типа транзакции</summary>
         public TKey? TransactionTypeId { get; set; }
 
-        /// <summary>Тип транзакции</summary>
+        /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
         public required TransactionType TransactionType { get; set; }
 
         /// <summary>Мягкое удаление</summary>

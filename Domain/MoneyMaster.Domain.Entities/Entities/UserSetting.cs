@@ -7,7 +7,7 @@
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
 
-        /// <summary>Пользователь</summary>
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.User"/></summary>
         public User? User { get; set; }
 
         /// <summary>Расходы</summary>

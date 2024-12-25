@@ -11,6 +11,7 @@ namespace MoneyMaster.Domain.Entities
         /// <summary>Идентификатор категории</summary>
         public TKey? CategoryId { get; set; }
 
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.Category"/></summary>
         public required Category Category { get; set; }
 
         /// <summary>Описание</summary>
@@ -19,16 +20,16 @@ namespace MoneyMaster.Domain.Entities
         /// <summary>Идентификатор типа транзакции</summary>
         public TKey? TransactionTypeId { get; set; }
 
-        /// <summary>Тип транзакции</summary>
+        /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
         public required TransactionType TransactionType { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
 
-        /// <summary>Идентификатор аккаунта</summary>
+        /// <summary>Идентификатор счета </summary>
         public TKey? AccountId { get; set; }
 
-        /// <summary>Аккаунт</summary>
+        /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.Account"/></summary>
         public required Account Account { get; set; }
     }
 
