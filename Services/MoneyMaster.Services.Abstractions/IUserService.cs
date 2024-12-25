@@ -25,6 +25,12 @@ namespace MoneyMaster.Services.Abstractions
         /// <returns> Список DTO пользователей. </returns>
         Task<ICollection<UserDto>> GetAllAsync();
 
+        /// <summary>Добавление пользователя</summary>
+        /// <param name="item">Добавляемая сущность пользователя</param>
+        /// <param name="Cancel">Признак отмены асинхронной операции</param>
+        /// <returns>Добавленная в репозиторий сущность</returns>
+        Task<CreatingUserDto> AddAsync(CreatingUserDto item, CancellationToken Cancel = default);
+
 
     }
 }

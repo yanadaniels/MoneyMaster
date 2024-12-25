@@ -20,6 +20,23 @@ namespace MoneyMaster.Services.Implementations
             _mapper = mapper;
             _userRepository = userRepository;
         }
+
+        public async Task<CreatingUserDto> AddAsync(CreatingUserDto item, CancellationToken Cancel = default)
+        {
+            if (item is null) return null;
+
+            var user = _mapper.Map<CreatingUserDto, User>(item);
+
+            if (await _userRepository.Exist(user, Cancel))
+            {
+                return null;
+            }
+            _userRepository.Add(user);
+            await _userRepository.SaveChangesAsync(Cancel);
+
+            return item;
+        }
+
         public async Task<ICollection<UserDto>> GetAllAsync()
         {
             ICollection<User> entities =  _userRepository.GetAll().ToList();

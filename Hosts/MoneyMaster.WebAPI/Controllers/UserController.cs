@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoneyMaster.Domain.Entities;
 using MoneyMaster.Services.Abstractions;
 using MoneyMaster.Services.Contracts.User;
 
@@ -39,6 +40,26 @@ namespace MoneyMaster.WebAPI.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти пользователя по указанному идентификатору");
 
             return StatusCode(StatusCodes.Status200OK, user);
+        }
+
+
+        /// <summary>
+        /// Создание пользователя
+        /// </summary>
+        /// <remarks>
+        /// Данный метод позволяет создать нового пользователя
+        /// </remarks>
+        /// <response code="201">Новый пользователь успешно создан</response>
+        /// <response code="409">Ошибки при указании данных для создания пользователя</response>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Create([FromBody] CreatingUserDto model)
+        {
+            var result = await _userService.AddAsync(model);
+            if (result is null)
+                return StatusCode(StatusCodes.Status409Conflict, $"Конфликт: элемент с именем = {model.UserName} или с email = {model.Email} уже существует");
+            return StatusCode(StatusCodes.Status201Created, $"Пользователь успешно создан.");
         }
 
         /// <summary>

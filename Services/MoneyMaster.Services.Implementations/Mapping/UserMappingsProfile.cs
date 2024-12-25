@@ -11,6 +11,12 @@ namespace MoneyMaster.Services.Implementations.Mapping
         public UserMappingsProfile()
         {
             CreateMap<User, UserDto>();
+
+            CreateMap<CreatingUserDto, User>()
+                .ForMember(d => d.Id, map => map.Ignore())
+                .ForMember(d => d.IsDelete, map => map.Ignore())
+                .ForMember(d => d.Accounts, map => map.Ignore())
+                .ForMember(d => d.UserSetting, map => map.Ignore());
         }
     }
 }
