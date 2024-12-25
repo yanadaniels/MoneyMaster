@@ -2,6 +2,7 @@ using MoneyMaster.Infrastructure.EntityFramework;
 using MoneyMaster.Infrastructure.Repositories.Implementations.Service;
 using MoneyMaster.Services.Contracts.User;
 using MoneyMaster.Services.Implementations.Service;
+using MoneyMaster.WebAPI.Data;
 using System.Reflection;
 namespace MoneyMaster.WebAPI
 {
@@ -18,7 +19,11 @@ namespace MoneyMaster.WebAPI
                   .AddDatabase(builder.Configuration.GetSection("Database"))
                   .AddRepositories()
                   .AddServices()
+                  
                   ;
+            builder.Services.AddTransient<DbInitializer>().BuildServiceProvider().CreateAsyncScope().ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync().Wait();
+
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
