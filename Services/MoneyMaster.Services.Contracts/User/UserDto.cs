@@ -24,8 +24,8 @@ namespace MoneyMaster.Services.Contracts.User
         /// <summary>Настройки пользователя </summary>
         public UserSettingDto? UserSetting { get; set; }
 
-        /// <summary>Аккаунт</summary>
-        public AccountDto? Account { get; set; }
+        /// <summary>Коллекция счетов</summary>
+        public ICollection<AccountDto>? Accounts { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

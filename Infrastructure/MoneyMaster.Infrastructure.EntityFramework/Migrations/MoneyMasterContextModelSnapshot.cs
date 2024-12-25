@@ -52,8 +52,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 
                     b.HasIndex("AccountTypeId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Accounts", (string)null);
                 });
@@ -275,8 +274,8 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
                         .IsRequired();
 
                     b.HasOne("MoneyMaster.Domain.Entities.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("MoneyMaster.Domain.Entities.Account", "UserId")
+                        .WithMany("Accounts")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -371,7 +370,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("MoneyMaster.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
 
                     b.Navigation("UserSetting");
                 });

@@ -11,8 +11,8 @@ using MoneyMaster.Infrastructure.EntityFramework.Context;
 namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20241219164913_initial")]
-    partial class initial
+    [Migration("20241225045546_updateUserAccount")]
+    partial class updateUserAccount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,8 +55,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 
                     b.HasIndex("AccountTypeId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Accounts", (string)null);
                 });
@@ -278,8 +277,8 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
                         .IsRequired();
 
                     b.HasOne("MoneyMaster.Domain.Entities.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("MoneyMaster.Domain.Entities.Account", "UserId")
+                        .WithMany("Accounts")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -374,7 +373,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("MoneyMaster.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Account");
+                    b.Navigation("Accounts");
 
                     b.Navigation("UserSetting");
                 });

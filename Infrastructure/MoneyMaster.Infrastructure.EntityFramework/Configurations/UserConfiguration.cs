@@ -16,10 +16,10 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Configurations
                    .WithOne(p => p.User)
                    .HasForeignKey<UserSetting>(p => p.UserId);
 
-            //Связь с таблицей Account один к одному
-            builder.HasOne(x => x.Account)
-                   .WithOne(p => p.User)
-                   .HasForeignKey<Account>(p => p.UserId);
+            //Связь с таблицей Account один к многим
+            builder.HasMany(x => x.Accounts)
+                   .WithOne(x => x.User)
+                   .HasForeignKey(x => x.UserId);
         }
     }
 }

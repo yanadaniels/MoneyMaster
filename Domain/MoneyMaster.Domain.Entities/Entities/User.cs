@@ -15,8 +15,8 @@
         /// <summary>Настройки пользователя </summary>
         public UserSetting? UserSetting { get; set; }
 
-        /// <summary>Аккаунт</summary>
-        public Account? Account { get; set; }
+        /// <summary>Коллекция счетов</summary>
+        public ICollection<Account>? Accounts { get; set; }
 
         /// <summary>Мягкое удаление</summary>
         public bool IsDelete { get; set; }
