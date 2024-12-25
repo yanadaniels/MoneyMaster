@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.Account;
 using MoneyMaster.Services.Contracts.AccountType;
-using MoneyMaster.Services.Implementations;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
     /// <summary>
-    /// Контроллер типа аккаунта
+    /// Контроллер типа счета
     /// </summary>
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -23,12 +21,12 @@ namespace MoneyMaster.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Получение объекта типа учетной записи
+        /// Получение объекта типа счета
         /// </summary>
-        /// <remarks>Данный метод позволяет получить объект типа учетной записи по её идентификатору</remarks>
-        /// <param name="id">Идентификатор типа учетной записи</param>
-        /// <response code="200">Получение объекта типа учетной записи</response>
-        /// <response code="404">Не удалось найти тип учетной записи по указанному идентификатору</response>
+        /// <remarks>Данный метод позволяет получить объект типа счета по её идентификатору</remarks>
+        /// <param name="id">Идентификатор типа счета</param>
+        /// <response code="200">Получение объекта типа счета</response>
+        /// <response code="404">Не удалось найти тип счета по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType<AccountTypeDto>(StatusCodes.Status200OK)]
@@ -38,18 +36,18 @@ namespace MoneyMaster.WebAPI.Controllers
             var accountType = await _accountTypeService.GetByIdAsync(id);
 
             if (accountType == null)
-                return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти тип учетной записи по указанному идентификатору");
+                return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти тип счета по указанному идентификатору");
 
             return StatusCode(StatusCodes.Status200OK, accountType);
         }
 
         /// <summary>
-        /// Получение всех типов учетной записи.
+        /// Получение всех типов счетов.
         /// </summary>
         /// <remarks>
-        /// Данный метод позволяет получить список всех типов учетных данных. 
+        /// Данный метод позволяет получить список всех типов счетов. 
         /// </remarks>
-        /// <response code="200">Получение списка типов учетных данных</response>
+        /// <response code="200">Получение списка типов счетов</response>
         [HttpGet]
         [ProducesResponseType<ICollection<AccountTypeDto>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()

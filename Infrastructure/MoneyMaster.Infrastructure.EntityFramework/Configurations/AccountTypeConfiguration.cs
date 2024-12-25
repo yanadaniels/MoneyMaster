@@ -4,7 +4,7 @@ using MoneyMaster.Domain.Entities;
 
 namespace MoneyMaster.Infrastructure.EntityFramework.Configurations
 {
-    /// <summary>Конфигурация для таблицы типы учетной записи</summary>
+    /// <summary>Конфигурация для таблицы тип счета</summary>
     public class AccountTypeConfiguration : IEntityTypeConfiguration<AccountType>
     {
         public void Configure(EntityTypeBuilder<AccountType> builder)

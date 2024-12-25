@@ -15,9 +15,10 @@ namespace MoneyMaster.Services.Contracts.Report
         /// <summary>Имя</summary>
         public required string Name { get; set; }
 
-        /// <summary>Идентификатор Аккаунта</summary>
+        /// <summary>Идентификатор счета</summary>
         public TKey? AccountId { get; set; }
 
+        /// <summary>Dto счета</summary>
         public required AccountDto Account { get; set; }
 
         /// <summary>Тип отчета</summary>

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.User;
 using MoneyMaster.Services.Contracts.UserSetting;
 
 namespace MoneyMaster.WebAPI.Controllers

@@ -3,7 +3,7 @@
 namespace MoneyMaster.Services.Repositories.Abstractions
 {
     /// <summary>
-    /// Репозиторий работы с Аккаунтом.
+    /// Репозиторий работы с счетами.
     /// </summary>
     public interface IAccountRepository:IRepository<Account,Guid>
     {

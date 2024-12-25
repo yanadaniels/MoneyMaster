@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MoneyMaster.Domain.Entities;
-using MoneyMaster.Services.Contracts.User;
 using MoneyMaster.Services.Contracts.UserSetting;
 
 namespace MoneyMaster.Services.Implementations.Mapping

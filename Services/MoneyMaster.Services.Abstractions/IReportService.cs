@@ -1,5 +1,4 @@
-﻿using MoneyMaster.Services.Contracts.Category;
-using MoneyMaster.Services.Contracts.Report;
+﻿using MoneyMaster.Services.Contracts.Report;
 
 namespace MoneyMaster.Services.Abstractions
 {

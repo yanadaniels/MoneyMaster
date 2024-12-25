@@ -3,20 +3,20 @@ using MoneyMaster.Services.Contracts.AccountType;
 
 namespace MoneyMaster.Services.Abstractions
 {
-    /// <summary>Интерфейс сервиса работы с типом учетной записи</summary>
+    /// <summary>Интерфейс сервиса работы с типом счета</summary>
     public interface IAccountTypeService
     {
         /// <summary>
-        /// Получить тип учетной записи по Id
+        /// Получить тип счета по Id
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
-        /// <returns> ДТО типа учетной записи. </returns>
+        /// <returns> ДТО типа счета. </returns>
         Task<AccountTypeDto> GetByIdAsync(Guid id);
 
         /// <summary>
-        /// Получить список типа учетной записи.
+        /// Получить список типа счетов.
         /// </summary>
-        /// <returns> Список DTO учетной записи. </returns>
+        /// <returns> Список DTO счетов. </returns>
         Task<ICollection<AccountTypeDto>> GetAllAsync();
     }
 }

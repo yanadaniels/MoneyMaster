@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿// Ignore Spelling: Registrator
+
+using Microsoft.Extensions.DependencyInjection;
 using MoneyMaster.Services.Abstractions;
 
 namespace MoneyMaster.Services.Implementations.Service

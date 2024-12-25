@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿// Ignore Spelling: Registrator
+
+using AutoMapper;
 using MoneyMaster.Services.Implementations.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 

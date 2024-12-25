@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.Transaction;
 using MoneyMaster.Services.Contracts.TransactionType;
-using MoneyMaster.Services.Implementations;
 
 namespace MoneyMaster.WebAPI.Controllers
 {

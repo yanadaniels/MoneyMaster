@@ -19,6 +19,7 @@ namespace MoneyMaster.Services.Contracts.Transaction
         /// <summary>Идентификатор категории</summary>
         public TKey? CategoryId { get; set; }
 
+        /// <summary>DTO категории</summary>
         public required CategoryDto Category { get; set; }
 
         /// <summary>Описание</summary>
@@ -30,10 +31,10 @@ namespace MoneyMaster.Services.Contracts.Transaction
         /// <summary>Тип транзакции</summary>
         public required TransactionTypeDto TransactionType { get; set; }
 
-        /// <summary>Идентификатор аккаунта</summary>
+        /// <summary>Идентификатор счета</summary>
         public TKey? AccountId { get; set; }
 
-        /// <summary>Аккаунт</summary>
+        /// <summary>Счет</summary>
         public required AccountDto Account { get; set; }
 
         /// <summary>Время</summary>

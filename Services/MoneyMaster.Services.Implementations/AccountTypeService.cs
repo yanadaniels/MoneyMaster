@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.Account;
 using MoneyMaster.Services.Contracts.AccountType;
-using MoneyMaster.Services.Contracts.Category;
 using MoneyMaster.Services.Repositories.Abstractions;
 
 namespace MoneyMaster.Services.Implementations
 {
-    /// <summary>Сервис работы с типом учетной записи</summary>
+    /// <summary>Сервис работы с типом счета</summary>
     public class AccountTypeService : IAccountTypeService
     {
         private readonly IMapper _mapper;

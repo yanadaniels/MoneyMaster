@@ -2,20 +2,20 @@
 
 namespace MoneyMaster.Services.Abstractions
 {
-    /// <summary>Интерфейс сервиса работы с аккаунтом</summary>
+    /// <summary>Интерфейс сервиса работы с счетами</summary>
     public interface IAccountService
     {
         /// <summary>
-        /// Получить аккаунт по Id
+        /// Получить счет по Id
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
-        /// <returns> ДТО аккаунта. </returns>
+        /// <returns> ДТО счета. </returns>
         Task<AccountDto> GetByIdAsync(Guid id);
 
         /// <summary>
-        /// Получить список аккаунтов.
+        /// Получить список счетов.
         /// </summary>
-        /// <returns> Список DTO аккаунтов. </returns>
+        /// <returns> Список DTO счетов. </returns>
         Task<ICollection<AccountDto>> GetAllAsync();
     }
 }

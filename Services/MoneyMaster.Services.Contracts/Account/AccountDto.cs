@@ -7,7 +7,7 @@ using MoneyMaster.Services.Contracts.User;
 
 namespace MoneyMaster.Services.Contracts.Account
 {
-    /// <summary>DTO аккаунта </summary>
+    /// <summary>DTO счета </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
     public class AccountDto<TKey>
     {
@@ -32,10 +32,10 @@ namespace MoneyMaster.Services.Contracts.Account
         /// <summary>Пользователь</summary>
         public UserDto? User { get; set; }
 
-        /// <summary>Идентификатор типа учетной записи</summary>
+        /// <summary>Идентификатор типа счета</summary>
         public TKey? AccountTypeId { get; set; }
 
-        /// <summary>Тип учетной записи</summary>
+        /// <summary>Тип счета</summary>
         public AccountTypeDto? AccountType { get; set; }
 
         /// <summary>Коллекция отчетов </summary>
@@ -48,6 +48,6 @@ namespace MoneyMaster.Services.Contracts.Account
         public DateTime CreateAt { get; set; }
     }
 
-    /// <summary>DTO аккаунта </summary>
+    /// <summary>DTO счета </summary>
     public class AccountDto:AccountDto<Guid>;
 }
