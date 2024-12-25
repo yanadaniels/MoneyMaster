@@ -17,7 +17,7 @@ namespace MoneyMaster.Services.Contracts.UserSetting
         /// <summary>Пользователь</summary>
         public UserDto? User { get; set; }
 
-        /// <summary>Расходы</summary>
+        /// <summary>Валюта</summary>
         public string? Currency { get; set; }
 
         /// <summary>Язык</summary>

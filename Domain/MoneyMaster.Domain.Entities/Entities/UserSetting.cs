@@ -10,7 +10,7 @@
         /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.User"/></summary>
         public User? User { get; set; }
 
-        /// <summary>Расходы</summary>
+        /// <summary>Валюта</summary>
         public string? Currency { get; set; }
 
         /// <summary>Язык</summary>
