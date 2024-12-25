@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\Marat\source\repos\MoneyMaster\Services\MoneyMaster.Services.Contracts\bin\Debug\net9.0\MoneyMaster.Services.Contracts.xml</DocumentationFile>
+    <DocumentationFile>..\..\Services\MoneyMaster.Services.Contracts\bin\Debug\net9.0\MoneyMaster.Services.Contracts.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
