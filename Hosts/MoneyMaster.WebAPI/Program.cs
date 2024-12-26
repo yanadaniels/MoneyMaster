@@ -48,11 +48,11 @@ namespace MoneyMaster.WebAPI
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
-                //app.UseSwaggerUI(o =>
-                //{
-                //    o.InjectStylesheet("/css/swagger-custom.css");
-                //});
+                //app.UseSwaggerUI();
+                app.UseSwaggerUI(o =>
+                {
+                    o.InjectStylesheet("/css/swagger-custom.css");
+                });
             }
 
             app.UseHttpsRedirection();
