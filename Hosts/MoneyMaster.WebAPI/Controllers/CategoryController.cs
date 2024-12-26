@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.Category;
+using MoneyMaster.WebAPI.Models.Category;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace MoneyMaster.WebAPI.Controllers
     {
         private readonly ILogger<CategoryController> _logger;
         private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService)
+        public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService, IMapper mapper)
         {
             _logger = logger;
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="404">Не удалось найти категорию по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<CategoryDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType<CategoryModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
@@ -38,7 +41,7 @@ namespace MoneyMaster.WebAPI.Controllers
             if (category == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти категорию по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, category);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<CategoryModel>(category));
         }
 
         /// <summary>
@@ -49,12 +52,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Получение списка всех категорий</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<CategoryDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ICollection<CategoryModel>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, categories);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<ICollection<CategoryModel>>(categories));
         }
     }
 }

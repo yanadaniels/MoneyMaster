@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.UserSetting;
+using MoneyMaster.WebAPI.Models.UserSetting;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -13,14 +14,16 @@ namespace MoneyMaster.WebAPI.Controllers
     {
         private readonly ILogger<UserSettingController> _logger;
         private readonly IUserSettingService _userSettingService;
+        private readonly IMapper _mapper;
 
         /// <summary><inheritdoc cref="UserSettingController"/></summary>
         /// <param name="logger"></param>
         /// <param name="userSettingService"></param>
-        public UserSettingController(ILogger<UserSettingController> logger, IUserSettingService userSettingService)
+        public UserSettingController(ILogger<UserSettingController> logger, IUserSettingService userSettingService, IMapper mapper)
         {
             _logger = logger;
             _userSettingService = userSettingService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -32,7 +35,7 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="404">Не удалось найти настройки пользователя по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<UserSettingDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserSettingModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
@@ -41,7 +44,7 @@ namespace MoneyMaster.WebAPI.Controllers
             if (userSetting == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Настройки пользователя не найдены");
 
-            return StatusCode(StatusCodes.Status200OK, userSetting);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<UserSettingModel>(userSetting) );
         }
 
         /// <summary>
@@ -52,12 +55,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Получение списка настроек пользователей</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<UserSettingDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ICollection<UserSettingModel>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var userSettings = await _userSettingService.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, userSettings);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<ICollection<UserSettingModel>>(userSettings));
         }
     }
 }

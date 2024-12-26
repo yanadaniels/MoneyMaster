@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.AccountType;
+using MoneyMaster.WebAPI.Models.Account;
+using MoneyMaster.WebAPI.Models.AccountType;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -13,11 +15,13 @@ namespace MoneyMaster.WebAPI.Controllers
     {
         private readonly ILogger<AccountTypeController> _logger;
         private readonly IAccountTypeService _accountTypeService;
+        private readonly IMapper _mapper;
 
-        public AccountTypeController(ILogger<AccountTypeController> logger, IAccountTypeService accountTypeService)
+        public AccountTypeController(ILogger<AccountTypeController> logger, IAccountTypeService accountTypeService, IMapper mapper)
         {
             _logger = logger;
             _accountTypeService = accountTypeService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -29,7 +33,7 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="404">Не удалось найти тип счета по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<AccountTypeDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType<AccountTypeModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
@@ -38,7 +42,7 @@ namespace MoneyMaster.WebAPI.Controllers
             if (accountType == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти тип счета по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, accountType);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<AccountTypeModel>(accountType));
         }
 
         /// <summary>
@@ -49,12 +53,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Получение списка типов счетов</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<AccountTypeDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ICollection<AccountTypeModel>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var accountTypes = await _accountTypeService.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, accountTypes);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<ICollection<AccountTypeModel>>(accountTypes) );
         }
     }
 }

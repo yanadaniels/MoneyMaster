@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Services.Abstractions;
-using MoneyMaster.Services.Contracts.Transaction;
+using MoneyMaster.WebAPI.Models.Transaction;
 
 namespace MoneyMaster.WebAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace MoneyMaster.WebAPI.Controllers
     {
         private readonly ILogger<TransactionController> _logger;
         private readonly ITransactionService _transactionService;
+        private readonly IMapper _mapper;
 
-        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService)
+        public TransactionController(ILogger<TransactionController> logger, ITransactionService transactionService,IMapper mapper)
         {
             _logger = logger;
             _transactionService = transactionService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="404">Не удалось найти транзакцию по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<TransactionDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType<TransactionModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
@@ -38,7 +41,7 @@ namespace MoneyMaster.WebAPI.Controllers
             if (transaction == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти транзакцию по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, transaction);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<TransactionModel>(transaction));
         }
 
         /// <summary>
@@ -49,12 +52,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Получение списка всех транзакций</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<TransactionDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ICollection<TransactionModel>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var transactions = await _transactionService.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, transactions);
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<ICollection<TransactionModel>>(transactions));
         }
     }
 }
