@@ -2,7 +2,7 @@
 {
     /// <summary>Счет пользователя</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class Account<TKey> : NamedTimedEntity<TKey>
+    public class Account<TKey> : NamedTimedEntity<TKey>, ISoftDeletable
     {
         /// <summary>Баланс</summary>
         public decimal Balance { get; set; }
@@ -20,7 +20,7 @@
         public User? User { get; set; }
 
         /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; }
+        public bool IsDelete { get; set; } = false;
 
         /// <summary>Идентификатор типа счета записи</summary>
         public TKey? AccountTypeId { get; set; }

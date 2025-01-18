@@ -1,19 +1,21 @@
-﻿namespace MoneyMaster.WebAPI.Models.Account
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MoneyMaster.Services.Contracts.Account
 {
-    /// <summary>Модель счета </summary>
+    /// <summary>Модель для редактирования счёта </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class AccountModel<TKey>
+    public class UpdatingAccountDto<TKey>
     {
         /// <summary>Первичный ключ </summary>
-        public TKey? Id { get; set; }
+        public required TKey Id { get; set; }
 
         /// <summary>Имя</summary>
-        public required string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>Баланс</summary>
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
 
-        /// <summary>Расходы</summary>
+        /// <summary>Валюта</summary>
         public string? Currency { get; set; }
 
         /// <summary>Иконка</summary>
@@ -24,11 +26,8 @@
 
         /// <summary>Идентификатор типа счета</summary>
         public TKey? AccountTypeId { get; set; }
-
-        /// <summary>Время</summary>
-        public DateTime CreateAt { get; set; }
     }
 
-    /// <summary>Модель счета </summary>
-    public class AccountModel : AccountModel<Guid>;
+    /// <summary>Модель для редактирования счёта</summary>
+    public class UpdatingAccountDto : UpdatingAccountDto<Guid>;
 }

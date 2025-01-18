@@ -11,6 +11,12 @@ namespace MoneyMaster.WebAPI.Mapping
         public AccountModelMappingsProfile()
         {
             CreateMap<AccountDto, AccountModel>();
+
+            CreateMap<CreatingAccountModel, CreatingAccountDto>();
+            CreateMap<CreatingAccountDto, CreatingAccountModel>();
+
+            CreateMap<UpdatingAccountModel, UpdatingAccountDto>();
+            CreateMap<UpdatingAccountDto, AccountModel>();
         }
     }
 }

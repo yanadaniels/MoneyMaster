@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\MoneyMaster.Services.Contracts\MoneyMaster.Services.Contracts.csproj" />
     <ProjectReference Include="..\..\Services\MoneyMaster.Services.Repositories.Abstractions\MoneyMaster.Services.Repositories.Abstractions.csproj" />
     <ProjectReference Include="..\MoneyMaster.Infrastructure.EntityFramework\MoneyMaster.Infrastructure.EntityFramework.csproj" />
   </ItemGroup>

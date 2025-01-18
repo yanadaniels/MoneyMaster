@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyMaster.Domain.Entities;
 using MoneyMaster.Infrastructure.EntityFramework.Configurations;
+using System.Linq.Expressions;
+using System.Reflection.Emit;
 
 namespace MoneyMaster.Infrastructure.EntityFramework.Context
 {
@@ -24,6 +27,24 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Context
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
             builder.ApplyConfiguration(new TransactionTypeConfiguration());
+
+            // Добавляет фильтр для всех сущностей, реализующих ISoftDeletable, исключая помеченные как удаленные.
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                if (typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType))
+                {
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var filter = Expression.Lambda(
+                        Expression.Equal(
+                            Expression.Property(parameter, nameof(ISoftDeletable.IsDelete)),
+                            Expression.Constant(false)
+                        ),
+                        parameter
+                    );
+
+                    builder.Entity(entityType.ClrType).HasQueryFilter(filter);
+                }
+            }
         }
     }
 }

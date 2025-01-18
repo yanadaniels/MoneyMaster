@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\MoneyMaster.Domain.Entities\MoneyMaster.Domain.Entities.csproj" />
+    <ProjectReference Include="..\MoneyMaster.Services.Contracts\MoneyMaster.Services.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

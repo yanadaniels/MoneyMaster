@@ -3,6 +3,7 @@ using MoneyMaster.Infrastructure.Repositories.Implementations.Service;
 using MoneyMaster.Services.Contracts.User;
 using MoneyMaster.Services.Implementations.Service;
 using MoneyMaster.WebAPI.Data;
+using MoneyMaster.WebAPI.Extensions;
 using System.Reflection;
 namespace MoneyMaster.WebAPI
 {
@@ -24,7 +25,12 @@ namespace MoneyMaster.WebAPI
                   .AddServices()
                   
                   ;
-            builder.Services.AddTransient<DbInitializer>().BuildServiceProvider().CreateAsyncScope().ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync().Wait();
+            builder.Services.AddTransient<DbInitializer>()
+                .BuildServiceProvider()
+                .CreateAsyncScope()
+                .ServiceProvider
+                .GetRequiredService<DbInitializer>()
+                .InitializeAsync().Wait();
 
 
 
@@ -43,6 +49,7 @@ namespace MoneyMaster.WebAPI
             });
 
             var app = builder.Build();
+            app.UseCustomMiddleware();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
