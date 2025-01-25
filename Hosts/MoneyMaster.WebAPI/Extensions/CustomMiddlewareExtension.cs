@@ -12,7 +12,7 @@ namespace MoneyMaster.WebAPI.Extensions
         /// </summary>
         /// <param name="builder">Построитель приложения для настройки Middleware.</param>
         /// <returns>Обновленный построитель приложения.</returns>
-        public static IApplicationBuilder UseCustomMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseExceptionHandlingMiddleware(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ExceptionHandlingMiddleware>();
         }

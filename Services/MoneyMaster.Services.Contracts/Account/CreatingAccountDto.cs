@@ -2,7 +2,7 @@
 {
     /// <summary>Модель счета </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class CreatingAccountDto<TKey>
+    public record CreatingAccountDto<TKey>
     {
         /// <summary>Имя</summary>
         public required string Name { get; set; }
@@ -26,5 +26,5 @@
         public DateTime? CreateAt { get; set; } = DateTime.UtcNow;
     }
 
-    public class CreatingAccountDto : CreatingAccountDto<Guid>;
+    public record CreatingAccountDto : CreatingAccountDto<Guid>;
 }

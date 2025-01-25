@@ -14,12 +14,14 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Configurations
             //Связь с таблицей Report один к многим
             builder.HasMany(x => x.Reports)
                    .WithOne(x => x.Account)
-                   .HasForeignKey(x => x.AccountId);
+                   .HasForeignKey(x => x.AccountId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
             //Связь с таблицей Transaction один к многим
             builder.HasMany(x => x.Transactions)
                    .WithOne(x => x.Account)
-                   .HasForeignKey(x => x.AccountId);
+                   .HasForeignKey(x => x.AccountId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

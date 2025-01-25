@@ -37,7 +37,7 @@ namespace MoneyMaster.WebAPI.Middlewares
             }
             catch (InvalidOperationException ex)
             {
-                await HandleExceptionAsync(context, StatusCodes.Status400BadRequest, ex.Message);
+                await HandleExceptionAsync(context, StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (DbUpdateException ex)
             {
@@ -58,7 +58,6 @@ namespace MoneyMaster.WebAPI.Middlewares
         /// <returns>Задача, представляющая асинхронную операцию.</returns>
         private static Task HandleExceptionAsync(HttpContext context, int statusCode, string detail)
         {
-            context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
 
             var problemDetails = new ProblemDetails

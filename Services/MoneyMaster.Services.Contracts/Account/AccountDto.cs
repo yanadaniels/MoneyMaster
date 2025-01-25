@@ -9,7 +9,7 @@ namespace MoneyMaster.Services.Contracts.Account
 {
     /// <summary>DTO счета </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class AccountDto<TKey>
+    public record AccountDto<TKey>
     {
         /// <summary>Первичный ключ </summary>
         public TKey? Id { get; set; }
@@ -49,5 +49,5 @@ namespace MoneyMaster.Services.Contracts.Account
     }
 
     /// <summary>DTO счета </summary>
-    public class AccountDto:AccountDto<Guid>;
+    public record AccountDto:AccountDto<Guid>;
 }

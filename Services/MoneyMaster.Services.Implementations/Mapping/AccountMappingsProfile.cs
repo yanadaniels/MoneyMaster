@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Services.Contracts.Account;
-using MoneyMaster.Services.Contracts.User;
 
 namespace MoneyMaster.Services.Implementations.Mapping
 {
@@ -16,12 +15,12 @@ namespace MoneyMaster.Services.Implementations.Mapping
             CreateMap<UpdatingAccountDto, Account>();
 
             CreateMap<CreatingAccountDto, Account>()
-                .ForMember(d => d.Id, map => map.Ignore())
-                .ForMember(d => d.IsDelete, map => map.Ignore())
-                .ForMember(d => d.AccountType, map => map.Ignore())
-                .ForMember(d => d.Reports, map => map.Ignore())
-                .ForMember(d => d.Transactions, map => map.Ignore())
-                .ForMember(d => d.User, map => map.Ignore());
+                .ForMember(account => account.Id, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(account => account.IsDeleted, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(account => account.AccountType, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(account => account.Reports, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(account => account.Transactions, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(account => account.User, memberConfiguration => memberConfiguration.Ignore());
         }
     }
 }

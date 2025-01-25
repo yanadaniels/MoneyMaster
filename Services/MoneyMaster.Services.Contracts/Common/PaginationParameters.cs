@@ -7,8 +7,8 @@
         /// <summary> Элементов на одной странице </summary>
         public int PageSize { get; set; } = 10;
         /// <summary> Поле для сортировки (например, "Name" или "Balance") </summary>
-        public string? SortBy { get; set; } = null;
+        public string? SortBy { get; set; }
         /// <summary> Порядок сортировки (по возрастанию или убыванию) </summary>
-        public bool IsDescending { get; set; } = false;
+        public bool IsDescending { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace MoneyMaster.WebAPI.Controllers
     /// Контроллер счета
     /// </summary>
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/v1/accounts/")]
     public class AccountController : ControllerBase
     {
         private readonly ILogger<AccountController> _logger;
@@ -41,19 +41,18 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="200">Возвращает счет</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
-        [HttpGet]
-        [Route("{id}")]
-        [ProducesResponseType<AccountModel>(StatusCodes.Status200OK)]
+        [HttpGet("{id}")]
+        [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var account = await _accountService.GetByIdAsync(id);
 
-            if (account == null)
-                return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти счет по указанному идентификатору");
+            if (account is null)
+               return NotFound($"Не удалось найти счет по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<AccountModel>(account));
+            return Ok(_mapper.Map<AccountModelResponse>(account));
         }
 
         /// <summary>
@@ -65,11 +64,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <param name="parameters">Параметры пагинации и сортировки.</param>
         /// <returns>Список аккаунтов и информация о пагинации.</returns>
         /// <response code="200">Возвращает список счетов</response>
+        /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
-        [HttpGet("paged")]
-        [Produces("application/json")]
-        [ProducesResponseType<PaginationResponseModel<AccountModel>>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet("")]
+        [ProducesResponseType<PaginationResponseModel<AccountModelResponse>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationParametersModel parameters)
         {
             if (!ModelState.IsValid)
@@ -78,9 +78,9 @@ namespace MoneyMaster.WebAPI.Controllers
             var parameterDto = _mapper.Map<PaginationParameters>(parameters);
 
             var (listAccountDto, totalCount) = await _accountService.GetAllAsync(parameterDto);
-            var listAccountModel = _mapper.Map<List<AccountModel>>(listAccountDto);
+            var listAccountModel = _mapper.Map<List<AccountModelResponse>>(listAccountDto);
              
-            return Ok(new PaginationResponseModel<AccountModel>
+            return Ok(new PaginationResponseModel<AccountModelResponse>
             {
                 TotalCount = totalCount,
                 PageNumber = parameters.PageNumber,
@@ -102,10 +102,10 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="200">Возвращает список удаленных счетов</response>
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
-        [HttpGet("paged")]
-        [Produces("application/json")]
-        [ProducesResponseType<PaginationResponseModel<AccountModel>>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet("deleted")]
+        [ProducesResponseType<PaginationResponseModel<AccountModelResponse>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllDeleted([FromQuery] PaginationParametersModel parameters)
         {
             if (!ModelState.IsValid)
@@ -113,9 +113,9 @@ namespace MoneyMaster.WebAPI.Controllers
 
             var parameterDto = _mapper.Map<PaginationParameters>(parameters);
             var (listAccountDto, totalCount) = await _accountService.GetAllDeletedAsync(parameterDto);
-            var listAccountModel = _mapper.Map<List<AccountModel>>(listAccountDto);
+            var listAccountModel = _mapper.Map<List<AccountModelResponse>>(listAccountDto);
 
-            return Ok(new PaginationResponseModel<AccountModel>
+            return Ok(new PaginationResponseModel<AccountModelResponse>
             {
                 TotalCount = totalCount,
                 PageNumber = parameters.PageNumber,
@@ -134,14 +134,14 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Возвращает данные необходимые в процессе создания нового счета</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
-        [HttpGet]
-        [ProducesResponseType<CreatingAccountInfoModel>(StatusCodes.Status200OK)]
+        [HttpGet("create")]
+        [ProducesResponseType<CreatingAccountInfoModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCreateInfo()
         {
             var creatingAccountInfoDto = await _accountService.GetInfoNeedToCreateAccountAsync();
-            var creatingAccountInfoModel = _mapper.Map<CreatingAccountInfoModel>(creatingAccountInfoDto);
-            return StatusCode(StatusCodes.Status200OK, creatingAccountInfoModel);
+            var creatingAccountInfoModel = _mapper.Map<CreatingAccountInfoModelResponse>(creatingAccountInfoDto);
+            return Ok(creatingAccountInfoModel);
         }
 
         /// <summary>
@@ -154,10 +154,10 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
         [HttpPost]
-        [ProducesResponseType<AccountModel>(StatusCodes.Status201Created)]
+        [ProducesResponseType<AccountModelResponse>(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] CreatingAccountModel model)
+        public async Task<IActionResult> Create([FromBody] CreatingAccountModelRequest model)
         {
             if (model == null)
                 return BadRequest("Отсутсвуют данные");
@@ -167,10 +167,13 @@ namespace MoneyMaster.WebAPI.Controllers
 
             var newAccountDto = _mapper.Map<CreatingAccountDto>(model);
             var accountDto = await _accountService.AddAsync(newAccountDto);
-            var accountModel = _mapper.Map<AccountModel>(accountDto);
+            var accountModel = _mapper.Map<AccountModelResponse>(accountDto);
 
             if (accountDto != null)
-                return StatusCode(StatusCodes.Status201Created, accountModel);
+            {
+                var resourceUrl = Url.Action(nameof(Get), new { id = accountDto.Id });
+                return Created(resourceUrl, accountModel);
+            }
             else
                 return StatusCode(StatusCodes.Status500InternalServerError, "Не удается создать счёт из-за внутренней ошибки");
         }
@@ -187,11 +190,11 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
         [HttpPut]
-        [ProducesResponseType<AccountModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update([FromBody] UpdatingAccountModel model)
+        public async Task<IActionResult> Update([FromBody] UpdatingAccountModelRequest model)
         {
             if (model == null)
                 return BadRequest("Отсутсвуют данные");
@@ -201,7 +204,7 @@ namespace MoneyMaster.WebAPI.Controllers
 
             var updatedAccountDto = _mapper.Map<UpdatingAccountDto>(model);
             var updatingAccountDto = await _accountService.UpdateAsync(updatedAccountDto);
-            var AccountModel = _mapper.Map<AccountModel>(updatingAccountDto);
+            var AccountModel = _mapper.Map<AccountModelResponse>(updatingAccountDto);
 
             if (updatingAccountDto != null)
                 return Ok(AccountModel);
@@ -214,12 +217,12 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </summary>
         /// <remarks>Данный метод позволяет пометить счет как удаленный по её ID</remarks>
         /// <param name="id">Идентификатор удаляемого счета</param>
-        /// <response code="200">Возвращает удаленный счет</response>
+        /// <response code="204">При успешном удалении счета</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType<AccountModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
@@ -229,7 +232,7 @@ namespace MoneyMaster.WebAPI.Controllers
             if (deletedAccount == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось удалить счет по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<AccountModel>(deletedAccount));
+            return NoContent();
         }
 
         /// <summary>
@@ -242,7 +245,7 @@ namespace MoneyMaster.WebAPI.Controllers
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
         [HttpPost]
         [Route("{id}")]
-        [ProducesResponseType<AccountModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Restore([FromRoute] Guid id)
@@ -250,9 +253,9 @@ namespace MoneyMaster.WebAPI.Controllers
             var restoredAccount = await _accountService.RestoreAsync(id);
 
             if (restoredAccount == null)
-                return StatusCode(StatusCodes.Status404NotFound, $"Не удалось восстановить счет по указанному идентификатору");
+                return NotFound($"Не удалось восстановить счет по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<AccountModel>(restoredAccount));
+            return Ok(_mapper.Map<AccountModelResponse>(restoredAccount));
         }
 
     }

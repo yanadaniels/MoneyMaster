@@ -19,8 +19,8 @@
         /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.User"/></summary>
         public User? User { get; set; }
 
-        /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; } = false;
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Идентификатор типа счета записи</summary>
         public TKey? AccountTypeId { get; set; }

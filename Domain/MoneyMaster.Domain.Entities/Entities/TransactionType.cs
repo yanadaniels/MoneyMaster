@@ -1,15 +1,15 @@
 ﻿namespace MoneyMaster.Domain.Entities.Entities
 {
     /// <summary>Тип транзакции</summary>
-    public class TransactionType<TKey> : NamedTimedEntity<TKey>
+    public class TransactionType<TKey> : NamedTimedEntity<TKey>, ISoftDeletable
     {
         /// <summary>Описание</summary>
         public string? Description { get; set; }
 
-        /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; }
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
-        /// <summary></summary>
+        /// <summary>Указывает на то что тип системный и его удалять нельзя</summary>
         public bool IsSystem { get; set; }
 
         /// <summary>Коллекция категорий</summary>

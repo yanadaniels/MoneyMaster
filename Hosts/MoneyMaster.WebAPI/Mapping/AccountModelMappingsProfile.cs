@@ -10,13 +10,15 @@ namespace MoneyMaster.WebAPI.Mapping
         /// <summary><inheritdoc cref="AccountModelMappingsProfile"/> </summary>
         public AccountModelMappingsProfile()
         {
-            CreateMap<AccountDto, AccountModel>();
+            CreateMap<AccountDto, AccountModelResponse>();
 
-            CreateMap<CreatingAccountModel, CreatingAccountDto>();
-            CreateMap<CreatingAccountDto, CreatingAccountModel>();
+            CreateMap<CreatingAccountModelRequest, CreatingAccountDto>();
+            CreateMap<CreatingAccountDto, AccountModelResponse>();
 
-            CreateMap<UpdatingAccountModel, UpdatingAccountDto>();
-            CreateMap<UpdatingAccountDto, AccountModel>();
+            CreateMap<UpdatingAccountDto, AccountModelResponse>();
+
+            CreateMap<UpdatingAccountModelRequest, UpdatingAccountDto>();
+
         }
     }
 }

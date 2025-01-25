@@ -35,15 +35,15 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var accountTypes = await _accountTypeRepository.GetAllAsync(cancellationToken);
-                var Currencies = Enum.GetNames(typeof(CurrencyCode)).ToList();
+                var currencies = Enum.GetNames(typeof(CurrencyCode)).ToList();
 
-                var CreatingInfo = new CreatingAccountInfoDto()
+                var creatingInfo = new CreatingAccountInfoDto()
                 {
                     AccountTypes = _mapper.Map<List<AccountTypeDto>>(accountTypes),
-                    CurrentCode = Currencies
+                    CurrentCode = currencies
                 };
 
-                return CreatingInfo;
+                return creatingInfo;
             }
             catch (DbUpdateException ex)
             {
@@ -64,8 +64,8 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var result = await _accountRepository.GetAllAsync(parameters, cancellationToken);
-                var AccountList = _mapper.Map<List<Account>, ICollection<AccountDto>>(result.Items);
-                return (AccountList, result.TotalCount);
+                var accountList = _mapper.Map<List<Account>, ICollection<AccountDto>>(result.Items);
+                return (accountList, result.TotalCount);
             }
             catch (DbUpdateException ex)
             {
@@ -86,8 +86,8 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var result = await _accountRepository.GetAllDeletedAsync(parameters, cancellationToken);
-                var DeletedAccountList = _mapper.Map<List<Account>, ICollection<AccountDto>>(result.Items);
-                return (DeletedAccountList, result.TotalCount);
+                var deletedAccountList = _mapper.Map<List<Account>, ICollection<AccountDto>>(result.Items);
+                return (deletedAccountList, result.TotalCount);
             }
             catch (DbUpdateException ex)
             {
@@ -106,11 +106,7 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var account = await _accountRepository.GetAsync(id, CancellationToken.None);
-
-                if (account is null)
-                    return null;
-
-                return _mapper.Map<Account, AccountDto>(account);
+                return account is null ? null : _mapper.Map<Account, AccountDto>(account);
             }
             catch (DbUpdateException ex)
             {
@@ -183,11 +179,7 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var deletedAccount = await _accountRepository.SoftDeleteAsync(id, cancellationToken);
-                if (deletedAccount == null)
-                {
-                    return null;
-                }
-                return _mapper.Map<AccountDto>(deletedAccount);
+                return deletedAccount is null ? null : _mapper.Map<AccountDto>(deletedAccount);
               
             }
             catch (InvalidOperationException ex)
@@ -212,11 +204,7 @@ namespace MoneyMaster.Services.Implementations
             try
             {
                 var restoredAccount = await _accountRepository.RestoreAsync(id, cancellationToken);
-                if (restoredAccount == null)
-                {
-                    return null;
-                }
-                return _mapper.Map<AccountDto>(restoredAccount);
+                return restoredAccount is null ? null : _mapper.Map<AccountDto>(restoredAccount);
             }
             catch (InvalidOperationException ex)
             {

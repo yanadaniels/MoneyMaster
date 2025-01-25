@@ -2,7 +2,7 @@
 {
     /// <summary>Модель счета </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class AccountModel<TKey>
+    public class AccountModelResponse<TKey>
     {
         /// <summary>Первичный ключ </summary>
         public TKey? Id { get; set; }
@@ -30,5 +30,5 @@
     }
 
     /// <summary>Модель счета </summary>
-    public class AccountModel : AccountModel<Guid>;
+    public class AccountModelResponse : AccountModelResponse<Guid>;
 }

@@ -33,7 +33,7 @@ namespace MoneyMaster.WebAPI.Models.Transaction
         public TKey? AccountId { get; set; }
 
         /// <summary>Счет</summary>
-        public required AccountModel Account { get; set; }
+        public required AccountModelResponse Account { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

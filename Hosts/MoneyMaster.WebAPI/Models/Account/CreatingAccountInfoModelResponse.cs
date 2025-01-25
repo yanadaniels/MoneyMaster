@@ -3,7 +3,7 @@
 namespace MoneyMaster.WebAPI.Models.Account
 {
     /// <summary>Модель создания счёта</summary>
-    public class CreatingAccountInfoModel
+    public class CreatingAccountInfoModelResponse
     {
         /// <summary>Имя пользователя</summary>
         public required ICollection<AccountTypeModel> AccountTypes { get; set; }

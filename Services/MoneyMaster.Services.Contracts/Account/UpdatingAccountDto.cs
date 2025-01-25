@@ -4,7 +4,7 @@ namespace MoneyMaster.Services.Contracts.Account
 {
     /// <summary>Модель для редактирования счёта </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class UpdatingAccountDto<TKey>
+    public record UpdatingAccountDto<TKey>
     {
         /// <summary>Первичный ключ </summary>
         public required TKey Id { get; set; }
@@ -29,5 +29,5 @@ namespace MoneyMaster.Services.Contracts.Account
     }
 
     /// <summary>Модель для редактирования счёта</summary>
-    public class UpdatingAccountDto : UpdatingAccountDto<Guid>;
+    public record UpdatingAccountDto : UpdatingAccountDto<Guid>;
 }

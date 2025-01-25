@@ -4,7 +4,7 @@ namespace MoneyMaster.WebAPI.Models.Account
 {
     /// <summary>Модель создания счёта </summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class CreatingAccountModel<TKey>
+    public class CreatingAccountModelRequest<TKey>
     {
 
         /// <summary>Имя</summary>
@@ -38,5 +38,5 @@ namespace MoneyMaster.WebAPI.Models.Account
     }
 
     /// <summary> Модель создания счёта </summary>
-    public class CreatingAccountModel : CreatingAccountModel<Guid>;
+    public class CreatingAccountModelRequest : CreatingAccountModelRequest<Guid>;
 }

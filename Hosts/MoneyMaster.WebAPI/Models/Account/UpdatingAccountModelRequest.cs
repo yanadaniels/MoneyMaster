@@ -4,7 +4,7 @@ namespace MoneyMaster.WebAPI.Models.Account
 {
     /// <summary>Модель для редактирования счёта</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class UpdatingAccountModel<TKey>
+    public class UpdatingAccountModelRequest<TKey>
     {
         /// <summary>Первичный ключ </summary>
         [Required(ErrorMessage = "Идентификатор счёта обязателен")]
@@ -33,5 +33,5 @@ namespace MoneyMaster.WebAPI.Models.Account
     }
 
     /// <summary>Модель для редактирования счёта</summary>
-    public class UpdatingAccountModel : UpdatingAccountModel<Guid>;
+    public class UpdatingAccountModelRequest : UpdatingAccountModelRequest<Guid>;
 }

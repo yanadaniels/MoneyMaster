@@ -123,7 +123,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
             var query = _entitySet
                 .AsQueryable()
                 .IgnoreQueryFilters()
-                .Where(e => EF.Property<bool>(e, "IsDelete"));
+                .Where(e => EF.Property<bool>(e, "IsDeleted"));
 
             if (asNoTracking)
                 query = query.AsNoTracking();
@@ -277,7 +277,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
         {
             if (entity is ISoftDeletable softDeletableEntity)
             {
-                softDeletableEntity.IsDelete = true;
+                softDeletableEntity.IsDeleted = true;
                 Context.Set<T>().Update(entity);
                 await Context.SaveChangesAsync();
                 return entity;
@@ -323,7 +323,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
         {
             if (entity is ISoftDeletable softDeletableEntity)
             {
-                softDeletableEntity.IsDelete = false;
+                softDeletableEntity.IsDeleted = false;
                 Context.Set<T>().Update(entity);
                 await Context.SaveChangesAsync(cancellationToken);
 
