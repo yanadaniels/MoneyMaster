@@ -41,7 +41,7 @@ namespace MoneyMaster.Services.Abstractions
         /// <param name="accountDto"> Принимает DTO в качестве нового счёта </param>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns> DTO счёта </returns>
-        Task<AccountDto?> AddAsync(
+        Task<AccountDto> AddAsync(
             CreatingAccountDto newAccountDto, CancellationToken cancellationToken = default);
 
         /// <summary>

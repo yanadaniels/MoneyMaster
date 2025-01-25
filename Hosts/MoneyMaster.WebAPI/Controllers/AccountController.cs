@@ -169,13 +169,8 @@ namespace MoneyMaster.WebAPI.Controllers
             var accountDto = await _accountService.AddAsync(newAccountDto);
             var accountModel = _mapper.Map<AccountModelResponse>(accountDto);
 
-            if (accountDto != null)
-            {
-                var resourceUrl = Url.Action(nameof(Get), new { id = accountDto.Id });
-                return Created(resourceUrl, accountModel);
-            }
-            else
-                return StatusCode(StatusCodes.Status500InternalServerError, "Не удается создать счёт из-за внутренней ошибки");
+            var resourceUrl = Url.Action(nameof(Get), new { id = accountDto.Id });
+            return Created(resourceUrl, accountModel);
         }
 
         /// <summary>

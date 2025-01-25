@@ -120,7 +120,7 @@ namespace MoneyMaster.Services.Implementations
             }
         }
 
-        public async Task<AccountDto?> AddAsync(
+        public async Task<AccountDto> AddAsync(
             CreatingAccountDto newAccountDto, CancellationToken cancellationToken = default)
         {
             if (newAccountDto is null)
