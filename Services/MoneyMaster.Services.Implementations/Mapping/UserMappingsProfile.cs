@@ -13,10 +13,10 @@ namespace MoneyMaster.Services.Implementations.Mapping
             CreateMap<User, UserDto>();
 
             CreateMap<CreatingUserDto, User>()
-                .ForMember(d => d.Id, map => map.Ignore())
-                .ForMember(d => d.IsDelete, map => map.Ignore())
-                .ForMember(d => d.Accounts, map => map.Ignore())
-                .ForMember(d => d.UserSetting, map => map.Ignore());
+                .ForMember(user => user.Id, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(user => user.IsDeleted, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(user => user.Accounts, memberConfiguration => memberConfiguration.Ignore())
+                .ForMember(user => user.UserSetting, memberConfiguration => memberConfiguration.Ignore());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace MoneyMaster.WebAPI.Models.User
         public UserSettingModel? UserSetting { get; set; }
 
         /// <summary>Коллекция счетов</summary>
-        public ICollection<AccountModel>? Accounts { get; set; }
+        public ICollection<AccountModelResponse>? Accounts { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

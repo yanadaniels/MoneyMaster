@@ -1,4 +1,5 @@
 ﻿using MoneyMaster.Domain.Entities;
+using MoneyMaster.Services.Contracts.Common;
 
 namespace MoneyMaster.Services.Repositories.Abstractions
 {
@@ -26,19 +27,63 @@ namespace MoneyMaster.Services.Repositories.Abstractions
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false);
 
         /// <summary>
+        /// Асинхронно получает сущности с пагинацией
+        /// </summary>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <param name="asNoTracking"> Вызвать с ApNoTracking </param>
+        /// <param name="parameters"> Модель передаваемых параметров для формирования пагинации </param>
+        /// <returns> Возвращает кортеж со списком сущностей и общим количеством страниц </returns>
+        Task<(List<T> Items, int TotalCount)> GetAllAsync(
+            PaginationParameters parameters, CancellationToken cancellationToken, bool asNoTracking = false);
+
+        /// <summary>
+        /// Асинхронно получает сущности помеченные как удаленные c пагинацией
+        /// </summary>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <param name="asNoTracking"> Вызвать с ApNoTracking </param>
+        /// <param name="parameters"> Модель передаваемых параметров для формирования пагинации </param>
+        /// <returns> Возвращает кортеж со список сущностей помеченных как удаленные и общим количеством страниц </returns>
+        Task<(List<T> Items, int TotalCount)> GetAllDeletedAsync(
+            PaginationParameters parameters, CancellationToken cancellationToken, bool asNoTracking = false);
+
+        /// <summary>
         /// Получить сущность по Id.
         /// </summary>
         /// <param name="id"> Id сущности. </param>
-        /// <returns> Cущность. </returns>
-        T Get(TPrimaryKey id);
+        /// <returns> Cущность или null если ничего найдено </returns>
+        T? Get(TPrimaryKey id);
 
         /// <summary>
         /// Получить сущность по Id.
         /// </summary>
         /// <param name="id"> Id сущности. </param>
         /// <param name="cancellationToken"></param>
-        /// <returns> Cущность. </returns>
-        Task<T> GetAsync(TPrimaryKey id, CancellationToken cancellationToken);
+        /// <returns> Cущность или null если ничего найдено </returns>
+        Task<T?> GetAsync(TPrimaryKey id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Асинхронно получает сущность по ID, включая те, что помечены как удаленные.
+        /// </summary>
+        /// <param name="id"> Идентификатор сущности </param>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <returns> Возвращает найденную сущность или null если ничего не было найдено </returns>
+        Task<T?> GetByIdIncludingDeletedAsync(TPrimaryKey id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Асинхронно помечает сущность как удаленную
+        /// </summary>
+        /// <param name="id"> Индентификатор сущности </param>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <returns> Удалённую сущность если успешно, иначе null </returns>
+        Task<T?> SoftDeleteAsync(TPrimaryKey id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Асинхронно помечает сущность как удаленную
+        /// </summary>
+        /// <param name="entity"> Сущность которую нужно пометить как удаленную </param>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <returns> Удалённую сущность если успешно, иначе null </returns>
+        Task<T?> SoftDeleteAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удалить сущность.
@@ -60,6 +105,22 @@ namespace MoneyMaster.Services.Repositories.Abstractions
         /// <param name="entities"> Коллекция сущностей для удаления. </param>
         /// <returns> Была ли операция удаления успешна. </returns>
         bool DeleteRange(ICollection<T> entities);
+
+        /// <summary>
+        /// Асинхронно убирает метку удалено
+        /// </summary>
+        /// <param name="id"> Идентификатор восстанавливаемой сущности </param>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <returns> Восстановленную сущность если успешно, иначе null</returns>
+        Task<T?> RestoreAsync(TPrimaryKey id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Асинхронно убирает метку удалено
+        /// </summary>
+        /// <param name="entity"> Сущность которую нужно восстановить </param>
+        /// <param name="cancellationToken"> Токен отмены </param>
+        /// <returns> Восстановленную сущность если успешно, иначе null</returns>
+        Task<T?> RestoreAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Для сущности проставить состояние - что она изменена.

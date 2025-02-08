@@ -3,7 +3,7 @@
 namespace MoneyMaster.Domain.Entities
 {
     /// <summary>Транзакция</summary>
-    public class Transaction<TKey> : TimedEntity<TKey>
+    public class Transaction<TKey> : TimedEntity<TKey>, ISoftDeletable
     {
         /// <summary>Количество</summary>
         public decimal Amount { get; set; }
@@ -12,7 +12,7 @@ namespace MoneyMaster.Domain.Entities
         public TKey? CategoryId { get; set; }
 
         /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.Category"/></summary>
-        public required Category Category { get; set; }
+        public Category? Category { get; set; }
 
         /// <summary>Описание</summary>
         public string? Description { get; set; }
@@ -21,16 +21,16 @@ namespace MoneyMaster.Domain.Entities
         public TKey? TransactionTypeId { get; set; }
 
         /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
-        public required TransactionType TransactionType { get; set; }
+        public TransactionType? TransactionType { get; set; }
 
-        /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; }
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Идентификатор счета </summary>
         public TKey? AccountId { get; set; }
 
         /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.Account"/></summary>
-        public required Account Account { get; set; }
+        public Account? Account { get; set; }
     }
 
     /// <summary> <inheritdoc/></summary>

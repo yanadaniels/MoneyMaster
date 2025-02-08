@@ -15,8 +15,11 @@ namespace MoneyMaster.WebAPI.Models.AccountType
         /// <summary>Иконка</summary>
         public string? Icon { get; set; }
 
-        /// <summary>Коллекция счетов</summary>
-        public ICollection<AccountModel>? Accounts { get; set; }
+        /// <summary>Признак того что тип системный</summary>
+        public bool IsSystem { get; set; }
+
+        /// <summary>Мягкое удаление</summary>
+        public bool IsDelete { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

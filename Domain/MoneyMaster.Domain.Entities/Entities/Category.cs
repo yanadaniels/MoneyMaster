@@ -4,7 +4,7 @@ using MoneyMaster.Domain.Entities.Enums;
 namespace MoneyMaster.Domain.Entities
 {
     /// <summary>Категория</summary>
-    public class Category<TKey> : NamedTimedEntity<TKey>
+    public class Category<TKey> : NamedTimedEntity<TKey>, ISoftDeletable
     {
         /// <summary>Иконка</summary>
         public string? Icon { get; set; }
@@ -16,10 +16,10 @@ namespace MoneyMaster.Domain.Entities
         public TKey? TransactionTypeId { get; set; }
 
         /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
-        public required TransactionType TransactionType { get; set; }
+        public TransactionType? TransactionType { get; set; }
 
-        /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; }
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Коллекция транзакций</summary>
         public ICollection<Transaction>? Transactions { get; set; }

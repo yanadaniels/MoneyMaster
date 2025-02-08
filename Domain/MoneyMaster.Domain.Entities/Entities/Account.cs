@@ -2,7 +2,7 @@
 {
     /// <summary>Счет пользователя</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class Account<TKey> : NamedTimedEntity<TKey>
+    public class Account<TKey> : NamedTimedEntity<TKey>, ISoftDeletable
     {
         /// <summary>Баланс</summary>
         public decimal Balance { get; set; }
@@ -19,8 +19,8 @@
         /// <summary><inheritdoc cref="MoneyMaster.Domain.Entities.User"/></summary>
         public User? User { get; set; }
 
-        /// <summary>Мягкое удаление</summary>
-        public bool IsDelete { get; set; }
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Идентификатор типа счета записи</summary>
         public TKey? AccountTypeId { get; set; }

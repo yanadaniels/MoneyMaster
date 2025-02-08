@@ -17,7 +17,7 @@ namespace MoneyMaster.WebAPI.Models.Report
         public TKey? AccountId { get; set; }
 
         /// <summary>Модель счета</summary>
-        public required AccountModel Account { get; set; }
+        public required AccountModelResponse Account { get; set; }
 
         /// <summary>Тип отчета</summary>
         public ReportType Type { get; set; }
