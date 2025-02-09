@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common;
 using MoneyMasterService.Services.Abstractions;
 using MoneyMasterService.Services.Contracts.Account;
+using MoneyMasterService.WebAPI.Controllers.Base;
 using MoneyMasterService.WebAPI.Models.Account;
 using MoneyMasterService.WebAPI.Models.Common;
 
@@ -12,12 +14,12 @@ namespace MoneyMasterService.WebAPI.Controllers
     /// Контроллер счета
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("api/v1/accounts/")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService _accountService;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Конструктор для инициализации контроллера аккаунтов.
@@ -25,11 +27,10 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// <param name="logger">Логгер для регистрации событий и ошибок.</param>
         /// <param name="accountService">Сервис для работы с аккаунтами.</param>
         /// <param name="mapper">Объект для маппинга между сущностями и DTO.</param>
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IMapper mapper)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService, IMapper mapper): base(mapper)
         {
             _logger = logger;
             _accountService = accountService;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<PaginationResponseModel<AccountModelResponse>>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [RequirePrivilege(Privileges.Administrator, Privileges.System)]
         public async Task<IActionResult> GetAll([FromQuery] PaginationParametersModel parameters)
         {
             if (!ModelState.IsValid)

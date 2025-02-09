@@ -73,6 +73,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMasterService.WebAPI",
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6FDD84FC-8795-4AC1-B740-934D970A5B69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MoneyMaster.APIgateway", "MoneyMaster.APIgateway", "{468945CE-9B1F-4EB0-8807-29F1C04CC48E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.APIgateway", "MoneyMaster.APIgateway\MoneyMaster.APIgateway\MoneyMaster.APIgateway.csproj", "{987038E5-2C82-4FF0-B413-745C88D9D027}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +171,10 @@ Global
 		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987038E5-2C82-4FF0-B413-745C88D9D027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987038E5-2C82-4FF0-B413-745C88D9D027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987038E5-2C82-4FF0-B413-745C88D9D027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987038E5-2C82-4FF0-B413-745C88D9D027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,5 +211,6 @@ Global
 		{9DB6E50F-75C5-43F6-9AAA-B8F6E2A7B217} = {4490AC62-AEEB-4D89-B871-57E77B83D61B}
 		{1D852EB2-3502-4D21-BE7A-4A3134D80BB9} = {4490AC62-AEEB-4D89-B871-57E77B83D61B}
 		{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C} = {7A5F26D5-F3EA-423F-93B1-0B1375F5B8F0}
+		{987038E5-2C82-4FF0-B413-745C88D9D027} = {468945CE-9B1F-4EB0-8807-29F1C04CC48E}
 	EndGlobalSection
 EndGlobal

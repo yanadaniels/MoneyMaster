@@ -1,3 +1,4 @@
+using MoneyMaster.Common.Extensions;
 using MoneyMasterService.Infrastructure.EntityFramework;
 using MoneyMasterService.Services.Implementations.Service;
 using MoneyMasterService.WebAPI.Data;
@@ -46,6 +47,9 @@ namespace MoneyMasterService.WebAPI
                 opt.SupportNonNullableReferenceTypes();
             });
 
+            //ƒобавл€ем авторизацию
+            builder.Services.AddCustomJWTAuthentification();
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -69,7 +73,9 @@ namespace MoneyMasterService.WebAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();   // добавление middleware аутентификации 
+
+            app.UseAuthorization();   // добавление middleware авторизации 
 
 
             app.MapControllers();
