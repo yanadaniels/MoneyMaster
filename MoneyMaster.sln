@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MoneyMaster.APIgateway", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.APIgateway", "MoneyMaster.APIgateway\MoneyMaster.APIgateway\MoneyMaster.APIgateway.csproj", "{987038E5-2C82-4FF0-B413-745C88D9D027}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMasterService.Tests", "MoneyMasterService\Tests\MoneyMasterService.Tests\MoneyMasterService.Tests.csproj", "{E0A59813-A234-45C3-B87F-2A1C4E550934}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{987038E5-2C82-4FF0-B413-745C88D9D027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{987038E5-2C82-4FF0-B413-745C88D9D027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{987038E5-2C82-4FF0-B413-745C88D9D027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A59813-A234-45C3-B87F-2A1C4E550934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A59813-A234-45C3-B87F-2A1C4E550934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A59813-A234-45C3-B87F-2A1C4E550934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A59813-A234-45C3-B87F-2A1C4E550934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,5 +218,6 @@ Global
 		{1D852EB2-3502-4D21-BE7A-4A3134D80BB9} = {4490AC62-AEEB-4D89-B871-57E77B83D61B}
 		{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C} = {7A5F26D5-F3EA-423F-93B1-0B1375F5B8F0}
 		{987038E5-2C82-4FF0-B413-745C88D9D027} = {468945CE-9B1F-4EB0-8807-29F1C04CC48E}
+		{E0A59813-A234-45C3-B87F-2A1C4E550934} = {4BDA2288-C90B-4237-84DF-91E45D538CB6}
 	EndGlobalSection
 EndGlobal
