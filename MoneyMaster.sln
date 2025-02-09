@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService.Services.Im
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService.Services.Repositories.Abstractions", "IdentityService\Services\IdentityService.Services.Repositories.Abstractions\IdentityService.Services.Repositories.Abstractions.csproj", "{03F407A9-444D-422B-9B56-5FD2B5695381}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Common.Repositories", "MoneyMaster.Common\MoneyMaster.Common.Repositories\MoneyMaster.Common.Repositories.csproj", "{CDFC313E-699A-4D51-B605-F9BCBEDF27A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,10 @@ Global
 		{03F407A9-444D-422B-9B56-5FD2B5695381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03F407A9-444D-422B-9B56-5FD2B5695381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03F407A9-444D-422B-9B56-5FD2B5695381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDFC313E-699A-4D51-B605-F9BCBEDF27A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDFC313E-699A-4D51-B605-F9BCBEDF27A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDFC313E-699A-4D51-B605-F9BCBEDF27A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDFC313E-699A-4D51-B605-F9BCBEDF27A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,5 +187,6 @@ Global
 		{99567D6F-ECB2-42BD-A99E-8918A232601D} = {39077365-A73B-4B0A-B86A-0B917FC4565E}
 		{4C3BE47F-A402-4C68-BB37-887ED73A9D95} = {39077365-A73B-4B0A-B86A-0B917FC4565E}
 		{03F407A9-444D-422B-9B56-5FD2B5695381} = {39077365-A73B-4B0A-B86A-0B917FC4565E}
+		{CDFC313E-699A-4D51-B605-F9BCBEDF27A4} = {F7E10A0D-4572-42C6-8FA1-915683AD534A}
 	EndGlobalSection
 EndGlobal

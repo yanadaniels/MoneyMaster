@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MoneyMaster.Common\MoneyMaster.Common.Interfaces\MoneyMaster.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Domain\IdentityService.Domain.Entities\IdentityService.Domain.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

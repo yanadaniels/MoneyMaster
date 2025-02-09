@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentityService.Services.Contracts\IdentityService.Services.Contracts.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoneyMaster.Common.Interfaces\MoneyMaster.Common.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
