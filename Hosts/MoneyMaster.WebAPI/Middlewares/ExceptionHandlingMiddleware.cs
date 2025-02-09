@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoneyMaster.Domain.Entities.DomainExceptions;
 
 namespace MoneyMaster.WebAPI.Middlewares
 {
@@ -35,15 +36,20 @@ namespace MoneyMaster.WebAPI.Middlewares
             {
                 await _next(context); // Передать управление следующему middleware
             }
-            catch (InvalidOperationException ex)
+            catch (NotFoundException exception)
             {
-                await HandleExceptionAsync(context, StatusCodes.Status422UnprocessableEntity, ex.Message);
+                await HandleExceptionAsync(context, StatusCodes.Status404NotFound, exception.Message);
             }
-            catch (DbUpdateException ex)
+            catch (InvalidOperationException exception)
             {
-                await HandleExceptionAsync(context, StatusCodes.Status500InternalServerError, "Ошибка БД. Проверьте данные и попробуйте снова.");
+                await HandleExceptionAsync(context, StatusCodes.Status422UnprocessableEntity, exception.Message);
             }
-            catch (Exception ex)
+            catch (DbUpdateException exception)
+            {
+                await HandleExceptionAsync(context, StatusCodes.Status500InternalServerError,
+                    "Ошибка БД. Проверьте данные и попробуйте снова.");
+            }
+            catch (Exception exception)
             {
                 await HandleExceptionAsync(context, StatusCodes.Status500InternalServerError, "Произошла неизвестная ошибка, пожалуйста попробуйте повторить запрос позже");
             }

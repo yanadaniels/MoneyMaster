@@ -43,7 +43,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
         /// <returns> Cущность или null если ничего не найдено </returns>
         public virtual async Task<T?> GetAsync(TPrimaryKey id, CancellationToken cancellationToken)
         {
-            return await _entitySet.FindAsync((object)id!);
+            return await _entitySet.FindAsync((object)id!, cancellationToken);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
         /// </summary>
         /// <param name="entity"> Сущность для добавления. </param>
         /// <returns> Добавленная сущность. </returns>
-        public virtual async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
         {
-            return (await _entitySet.AddAsync(entity)).Entity;
+            return (await _entitySet.AddAsync(entity, cancellationToken)).Entity;
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Base
         /// <returns> Восстановленную сущность если успешно, иначе null</returns>
         public virtual async Task<T?> RestoreAsync(TPrimaryKey id, CancellationToken cancellationToken)
         {
-            var entity = await _entitySet.IgnoreQueryFilters().FirstOrDefaultAsync(e => e!.Id!.Equals(id));
+            var entity = await _entitySet.IgnoreQueryFilters().FirstOrDefaultAsync(e => e.Id!.Equals(id), cancellationToken: cancellationToken);
 
             if (entity == null)
             {

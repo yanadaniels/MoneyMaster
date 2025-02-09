@@ -1,4 +1,4 @@
-﻿namespace MoneyMaster.Domain.Entities
+namespace MoneyMaster.Domain.Entities
 {
     /// <summary>Тип счета </summary>
     public class AccountType : NamedEntity, ISoftDeletable

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Domain.Entities.Entities;
+using MoneyMaster.Domain.Entities.Enums;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace MoneyMaster.WebAPI.Data
 {
@@ -38,24 +37,16 @@ namespace MoneyMaster.WebAPI.Data
 
             await _db.Set<AccountType>().AddRangeAsync(accountTypes);
 
-            List<TransactionType> transactionTypes = new List<TransactionType>()
-            {
-                new TransactionType() { Name = "Доход", CreateAt = DateTime.Now },
-                new TransactionType() { Name = "Расход", CreateAt = DateTime.Now },
-                new TransactionType() { Name = "Перевод", CreateAt = DateTime.Now }
-            };
-            await _db.Set<TransactionType>().AddRangeAsync(transactionTypes);
-
             List<Category> categories = new List<Category>()
             {
-                 new Category() { Name = "Зарплата", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход") , CreateAt = DateTime.Now},
-            new Category() { Name = "Подработка" , TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Продажа", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход"), CreateAt = DateTime.Now},
+                 new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
+            new Category() { Name = "Подработка" , CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
+            new Category() { Name = "Продажа", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
 
-            new Category() { Name = "Еда", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Транспорт", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Спорт", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Одежда", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход") , CreateAt = DateTime.Now},
+            new Category() { Name = "Еда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Транспорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Спорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Одежда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
 
             };
             await _db.Set<Category>().AddRangeAsync(categories);
@@ -96,34 +87,30 @@ namespace MoneyMaster.WebAPI.Data
             {
                 Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
                 Category = categories.FirstOrDefault(x => x.Name == "Зарплата"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
             };
-            Transaction transaction2 = new Transaction() { 
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"), 
-                Category = categories.FirstOrDefault(x => x.Name == "Еда"), 
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Еда").TransactionType };
+            Transaction transaction2 = new Transaction()
+            {
+                Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
+                Category = categories.FirstOrDefault(x => x.Name == "Еда")
+            };
             Transaction transaction3 = new Transaction() {
                 Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
-                Category = categories.FirstOrDefault(x => x.Name == "Спорт"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Спорт").TransactionType
+                Category = categories.FirstOrDefault(x => x.Name == "Спорт")
             };
 
             Transaction transaction4 = new Transaction() { 
                 Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"), 
-                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
+                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата")
             };
             Transaction transaction5 = new Transaction()
             {
                 Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"),
-                Category = categories.FirstOrDefault(x => x.Name == "Одежда"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Одежда").TransactionType
+                Category = categories.FirstOrDefault(x => x.Name == "Одежда")
             };
 
             Transaction transaction6 = new Transaction() { 
                 Account = accounts.FirstOrDefault(x => x.User.UserName == "Вася"), 
-                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
-                TransactionType =categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
+                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата")
             };
 
             await _db.Set<Transaction>().AddAsync(transaction1);
@@ -133,7 +120,7 @@ namespace MoneyMaster.WebAPI.Data
             await _db.Set<Transaction>().AddAsync(transaction5);
             await _db.Set<Transaction>().AddAsync(transaction6);
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }

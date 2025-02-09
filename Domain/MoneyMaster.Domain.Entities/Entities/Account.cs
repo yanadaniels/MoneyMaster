@@ -1,4 +1,6 @@
-﻿namespace MoneyMaster.Domain.Entities
+﻿using MoneyMaster.Domain.Entities.Entities;
+
+namespace MoneyMaster.Domain.Entities
 {
     /// <summary>Счет пользователя</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>

@@ -52,7 +52,7 @@ namespace MoneyMaster.WebAPI
             using (var scope = app.Services.CreateScope())
             {
                 var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-                await dbInitializer.InitializeAsync(); // Асинхронно инициализируем БД
+                await dbInitializer.InitializeAsync(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
             }
 
             app.UseExceptionHandlingMiddleware();
@@ -75,7 +75,7 @@ namespace MoneyMaster.WebAPI
 
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

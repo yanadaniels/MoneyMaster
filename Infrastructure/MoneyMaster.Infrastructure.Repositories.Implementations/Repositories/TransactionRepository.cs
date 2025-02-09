@@ -1,4 +1,5 @@
 ﻿using MoneyMaster.Domain.Entities;
+using MoneyMaster.Domain.Entities.Entities;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
 using MoneyMaster.Infrastructure.Repositories.Implementations.Base;
 using MoneyMaster.Services.Repositories.Abstractions;

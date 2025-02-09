@@ -2,7 +2,6 @@
 using MoneyMaster.Domain.Entities;
 using MoneyMaster.Infrastructure.EntityFramework.Configurations;
 using System.Linq.Expressions;
-using System.Reflection.Emit;
 
 namespace MoneyMaster.Infrastructure.EntityFramework.Context
 {
@@ -11,8 +10,8 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Context
     {
         public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options)
         {
-           //Database.EnsureDeleted();
-           // Database.EnsureCreatedAsync();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreatedAsync();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -26,7 +25,6 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Context
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
-            builder.ApplyConfiguration(new TransactionTypeConfiguration());
 
             //Добавляет фильтр для всех сущностей, реализующих ISoftDeletable, исключая помеченные как удаленные.
             foreach (var entityType in builder.Model.GetEntityTypes())
