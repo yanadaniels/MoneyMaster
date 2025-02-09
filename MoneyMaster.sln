@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMasterService.Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMasterService.WebAPI", "MoneyMasterService\Hosts\MoneyMasterService.WebAPI\MoneyMasterService.WebAPI.csproj", "{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6FDD84FC-8795-4AC1-B740-934D970A5B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CAD40C5-34FE-4F51-87B6-FE86D7981A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDD84FC-8795-4AC1-B740-934D970A5B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

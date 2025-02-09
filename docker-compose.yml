@@ -1,0 +1,13 @@
+services:
+  identityservice.webapi:
+    image: ${DOCKER_REGISTRY-}identityservicewebapi
+    build:
+      context: .
+      dockerfile: IdentityService/Hosts/IdentityService.WebAPI/Dockerfile
+
+  moneymasterservice.webapi:
+    image: ${DOCKER_REGISTRY-}moneymasterservicewebapi
+    build:
+      context: .
+      dockerfile: MoneyMasterService/Hosts/MoneyMasterService.WebAPI/Dockerfile
+
