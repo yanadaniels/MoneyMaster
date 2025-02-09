@@ -1,6 +1,7 @@
 ﻿namespace MoneyMaster.Common.Interfaces.Entities
-{ /// <summary>Сущность</summary>
-  /// <typeparam name="TKey"></typeparam>
+{
+    /// <summary>Сущность</summary>
+    /// <typeparam name="TKey"></typeparam>
     public interface IEntity<out TKey>
     {
         /// <summary>Идентификатор</summary>
