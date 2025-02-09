@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyMaster.Infrastructure.EntityFramework.Context;
 
@@ -10,9 +11,11 @@ using MoneyMaster.Infrastructure.EntityFramework.Context;
 namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    partial class MoneyMasterContextModelSnapshot : ModelSnapshot
+    [Migration("20250209143900_deleteTransactionType")]
+    partial class deleteTransactionType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -107,6 +110,9 @@ namespace MoneyMaster.Infrastructure.EntityFramework.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TransactionTypeId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

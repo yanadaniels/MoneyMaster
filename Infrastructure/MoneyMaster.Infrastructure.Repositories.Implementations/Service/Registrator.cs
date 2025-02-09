@@ -15,7 +15,6 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations.Service
             .AddTransient<ICategoryRepository,CategoryRepository>()
             .AddTransient<IReportRepository,ReportRepository>()
             .AddTransient<ITransactionRepository,TransactionRepository>()
-            .AddTransient<ITransactionTypeRepository,TransactionTypeRepository>()
             .AddTransient<IUserRepository,UserRepository>()
             .AddTransient<IUserSettingRepository,UserSettingRepository>()
             .AddTransient<IUnitOfWork, UnitOfWork>()

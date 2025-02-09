@@ -14,7 +14,6 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations
         private readonly ICategoryRepository _categoryRepository;
         private readonly IReportRepository _reportRepository;
         private readonly ITransactionRepository _transactionRepository;
-        private readonly ITransactionTypeRepository _transactionTypeRepository;
 
         private readonly MoneyMasterContext _context;
 
@@ -31,8 +30,7 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations
         public ITransactionRepository TransactionRepository => _transactionRepository;
 
         public IReportRepository ReportRepository => _reportRepository;
-
-        public ITransactionTypeRepository TransactionTypeRepository => _transactionTypeRepository;
+        
 
         /// <summary><inheritdoc cref="IUnitOfWork"/></summary>
         /// <param name="context">Контекст БД</param>
@@ -45,7 +43,6 @@ namespace MoneyMaster.Infrastructure.Repositories.Implementations
             _categoryRepository = new CategoryRepository(context);
             _accountTypeRepository = new AccountTypeRepository(context);
             _transactionRepository = new TransactionRepository(context);
-            _transactionTypeRepository = new TransactionTypeRepository(context);
             _reportRepository = new ReportRepository(context);
         }
 

@@ -1,4 +1,5 @@
 ﻿using MoneyMaster.Domain.Entities;
+using MoneyMaster.Domain.Entities.Entities;
 
 namespace MoneyMaster.Services.Repositories.Abstractions
 {

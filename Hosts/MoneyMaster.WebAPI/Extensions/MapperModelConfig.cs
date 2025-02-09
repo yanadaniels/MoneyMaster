@@ -13,8 +13,6 @@ namespace MoneyMaster.WebAPI.Extensions
                 cfg.AddProfile<AccountTypeModelMappingsProfile>();
                 cfg.AddProfile<CategoryModelMappingsProfile>();
                 cfg.AddProfile<ReportModelMappingsProfile>();
-                cfg.AddProfile<TransactionModelMappingsProfile>();
-                cfg.AddProfile<TransactionTypeModelMappingsProfile>();
                 cfg.AddProfile<UserModelMappingsProfile>();
                 cfg.AddProfile<UserSettingModelMappingsProfile>();
 

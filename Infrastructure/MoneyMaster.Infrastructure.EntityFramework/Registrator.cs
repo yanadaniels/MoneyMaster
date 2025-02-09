@@ -9,13 +9,13 @@ namespace MoneyMaster.Infrastructure.EntityFramework
 {
     public static class Registrator
     {
-        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration Configuration) => services
+        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration) => services
            .AddDbContext<MoneyMasterContext>(opt =>
            {
 
-               var type = Configuration["Type"];
+               var type = configuration["Type"];
 
-               var t = Configuration.GetConnectionString(type!);
+               var t = configuration.GetConnectionString(type!);
 
                switch (type)
                {
@@ -23,7 +23,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework
                    default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
 
                    case "MSSQL":
-                       opt.UseSqlServer(Configuration.GetConnectionString(type),
+                       opt.UseSqlServer(configuration.GetConnectionString(type),
                                                                 providerOptions =>
                                                                 {
                                                                     providerOptions.CommandTimeout(180);
@@ -31,7 +31,7 @@ namespace MoneyMaster.Infrastructure.EntityFramework
                                         );
                        break;
                    case "SQLite":
-                       opt.UseSqlite(Configuration.GetConnectionString(type), b => b.MigrationsAssembly("MoneyMaster.Infrastructure.EntityFramework"));
+                       opt.UseSqlite(configuration.GetConnectionString(type), b => b.MigrationsAssembly("MoneyMaster.Infrastructure.EntityFramework"));
                        break;
                };
                opt.EnableSensitiveDataLogging(false);

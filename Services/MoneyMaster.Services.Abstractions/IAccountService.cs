@@ -76,5 +76,9 @@ namespace MoneyMaster.Services.Abstractions
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns> Подтверждение востановления </returns>
         Task<AccountDto?> RestoreAsync(Guid id, CancellationToken cancellationToken = default);
+        
+        Task IncreaseBalanceAsync(Guid accountId, decimal amount, CancellationToken cancellationToken);
+        
+        Task DecreaseBalanceAsync(Guid accountId, decimal amount, CancellationToken cancellationToken);
     }
 }

@@ -140,7 +140,7 @@ namespace MoneyMaster.Services.Repositories.Abstractions
         /// </summary>
         /// <param name="entity"> Сущность для добавления. </param>
         /// <returns> Добавленная сущность. </returns>
-        Task<T> AddAsync(T entity);
+        Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Добавить в базу массив сущностей.

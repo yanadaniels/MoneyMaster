@@ -1,7 +1,7 @@
 ﻿// Ignore Spelling: Dto
 
+using MoneyMaster.Domain.Entities.Enums;
 using MoneyMaster.Services.Contracts.Transaction;
-using MoneyMaster.Services.Contracts.TransactionType;
 
 namespace MoneyMaster.Services.Contracts.Category
 {
@@ -21,11 +21,11 @@ namespace MoneyMaster.Services.Contracts.Category
         /// <summary>Идентификатор типа транзакции</summary>
         public TKey? TransactionTypeId { get; set; }
 
-        /// <summary>Тип транзакции</summary>
-        public required TransactionTypeDto TransactionType { get; set; }
+        /// <summary>Тип категории</summary>
+        public required CategoryType CategoryType { get; set; }
 
         /// <summary>Коллекция транзакций</summary>
-        public ICollection<TransactionDto>? Transactions { get; set; }
+        public ICollection<TransactionResponse>? Transactions { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

@@ -1,5 +1,5 @@
-﻿using MoneyMaster.WebAPI.Models.Transaction;
-using MoneyMaster.WebAPI.Models.TransactionType;
+﻿using MoneyMaster.Domain.Entities.Enums;
+using MoneyMaster.Services.Contracts.Transaction;
 
 namespace MoneyMaster.WebAPI.Models.Category
 {
@@ -19,11 +19,11 @@ namespace MoneyMaster.WebAPI.Models.Category
         /// <summary>Идентификатор типа транзакции</summary>
         public TKey? TransactionTypeId { get; set; }
 
-        /// <summary>Тип транзакции</summary>
-        public required TransactionTypeModel TransactionType { get; set; }
+        /// <summary>Тип категории</summary>
+        public required CategoryType CategoryType { get; set; }
 
         /// <summary>Коллекция транзакций</summary>
-        public ICollection<TransactionModel>? Transactions { get; set; }
+        public ICollection<TransactionResponse>? Transactions { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

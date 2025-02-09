@@ -28,15 +28,16 @@ namespace MoneyMaster.WebAPI.Controllers
         /// </summary>
         /// <remarks>Данный метод позволяет получить объект категорий по её идентификатору</remarks>
         /// <param name="id">Идентификатор категории</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Получение объекта категории</response>
         /// <response code="404">Не удалось найти категорию по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType<CategoryModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var category = await _categoryService.GetByIdAsync(id);
+            var category = await _categoryService.GetByIdAsync(id, cancellationToken);
 
             if (category == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти категорию по указанному идентификатору");

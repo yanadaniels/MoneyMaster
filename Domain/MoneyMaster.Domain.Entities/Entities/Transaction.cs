@@ -1,6 +1,4 @@
-﻿using MoneyMaster.Domain.Entities.Entities;
-
-namespace MoneyMaster.Domain.Entities
+﻿namespace MoneyMaster.Domain.Entities.Entities
 {
     /// <summary>Транзакция</summary>
     public class Transaction<TKey> : TimedEntity<TKey>, ISoftDeletable
@@ -16,12 +14,6 @@ namespace MoneyMaster.Domain.Entities
 
         /// <summary>Описание</summary>
         public string? Description { get; set; }
-
-        /// <summary>Идентификатор типа транзакции</summary>
-        public TKey? TransactionTypeId { get; set; }
-
-        /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
-        public TransactionType? TransactionType { get; set; }
 
         /// <summary>Признак того что сущность удалена</summary>
         public bool IsDeleted { get; set; }

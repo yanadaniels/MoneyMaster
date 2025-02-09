@@ -12,11 +12,8 @@ namespace MoneyMaster.Domain.Entities
         /// <summary></summary>
         public bool IsSystem { get; set; }
 
-        /// <summary>Идентификатор типа транзакции</summary>
-        public TKey? TransactionTypeId { get; set; }
-
-        /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
-        public TransactionType? TransactionType { get; set; }
+        /// <summary>Тип категории</summary>
+        public CategoryType CategoryType { get; set; }
 
         /// <summary>Признак того что сущность удалена</summary>
         public bool IsDeleted { get; set; }

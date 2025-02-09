@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MoneyMaster.Domain.Entities;
+using MoneyMaster.Domain.Entities.DomainExceptions;
 using MoneyMaster.Domain.Entities.Enums;
 using MoneyMaster.Services.Abstractions;
 using MoneyMaster.Services.Contracts.Account;
@@ -221,6 +222,36 @@ namespace MoneyMaster.Services.Implementations
                 _logger.LogError(ex, "Произошла ошибка при восстановлении счета");
                 throw;
             }
+        }
+
+        public async Task IncreaseBalanceAsync(Guid accountId, decimal amount, CancellationToken cancellationToken)
+        {
+            var account = await _accountRepository.GetAsync(accountId, cancellationToken);
+
+            if (account == null)
+            {
+                throw new AccountNotFoundException();
+            }
+            
+            account.Balance += amount;
+            
+            _accountRepository.Update(account);
+            await _accountRepository.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DecreaseBalanceAsync(Guid accountId, decimal amount, CancellationToken cancellationToken)
+        {
+            var account = await _accountRepository.GetAsync(accountId, cancellationToken);
+
+            if (account == null)
+            {
+                throw new AccountNotFoundException();
+            }
+            
+            account.Balance -= amount;
+            
+            _accountRepository.Update(account);
+            await _accountRepository.SaveChangesAsync(cancellationToken);
         }
     }
 }
