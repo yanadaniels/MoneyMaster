@@ -3,14 +3,10 @@ using IdentityService.WebAPI.Models.User;
 
 namespace IdentityService.WebAPI.Validation.User
 {
-    public class CreatingUserValidation : AbstractValidator<CreatingUserModel>
+    public class UserAuthorizeValidation : AbstractValidator<UserAuthorizeModel>
     {
-        public CreatingUserValidation()
+        public UserAuthorizeValidation()
         {
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Требуется адрес электронной почты.")
-                .EmailAddress().WithMessage("Требуется действительный адрес электронной почты.");
-
             RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("Имя пользователя не может быть пустым")
                 .MinimumLength(2).WithMessage("Имя пользователя не должна быть менее 2 символов.")

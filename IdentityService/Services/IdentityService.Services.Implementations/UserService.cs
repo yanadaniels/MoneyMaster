@@ -3,6 +3,7 @@ using IdentityService.Domain.Entities;
 using IdentityService.Services.Abstractions;
 using IdentityService.Services.Contracts.User;
 using IdentityService.Services.Repositories.Abstractions;
+using MoneyMaster.Common.Extensions;
 
 namespace IdentityService.Services.Implementations
 {
@@ -26,6 +27,8 @@ namespace IdentityService.Services.Implementations
             if (item is null) return null;
 
             var user = _mapper.Map<CreatingUserDto, User>(item);
+
+            user.PasswordHash = UserHelper.GenerateHash(item.PasswordHash);
 
             if (await _userRepository.Exist(user, Cancel))
             {

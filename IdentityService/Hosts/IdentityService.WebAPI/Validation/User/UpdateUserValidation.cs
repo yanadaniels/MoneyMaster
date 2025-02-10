@@ -3,13 +3,13 @@ using IdentityService.WebAPI.Models.User;
 
 namespace IdentityService.WebAPI.Validation.User
 {
-    public class CreatingUserValidation : AbstractValidator<CreatingUserModel>
+    public class UpdateUserValidation : AbstractValidator<UpdateUserModel>
     {
-        public CreatingUserValidation()
+        public UpdateUserValidation() 
         {
             RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Требуется адрес электронной почты.")
-                .EmailAddress().WithMessage("Требуется действительный адрес электронной почты.");
+               .NotEmpty().WithMessage("Требуется адрес электронной почты.")
+               .EmailAddress().WithMessage("Требуется действительный адрес электронной почты.");
 
             RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("Имя пользователя не может быть пустым")
@@ -26,5 +26,6 @@ namespace IdentityService.WebAPI.Validation.User
                     .Matches(@"[0-9]+").WithMessage("Ваш пароль должен содержать хотя бы одну цифру.")
                     .Matches(@"[\!\?\*\.]+").WithMessage("Ваш пароль должен содержать хотя бы один символ (!? *.).");
         }
+
     }
 }

@@ -5,6 +5,8 @@ namespace IdentityService.Services.Contracts.User
     /// <summary>Dto создания пользователя</summary>
     public class CreatingUserDto
     {
+        /// <summary>Идентификатор </summary>
+        public Guid Id { get; set; }
         /// <summary>Имя пользователя</summary>
         public required string UserName { get; set; }
 

@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MoneyMaster.Common.Options;
-using MoneyMaster.Common;
-using System.Security.Claims;
-using IdentityService.Services.Abstractions;
+﻿// Ignore Spelling: Validator
+
 using AutoMapper;
+using FluentValidation;
+using IdentityService.Services.Abstractions;
 using IdentityService.Services.Contracts.User;
 using IdentityService.WebAPI.Infrastructure;
+using IdentityService.WebAPI.Models.User;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MoneyMaster.Common;
+using MoneyMaster.Common.Options;
+using System.Security.Claims;
 
 namespace IdentityService.WebAPI.Controllers
 {
@@ -22,13 +26,22 @@ namespace IdentityService.WebAPI.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly AuthOptions _authOptions;
+        private readonly IValidator<CreatingUserModel> _creatingValidator;
+        private readonly IValidator<UserAuthorizeModel> _authorizeValidator;
 
-        public UserController(ILogger<UserController> logger, IUserService userService, IMapper mapper, AuthOptions authOptions)
+        public UserController(ILogger<UserController> logger,
+            IUserService userService,
+            IMapper mapper, 
+            AuthOptions authOptions, 
+            IValidator<CreatingUserModel> creatingValidator,
+            IValidator<UserAuthorizeModel> authorizeValidator)
         {
             _logger = logger;
             _userService = userService;
             _mapper = mapper;
             _authOptions = authOptions;
+            _creatingValidator = creatingValidator;
+            _authorizeValidator = authorizeValidator;
         }
 
         /// <summary>
@@ -40,9 +53,10 @@ namespace IdentityService.WebAPI.Controllers
         /// <response code="404">Не удалось найти пользователя по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<UserDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize]
+        //[Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var user = await _userService.GetByIdAsync(id);
@@ -50,7 +64,7 @@ namespace IdentityService.WebAPI.Controllers
             if (user == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти пользователя по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<UserDto>(user));
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<UserModel>(user));
         }
 
 
@@ -61,17 +75,26 @@ namespace IdentityService.WebAPI.Controllers
         /// Данный метод позволяет создать нового пользователя
         /// </remarks>
         /// <response code="201">Новый пользователь успешно создан</response>
+        /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указанием где данные были некорректны</response>
         /// <response code="409">Ошибки при указании данных для создания пользователя</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [Authorize]
-        public async Task<IActionResult> Create([FromBody] CreatingUserDto model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromBody] CreatingUserModel model)
         {
-            var result = await _userService.AddAsync(model);
+            var validationResult = await _creatingValidator.ValidateAsync(model);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.Aggregate("Validation error: ", (a, b) => $"{a} {b};"));
+
+            var result = await _userService.AddAsync(_mapper.Map<CreatingUserDto>(model));
             if (result is null)
-                return StatusCode(StatusCodes.Status409Conflict, $"Конфликт: элемент с именем = {model.UserName} или с email = {model.Email} уже существует");
-            return StatusCode(StatusCodes.Status201Created, $"Пользователь успешно создан.");
+                return Conflict($"Конфликт: элемент с именем = {model.UserName} или с email = {model.Email} уже существует");
+            var userModel = _mapper.Map<CreatingUserModel>(result);
+
+            var resourceUrl = Url.Action(nameof(Get), new { id = userModel.Id });
+            return Created(resourceUrl, userModel);
         }
 
         /// <summary>
@@ -82,29 +105,36 @@ namespace IdentityService.WebAPI.Controllers
         /// </remarks>
         /// <response code="200">Получение списка пользователей</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<UserDto>>(StatusCodes.Status200OK)]
-        [RequirePrivilege(Privileges.Administrator, Privileges.System)]
+        [ProducesResponseType<ICollection<UserModel>>(StatusCodes.Status200OK)]
+        //[RequirePrivilege(Privileges.Administrator, Privileges.System)]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllAsync();
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<ICollection<UserDto>>(users));
+            return Ok(_mapper.Map<ICollection<UserModel>>(users));
         }
 
         /// <summary>
         /// Авторизованный пользователь, без каких-либо ограничений
         /// </summary>
         /// <param name="user"></param>
-        /// <returns></returns>
+        /// <response code="200">Получение объекта пользователя</response>
+        /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указанием где данные были некорректны</response>
         [HttpPost("authorize")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> Token([FromBody] UserAuthorizeDto user)
+        public async Task<ActionResult<string>> Token([FromBody] UserAuthorizeModel user)
         {
-            var identity = await GetIdentity(user);
+            var validationResult = await _authorizeValidator.ValidateAsync(user);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.Aggregate("Validation error: ", (a, b) => $"{a} {b};"));
+
+            var identity = await GetIdentity(_mapper.Map<UserAuthorizeDto>(user));
             if (identity == null)
-            {
                 return BadRequest(new { errorText = "Неверное имя пользователя или пароль." });
-            }
+
 
             var encodedJwt = TokenProducer.GetJWTToken(identity.Claims, _authOptions);
 

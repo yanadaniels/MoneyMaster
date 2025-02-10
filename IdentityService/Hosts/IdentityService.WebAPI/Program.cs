@@ -2,7 +2,9 @@ using IdentityService.Infrastructure.EntityFramework;
 using IdentityService.Infrastructure.Repositories.Implementations.Service;
 using IdentityService.Services.Implementations.Service;
 using IdentityService.WebAPI.Data;
+using IdentityService.WebAPI.Extensions;
 using MoneyMaster.Common.Extensions;
+using System.Reflection;
 
 namespace IdentityService.WebAPI
 {
@@ -22,6 +24,7 @@ namespace IdentityService.WebAPI
                   .AddIdentityDatabase(builder.Configuration.GetSection("Database"))
                   .AddRepositories()
                   .AddServices()
+                  .AddValidation()
 
                   ;
             builder.Services.AddTransient<DbInitializer>().BuildServiceProvider().CreateAsyncScope().ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync().Wait();
@@ -31,16 +34,16 @@ namespace IdentityService.WebAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
 
-            //builder.Services.AddSwaggerGen(opt =>
-            //{
-            //    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            //    //var xml = $"{Assembly.GetAssembly(typeof(UserDto)).GetName().Name}.xml";
-            //    opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName), includeControllerXmlComments: true);
-            //    //opt.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xml));
-            //    opt.SupportNonNullableReferenceTypes();
-            //});
+            builder.Services.AddSwaggerGen(opt =>
+            {
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xml = $"{Assembly.GetAssembly(typeof(UserDto)).GetName().Name}.xml";
+                opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName), includeControllerXmlComments: true);
+                //opt.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xml));
+                opt.SupportNonNullableReferenceTypes();
+            });
 
             //Добавляем авторизацию
             builder.Services.AddCustomJWTAuthentification();
