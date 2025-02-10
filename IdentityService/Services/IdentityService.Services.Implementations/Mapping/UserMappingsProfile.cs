@@ -13,7 +13,6 @@ namespace IdentityService.Services.Implementations.Mapping
             CreateMap<User, UserDto>();
 
             CreateMap<CreatingUserDto, User>()
-                .ForMember(d => d.Id, map => map.Ignore())
                 .ForMember(d => d.IsDelete, map => map.Ignore())
                 ;
         }
