@@ -166,6 +166,7 @@ namespace MoneyMasterService.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            model.UserId = UserId;
             var newAccountDto = _mapper.Map<CreatingAccountDto>(model);
             var accountDto = await _accountService.AddAsync(newAccountDto);
             var accountModel = _mapper.Map<AccountModelResponse>(accountDto);
