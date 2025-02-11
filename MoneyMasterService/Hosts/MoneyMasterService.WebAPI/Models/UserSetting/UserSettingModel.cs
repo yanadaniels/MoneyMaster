@@ -1,4 +1,4 @@
-﻿using MoneyMasterService.WebAPI.Models.User;
+﻿
 
 namespace MoneyMasterService.WebAPI.Models.UserSetting
 {
@@ -11,9 +11,6 @@ namespace MoneyMasterService.WebAPI.Models.UserSetting
 
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
-
-        /// <summary>Пользователь</summary>
-        public UserModel? User { get; set; }
 
         /// <summary>Валюта</summary>
         public string? Currency { get; set; }

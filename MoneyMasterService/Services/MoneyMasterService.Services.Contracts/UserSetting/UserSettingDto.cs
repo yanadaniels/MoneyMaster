@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Dto
 
-using MoneyMasterService.Services.Contracts.User;
-
 namespace MoneyMasterService.Services.Contracts.UserSetting
 {
     /// <summary>DTO настроек пользователя</summary>
@@ -13,9 +11,6 @@ namespace MoneyMasterService.Services.Contracts.UserSetting
 
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
-
-        /// <summary>Пользователь</summary>
-        public UserDto? User { get; set; }
 
         /// <summary>Валюта</summary>
         public string? Currency { get; set; }

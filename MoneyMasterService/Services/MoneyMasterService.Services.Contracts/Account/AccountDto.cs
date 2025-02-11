@@ -3,7 +3,6 @@
 using MoneyMasterService.Services.Contracts.AccountType;
 using MoneyMasterService.Services.Contracts.Report;
 using MoneyMasterService.Services.Contracts.Transaction;
-using MoneyMasterService.Services.Contracts.User;
 
 namespace MoneyMasterService.Services.Contracts.Account
 {
@@ -28,9 +27,6 @@ namespace MoneyMasterService.Services.Contracts.Account
 
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
-
-        /// <summary>Пользователь</summary>
-        public UserDto? User { get; set; }
 
         /// <summary>Идентификатор типа счета</summary>
         public TKey? AccountTypeId { get; set; }

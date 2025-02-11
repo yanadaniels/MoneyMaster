@@ -60,75 +60,75 @@ namespace MoneyMasterService.WebAPI.Data
             _db.SaveChanges();
 
 
-            User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
-            User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
-            User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
-            UserSetting userSetting1 = new UserSetting() { Language = "ru" };
-            UserSetting userSetting2 = new UserSetting() { Language = "eng" };
-            UserSetting userSetting3 = new UserSetting() { Language = "ru" };
-            user1.UserSetting = userSetting1;
-            user2.UserSetting = userSetting2;
-            user3.UserSetting = userSetting3;
+            //User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };
+            //User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = "Ivan", CreateAt = DateTime.Now };
+            //User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = "Basia", CreateAt = DateTime.Now };
+            //UserSetting userSetting1 = new UserSetting() { Language = "ru" };
+            //UserSetting userSetting2 = new UserSetting() { Language = "eng" };
+            //UserSetting userSetting3 = new UserSetting() { Language = "ru" };
+            //user1.UserSetting = userSetting1;
+            //user2.UserSetting = userSetting2;
+            //user3.UserSetting = userSetting3;
 
-            await _db.Set<User>().AddAsync(user1);
-            await _db.Set<User>().AddAsync(user2);
-            await _db.Set<User>().AddAsync(user3);
+            //await _db.Set<User>().AddAsync(user1);
+            //await _db.Set<User>().AddAsync(user2);
+            //await _db.Set<User>().AddAsync(user3);
 
-            List<Account> accounts = new List<Account>()
-            {
-                new Account() { Name = "Тинькофф", User = user1 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
-                new Account() { Name = "Наличные", User = user1 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Наличные")  },
+            //List<Account> accounts = new List<Account>()
+            //{
+            //    new Account() { Name = "Тинькофф", User = user1 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
+            //    new Account() { Name = "Наличные", User = user1 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Наличные")  },
 
-                 new Account() { Name = "Сбер", User = user2 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
-                 new Account() { Name = "Сбережения", User = user2 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Наличные")  },
+            //     new Account() { Name = "Сбер", User = user2 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
+            //     new Account() { Name = "Сбережения", User = user2 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Наличные")  },
 
-                 new Account() { Name = "Совкомбанк", User = user3 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
-                 new Account() { Name = "Сбережения", User = user3 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Счет в банке")  },
+            //     new Account() { Name = "Совкомбанк", User = user3 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Банковская карта")  },
+            //     new Account() { Name = "Сбережения", User = user3 , AccountType = accountTypes.FirstOrDefault(x=>x.Name == "Счет в банке")  },
 
-            };
-            await _db.Set<Account>().AddRangeAsync(accounts);
+            //};
+            //await _db.Set<Account>().AddRangeAsync(accounts);
 
 
-            Transaction transaction1 = new Transaction()
-            {
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
-                Category = categories.FirstOrDefault(x => x.Name == "Зарплата"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
-            };
-            Transaction transaction2 = new Transaction() { 
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"), 
-                Category = categories.FirstOrDefault(x => x.Name == "Еда"), 
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Еда").TransactionType };
-            Transaction transaction3 = new Transaction() {
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
-                Category = categories.FirstOrDefault(x => x.Name == "Спорт"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Спорт").TransactionType
-            };
+            //Transaction transaction1 = new Transaction()
+            //{
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
+            //    Category = categories.FirstOrDefault(x => x.Name == "Зарплата"),
+            //    TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
+            //};
+            //Transaction transaction2 = new Transaction() { 
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"), 
+            //    Category = categories.FirstOrDefault(x => x.Name == "Еда"), 
+            //    TransactionType = categories.FirstOrDefault(x => x.Name == "Еда").TransactionType };
+            //Transaction transaction3 = new Transaction() {
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Петр"),
+            //    Category = categories.FirstOrDefault(x => x.Name == "Спорт"),
+            //    TransactionType = categories.FirstOrDefault(x => x.Name == "Спорт").TransactionType
+            //};
 
-            Transaction transaction4 = new Transaction() { 
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"), 
-                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
-            };
-            Transaction transaction5 = new Transaction()
-            {
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"),
-                Category = categories.FirstOrDefault(x => x.Name == "Одежда"),
-                TransactionType = categories.FirstOrDefault(x => x.Name == "Одежда").TransactionType
-            };
+            //Transaction transaction4 = new Transaction() { 
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"), 
+            //    Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
+            //    TransactionType = categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
+            //};
+            //Transaction transaction5 = new Transaction()
+            //{
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Иван"),
+            //    Category = categories.FirstOrDefault(x => x.Name == "Одежда"),
+            //    TransactionType = categories.FirstOrDefault(x => x.Name == "Одежда").TransactionType
+            //};
 
-            Transaction transaction6 = new Transaction() { 
-                Account = accounts.FirstOrDefault(x => x.User.UserName == "Вася"), 
-                Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
-                TransactionType =categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
-            };
+            //Transaction transaction6 = new Transaction() { 
+            //    Account = accounts.FirstOrDefault(x => x.User.UserName == "Вася"), 
+            //    Category  = categories.FirstOrDefault(x => x.Name == "Зарплата"), 
+            //    TransactionType =categories.FirstOrDefault(x => x.Name == "Зарплата").TransactionType
+            //};
 
-            await _db.Set<Transaction>().AddAsync(transaction1);
-            await _db.Set<Transaction>().AddAsync(transaction2);
-            await _db.Set<Transaction>().AddAsync(transaction3);
-            await _db.Set<Transaction>().AddAsync(transaction4);
-            await _db.Set<Transaction>().AddAsync(transaction5);
-            await _db.Set<Transaction>().AddAsync(transaction6);
+            //await _db.Set<Transaction>().AddAsync(transaction1);
+            //await _db.Set<Transaction>().AddAsync(transaction2);
+            //await _db.Set<Transaction>().AddAsync(transaction3);
+            //await _db.Set<Transaction>().AddAsync(transaction4);
+            //await _db.Set<Transaction>().AddAsync(transaction5);
+            //await _db.Set<Transaction>().AddAsync(transaction6);
 
             _db.SaveChanges();
         }

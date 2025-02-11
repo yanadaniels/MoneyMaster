@@ -7,7 +7,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
     /// <summary><inheritdoc cref="IUnitOfWork"/></summary>
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IUserRepository _userRepository;
         private readonly IUserSettingRepository _userSettingRepository;
         private readonly IAccountRepository _accountRepository;
         private readonly IAccountTypeRepository _accountTypeRepository;
@@ -18,7 +17,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
 
         private readonly MoneyMasterServiceContext _context;
 
-        public IUserRepository UserRepository => _userRepository;
 
         public IUserSettingRepository UserSettingRepository => _userSettingRepository;
 
@@ -40,7 +38,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
         {
             _context = context;
             _userSettingRepository = new UserSettingRepository(context);
-            _userRepository = new UserRepository(context);
             _accountRepository = new AccountRepository(context);
             _categoryRepository = new CategoryRepository(context);
             _accountTypeRepository = new AccountTypeRepository(context);

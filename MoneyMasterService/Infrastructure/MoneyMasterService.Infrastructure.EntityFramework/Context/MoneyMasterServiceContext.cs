@@ -23,7 +23,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Context
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new ReportConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
-            builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
             builder.ApplyConfiguration(new TransactionTypeConfiguration());
 

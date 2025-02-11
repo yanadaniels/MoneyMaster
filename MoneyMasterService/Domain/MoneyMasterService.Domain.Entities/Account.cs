@@ -19,9 +19,6 @@ namespace MoneyMasterService.Domain.Entities
         /// <summary>Идентификатор пользователя</summary>
         public TKey? UserId { get; set; }
 
-        /// <summary><inheritdoc cref="Domain.Entities.User"/></summary>
-        public User? User { get; set; }
-
         /// <summary>Признак того что сущность удалена</summary>
         public bool IsDeleted { get; set; }
 

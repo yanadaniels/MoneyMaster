@@ -20,7 +20,7 @@ namespace MoneyMasterService.Services.Implementations.Mapping
                 .ForMember(account => account.AccountType, memberConfiguration => memberConfiguration.Ignore())
                 .ForMember(account => account.Reports, memberConfiguration => memberConfiguration.Ignore())
                 .ForMember(account => account.Transactions, memberConfiguration => memberConfiguration.Ignore())
-                .ForMember(account => account.User, memberConfiguration => memberConfiguration.Ignore());
+                ;
         }
     }
 }
