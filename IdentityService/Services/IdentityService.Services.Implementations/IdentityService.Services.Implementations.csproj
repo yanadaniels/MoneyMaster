@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\IdentityService.Domain.Entities\IdentityService.Domain.Entities.csproj" />
+    <ProjectReference Include="..\IdentityService.Services.Abstractions\IdentityService.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\IdentityService.Services.Contracts\IdentityService.Services.Contracts.csproj" />
+    <ProjectReference Include="..\IdentityService.Services.Repositories.Abstractions\IdentityService.Services.Repositories.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

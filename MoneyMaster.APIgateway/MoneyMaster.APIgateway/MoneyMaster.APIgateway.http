@@ -1,0 +1,6 @@
+@MoneyMaster.APIgateway_HostAddress = http://localhost:5075
+
+GET {{MoneyMaster.APIgateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,47 @@
+services:
+  identityservice.webapi:
+    image: ${DOCKER_REGISTRY-}identityservicewebapi
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: identity-api
+    build:
+      context: .
+      dockerfile: IdentityService/Hosts/IdentityService.WebAPI/Dockerfile
+    ports:
+      - "18001:8081"
+
+  moneymasterservice.webapi:
+    image: ${DOCKER_REGISTRY-}moneymasterservicewebapi
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: moneymaster-api
+    build:
+      context: .
+      dockerfile: MoneyMasterService/Hosts/MoneyMasterService.WebAPI/Dockerfile
+    ports:
+      - "19001:8081"
+
+
+  moneymaster.apigateway:
+    image: ${DOCKER_REGISTRY-}moneymasterapigateway
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: apigateway
+    build:
+      context: .
+      dockerfile: MoneyMaster.APIgateway/MoneyMaster.APIgateway/Dockerfile
+    ports:
+      - "20001:8081"
+

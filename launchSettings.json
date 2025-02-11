@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "identityservice.webapi": "StartDebugging",
+        "moneymasterservice.webapi": "StartDebugging",
+        "moneymaster.apigateway": "StartDebugging"
+      }
+    }
+  }
+}
