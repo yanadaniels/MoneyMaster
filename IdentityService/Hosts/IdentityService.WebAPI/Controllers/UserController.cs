@@ -1,16 +1,9 @@
-﻿// Ignore Spelling: Validator
-
-using AutoMapper;
-using FluentValidation;
+﻿using AutoMapper;
 using IdentityService.Services.Abstractions;
 using IdentityService.Services.Contracts.User;
-using IdentityService.WebAPI.Infrastructure;
 using IdentityService.WebAPI.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MoneyMaster.Common;
-using MoneyMaster.Common.Options;
-using System.Security.Claims;
 
 namespace IdentityService.WebAPI.Controllers
 {
@@ -18,58 +11,55 @@ namespace IdentityService.WebAPI.Controllers
     /// Контроллер пользователя
     /// </summary>
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("/api/v1/users/")]
     [Authorize]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly AuthOptions _authOptions;
-        private readonly IValidator<CreatingUserModel> _creatingValidator;
-        private readonly IValidator<UserAuthorizeModel> _authorizeValidator;
 
-        public UserController(ILogger<UserController> logger,
+        /// <summary>
+        /// Конструктор контроллера пользователя
+        /// </summary>
+        /// <param name="logger">Логгер</param>
+        /// <param name="userService">Сервис пользователя</param>
+        /// <param name="mapper">Маппер</param>
+        public UserController(
+            ILogger<UserController> logger,
             IUserService userService,
-            IMapper mapper, 
-            AuthOptions authOptions, 
-            IValidator<CreatingUserModel> creatingValidator,
-            IValidator<UserAuthorizeModel> authorizeValidator)
+            IMapper mapper)
         {
             _logger = logger;
             _userService = userService;
             _mapper = mapper;
-            _authOptions = authOptions;
-            _creatingValidator = creatingValidator;
-            _authorizeValidator = authorizeValidator;
         }
 
         /// <summary>
-        /// Получение объекта пользователя
+        /// Получить пользователя
         /// </summary>
         /// <remarks>Данный метод позволяет получить пользователя по её идентификатору</remarks>
         /// <param name="id">Идентификатор пользователя</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Получение объекта пользователя</response>
         /// <response code="404">Не удалось найти пользователя по указанному идентификатору</response>
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType<UserModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[Authorize]
-        [AllowAnonymous]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        [Authorize]
+        public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id, cancellationToken);
 
             if (user == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти пользователя по указанному идентификатору");
 
-            return StatusCode(StatusCodes.Status200OK, _mapper.Map<UserModel>(user));
+            return StatusCode(StatusCodes.Status200OK, _mapper.Map<UserModelResponse>(user));
         }
 
-
         /// <summary>
-        /// Создание пользователя
+        /// Регистрация нового пользователя
         /// </summary>
         /// <remarks>
         /// Данный метод позволяет создать нового пользователя
@@ -82,93 +72,135 @@ namespace IdentityService.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [AllowAnonymous]
-        public async Task<IActionResult> Create([FromBody] CreatingUserModel model)
+        public async Task<IActionResult> Create([FromBody] 
+            CreatingUserModelRequest model, 
+            CancellationToken cancellationToken)
         {
-            var validationResult = await _creatingValidator.ValidateAsync(model);
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors.Aggregate("Validation error: ", (a, b) => $"{a} {b};"));
-
-            var result = await _userService.AddAsync(_mapper.Map<CreatingUserDto>(model));
+            var result = await _userService.AddAsync(_mapper.Map<CreatingUserDto>(model), cancellationToken);
             if (result is null)
                 return Conflict($"Конфликт: элемент с именем = {model.UserName} или с email = {model.Email} уже существует");
-            var userModel = _mapper.Map<CreatingUserModel>(result);
 
-            var resourceUrl = Url.Action(nameof(Get), new { id = userModel.Id });
-            return Created(resourceUrl, userModel);
+            return Created("/login", new
+            {
+                Message = "Вы успешно зарегестрировались. Пожалуйста перейдите на страницу авторизации",
+                LoginUrl = "/login"
+            });
         }
 
         /// <summary>
-        /// Получение всех пользователей.
+        /// Получить всех пользователей.
         /// </summary>
         /// <remarks>
         /// Данный метод позволяет получить список всех пользователей. 
         /// </remarks>
         /// <response code="200">Получение списка пользователей</response>
         [HttpGet]
-        [ProducesResponseType<ICollection<UserModel>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ICollection<UserModelResponse>>(StatusCodes.Status200OK)]
         //[RequirePrivilege(Privileges.Administrator, Privileges.System)]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        [Authorize]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
-            var users = await _userService.GetAllAsync();
+            var users = await _userService.GetAllAsync(cancellationToken);
 
-            return Ok(_mapper.Map<ICollection<UserModel>>(users));
+            return Ok(_mapper.Map<ICollection<UserModelResponse>>(users));
         }
 
         /// <summary>
-        /// Авторизованный пользователь, без каких-либо ограничений
+        /// Авторизоваться
         /// </summary>
         /// <param name="user"></param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Получение объекта пользователя</response>
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указанием где данные были некорректны</response>
-        [HttpPost("authorize")]
+        [HttpPost("login")]
+        [ProducesResponseType<UserJwtTokenResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> Token([FromBody] UserAuthorizeModel user)
+        public async Task<ActionResult<UserJwtTokenResponse>> Login([FromBody] 
+            UserAuthorizeModelRequest user,
+            CancellationToken cancellationToken)
         {
-            var validationResult = await _authorizeValidator.ValidateAsync(user);
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors.Aggregate("Validation error: ", (a, b) => $"{a} {b};"));
+            var userJwtTokenDto = await _userService.SignIn(_mapper.Map<UserAuthorizeDto>(user), cancellationToken);
+            if (userJwtTokenDto == null)
+                return BadRequest(new { errorText = "Неверное имя пользователя или пароль" });
 
-            var identity = await GetIdentity(_mapper.Map<UserAuthorizeDto>(user));
-            if (identity == null)
-                return BadRequest(new { errorText = "Неверное имя пользователя или пароль." });
-
-
-            var encodedJwt = TokenProducer.GetJWTToken(identity.Claims, _authOptions);
-
-            var response = new
-            {
-                token = encodedJwt,
-                username = identity.Name
-            };
+            var response = _mapper.Map<UserJwtTokenResponse>(userJwtTokenDto);
 
             return Ok(response);
         }
 
-        private async Task<ClaimsIdentity> GetIdentity(UserAuthorizeDto user)
+        /// <summary>
+        /// Выйти из системы
+        /// </summary>
+        /// <remarks>Данный метод позволяет выйти из системы</remarks>
+        /// <param name="id">Идентификатор пользователя</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <response code="204">При успешном выходе из системы</response>
+        /// <response code="400">Если произошла ошибка при выходе</response>
+        [HttpPost("logout/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize]
+        public async Task<ActionResult> Logout([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var person = await _userService.AuthorizeUser(user);
-            if (person != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, person.UserName),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role),
-                    new Claim("ID", person.Id.ToString()),
-                    new Claim("NameTelegram", person.TelegramUserName?.ToString()?? ""),
-                    new Claim("Role", person.Role),
-                    new Claim("EMail",person.Email)
-                };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
-            }
+            var isLogout = await _userService.SignOut(id, cancellationToken);
+            if (!isLogout)
+                return BadRequest(new { errorText = "Не удалось разлогиниться. Пользователь не найден или произошла ошибка." });
 
-            // если пользователя не найдено
-            return null;
+            return NoContent();
         }
+
+
+        /// <summary>
+        /// Обновить Access и Refresh токен
+        /// </summary>
+        /// <param name="oldRefreshToken">Объект с данными для обновления Access токена</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <response code="200">Получение объекта пользователя</response>
+        /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указанием где данные были некорректны</response>
+        [HttpPost("refresh/{id}")]
+        [ProducesResponseType<UserRefreshJwtTokenResponse>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserRefreshJwtTokenResponse>> RefreshToken([FromBody] 
+            RefreshTokenRequest oldRefreshToken, 
+            CancellationToken cancellationToken)
+        {
+            var userRefreshTokenDto = _mapper.Map<RefreshTokenRequest, UserRefreshTokenDto>(oldRefreshToken);
+            var userJwtTokenDto = await _userService.RefreshToken(userRefreshTokenDto, cancellationToken);
+
+            if (userJwtTokenDto == null)
+                return BadRequest(new { errorText = "Неверное имя пользователя или пароль или устарел Refresh токен" });
+
+            var response = _mapper.Map<UserRefreshJwtTokenResponse>(userJwtTokenDto);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Обновить данные пользователя
+        /// </summary>
+        /// <param name="id">Идентификатор пользователя</param>
+        /// <param name="updateUser">Json c обновленными свойствами</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <response code="200">Получение объекта пользователя</response>
+        /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указанием где данные были некорректны</response>
+        /// <response code="401">Если нет авторизации</response>
+        [HttpPatch("{id}")]
+        [ProducesResponseType<UserModelResponse>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize]
+        public async Task<ActionResult<UserModelResponse>> Update(Guid id, [FromBody] 
+            UserUpdateModelRequest updateUser, 
+            CancellationToken cancellationToken)
+        {
+            var updateUserDto = _mapper.Map<UserUpdateDto>(updateUser);
+            var updatedUser = await _userService.UpdateAsync(updateUserDto, cancellationToken);
+
+            if (updatedUser == null)
+                return NotFound(new { errorText = "Пользователь не найден" });
+
+            return Ok(_mapper.Map<UserModelResponse>(updatedUser));
+        }
+
     }
 }

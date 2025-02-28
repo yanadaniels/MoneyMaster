@@ -12,6 +12,19 @@ namespace IdentityService.Infrastructure.EntityFramework.Context
             // Database.EnsureCreatedAsync();
         }
 
+        // Этот конструктор нужен только для миграций
+        public IdentityContext()
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite("Data Source=Identity.db"); // Заглушка, EF сам подставит правильное значение
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

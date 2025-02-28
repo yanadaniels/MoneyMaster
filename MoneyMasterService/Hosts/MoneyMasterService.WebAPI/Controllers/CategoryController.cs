@@ -34,9 +34,9 @@ namespace MoneyMasterService.WebAPI.Controllers
         [Route("{id}")]
         [ProducesResponseType<CategoryModel>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var category = await _categoryService.GetByIdAsync(id);
+            var category = await _categoryService.GetByIdAsync(id, cancellationToken);
 
             if (category == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось найти категорию по указанному идентификатору");

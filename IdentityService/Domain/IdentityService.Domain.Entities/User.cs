@@ -25,5 +25,11 @@ namespace IdentityService.Domain.Entities
 
         /// <summary>Роли пользователя</summary>
         public required string Role { get; set; }
+
+        /// <summary>Токен для обновления Access Token</summary>
+        public string? RefreshToken { get; set; }
+
+        /// <summary>Время истечения Refresh токена</summary>
+        public DateTime? Expiration { get; set; }
     }
 }

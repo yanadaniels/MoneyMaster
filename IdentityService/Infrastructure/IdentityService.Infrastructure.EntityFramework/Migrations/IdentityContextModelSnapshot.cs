@@ -30,11 +30,17 @@ namespace IdentityService.Infrastructure.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RefreshToken")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Role")

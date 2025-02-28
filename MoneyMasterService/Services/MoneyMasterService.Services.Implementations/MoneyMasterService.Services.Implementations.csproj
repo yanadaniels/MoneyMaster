@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MoneyMasterService.Domain.Entities\MoneyMasterService.Domain.Entities.csproj" />
     <ProjectReference Include="..\MoneyMasterService.Services.Abstractions\MoneyMasterService.Services.Abstractions.csproj" />
     <ProjectReference Include="..\MoneyMasterService.Services.Repositories.Abstractions\MoneyMasterService.Services.Repositories.Abstractions.csproj" />
   </ItemGroup>

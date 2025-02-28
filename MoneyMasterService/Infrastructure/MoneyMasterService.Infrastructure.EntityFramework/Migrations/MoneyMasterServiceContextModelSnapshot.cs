@@ -88,6 +88,9 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CategoryType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("TEXT");
 
@@ -108,8 +111,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Categories", (string)null);
                 });
@@ -173,45 +174,13 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("TransactionTypeId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("TransactionTypeId");
-
                     b.ToTable("Transactions", (string)null);
-                });
-
-            modelBuilder.Entity("MoneyMasterService.Domain.Entities.TransactionType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsSystem")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionTypes", (string)null);
                 });
 
             modelBuilder.Entity("MoneyMasterService.Domain.Entities.UserSetting", b =>
@@ -248,17 +217,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
                     b.Navigation("AccountType");
                 });
 
-            modelBuilder.Entity("MoneyMasterService.Domain.Entities.Category", b =>
-                {
-                    b.HasOne("MoneyMasterService.Domain.Entities.TransactionType", "TransactionType")
-                        .WithMany("Categories")
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TransactionType");
-                });
-
             modelBuilder.Entity("MoneyMasterService.Domain.Entities.Report", b =>
                 {
                     b.HasOne("MoneyMasterService.Domain.Entities.Account", "Account")
@@ -284,17 +242,9 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMasterService.Domain.Entities.TransactionType", "TransactionType")
-                        .WithMany("Transactions")
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Account");
 
                     b.Navigation("Category");
-
-                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("MoneyMasterService.Domain.Entities.Account", b =>
@@ -311,13 +261,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("MoneyMasterService.Domain.Entities.Category", b =>
                 {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("MoneyMasterService.Domain.Entities.TransactionType", b =>
-                {
-                    b.Navigation("Categories");
-
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

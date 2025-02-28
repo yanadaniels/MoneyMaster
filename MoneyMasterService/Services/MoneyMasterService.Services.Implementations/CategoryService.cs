@@ -27,9 +27,9 @@ namespace MoneyMasterService.Services.Implementations
             return _mapper.Map<ICollection<Category>, ICollection<CategoryDto>>(entities);
         }
 
-        public async Task<CategoryDto> GetByIdAsync(Guid id)
+        public async Task<CategoryDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetAsync(id, CancellationToken.None);
+            var category = await _categoryRepository.GetAsync(id, cancellationToken);
             return _mapper.Map<Category, CategoryDto>(category);
         }
     }

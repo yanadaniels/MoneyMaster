@@ -11,10 +11,17 @@ namespace IdentityService.Services.Implementations.Mapping
         public UserMappingsProfile()
         {
             CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
 
             CreateMap<CreatingUserDto, User>()
-                .ForMember(d => d.IsDelete, map => map.Ignore())
-                ;
+                .ForMember(d => d.IsDelete, map => map.Ignore());
+
+            CreateMap<UserUpdateDto, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) =>
+                {
+                    var destType = typeof(User).GetProperty(opts.DestinationMember.Name)?.PropertyType;
+                    return srcMember != null || (destType != null && Nullable.GetUnderlyingType(destType) != null);
+                }));
         }
     }
 }

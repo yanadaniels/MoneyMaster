@@ -9,6 +9,6 @@ namespace IdentityService.Services.Contracts.User
         public required string UserName { get; set; }
 
         /// <summary>Пароль</summary>
-        public required string PasswordHash { get; set; }
+        public required string Password { get; set; }
     }
 }

@@ -12,30 +12,34 @@ namespace IdentityService.Infrastructure.EntityFramework
         public static IServiceCollection AddIdentityDatabase(this IServiceCollection services, IConfiguration Configuration) => services
            .AddDbContext<IdentityContext>(opt =>
            {
-
                var type = Configuration["Type"];
+               if (string.IsNullOrEmpty(type))
+                   throw new InvalidOperationException("Не указан тип БД в конфигурации (Database.Type)");
 
-               var t = Configuration.GetConnectionString(type!);
+               var connectionString = Configuration[$"ConnectionStrings:{type}"];
+               if (string.IsNullOrEmpty(connectionString))
+                   throw new InvalidOperationException($"Не найдена строка подключения для типа {type} в Database.ConnectionStrings");
 
                switch (type)
                {
-                   case null: throw new InvalidOperationException("Не определён тип БД");
-                   default: throw new InvalidOperationException($"Тип подключения {type} не поддерживается");
-
                    case "MSSQL":
-                       opt.UseSqlServer(Configuration.GetConnectionString(type),
-                                                                providerOptions =>
-                                                                {
-                                                                    providerOptions.CommandTimeout(180);
-                                                                }
-                                        );
+                       opt.UseSqlServer(connectionString, providerOptions =>
+                       {
+                           providerOptions.CommandTimeout(180);
+                       });
                        break;
+
                    case "SQLite":
-                       opt.UseSqlite(Configuration.GetConnectionString(type), b => b.MigrationsAssembly("IdentityService.Infrastructure.EntityFramework"));
+                       opt.UseSqlite(connectionString, b =>
+                           b.MigrationsAssembly("IdentityService.Infrastructure.EntityFramework"));
                        break;
-               };
+
+                   default:
+                       throw new InvalidOperationException($"Тип подключения {type} не поддерживается.");
+               }
+               ;
+
                opt.EnableSensitiveDataLogging(false);
-           })
-        ;
+           });
     }
 }

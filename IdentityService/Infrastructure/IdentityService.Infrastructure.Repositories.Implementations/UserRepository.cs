@@ -15,12 +15,12 @@ namespace IdentityService.Infrastructure.Repositories.Implementations
         public UserRepository(IdentityContext context) : base(context) { }
 
         //TODO: Пароль нужно зашифровать
-        public async Task<User?> AuthorizeUserAsync(string userName, string password)
+        public async Task<User?> AuthorizeUserAsync(string userName, string password, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
                 return null;
 
-            var entity = await Context.Set<User>().FirstOrDefaultAsync(a => a.UserName == userName);
+            var entity = await Context.Set<User>().FirstOrDefaultAsync(a => a.UserName == userName, cancellationToken);
             if (entity != null && UserHelper.VerifyHash(password, entity.PasswordHash))
             {
                 return entity;

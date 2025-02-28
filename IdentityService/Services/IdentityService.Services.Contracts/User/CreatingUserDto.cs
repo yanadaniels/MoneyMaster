@@ -5,8 +5,6 @@ namespace IdentityService.Services.Contracts.User
     /// <summary>Dto создания пользователя</summary>
     public class CreatingUserDto
     {
-        /// <summary>Идентификатор </summary>
-        public Guid Id { get; set; }
         /// <summary>Имя пользователя</summary>
         public required string UserName { get; set; }
 
@@ -14,7 +12,7 @@ namespace IdentityService.Services.Contracts.User
         public required string Email { get; set; }
 
         /// <summary>Пароль</summary>
-        public required string PasswordHash { get; set; }
+        public required string Password { get; set; }
 
         /// <summary>Имя пользователя в телеграмм</summary>
         public string? TelegramUserName { get; set; }

@@ -20,9 +20,6 @@
         /// <summary><inheritdoc cref="ITransactionRepository"/></summary>
         ITransactionRepository TransactionRepository { get; }
 
-        /// <summary><inheritdoc cref="ITransactionTypeRepository"/></summary>
-        ITransactionTypeRepository TransactionTypeRepository { get; }
-
         /// <summary><inheritdoc cref="IUserSettingRepository"/></summary>
         IUserSettingRepository UserSettingRepository { get; }
 

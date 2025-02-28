@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using MoneyMasterService.Services.Contracts.Transaction;
-using MoneyMasterService.WebAPI.Models.Transaction;
 
 namespace MoneyMasterService.WebAPI.Mapping
 {
@@ -10,7 +8,7 @@ namespace MoneyMasterService.WebAPI.Mapping
         /// <summary><inheritdoc cref="TransactionModelMappingsProfile"/> </summary>
         public TransactionModelMappingsProfile()
         {
-            CreateMap<TransactionDto, TransactionModel>();
+            //CreateMap<TransactionDto, TransactionModel>();
         }
     }
 }

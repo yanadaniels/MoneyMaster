@@ -10,7 +10,7 @@ namespace MoneyMasterService.Services.Implementations.Mapping
         /// <summary><inheritdoc cref="TransactionMappingsProfile"/> </summary>
         public TransactionMappingsProfile()
         {
-            CreateMap<Transaction, TransactionDto>();
+            CreateMap<Transaction, TransactionResponse>();
         }
     }
 }

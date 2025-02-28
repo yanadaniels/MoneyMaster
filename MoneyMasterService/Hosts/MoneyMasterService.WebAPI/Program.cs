@@ -36,7 +36,6 @@ namespace MoneyMasterService.WebAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen();
 
             builder.Services.AddSwaggerGen(opt =>
             {
@@ -50,7 +49,20 @@ namespace MoneyMasterService.WebAPI
             //Добавляем авторизацию
             builder.Services.AddCustomJWTAuthentification();
 
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()  // Разрешает все домены
+                          .AllowAnyMethod()  // Разрешает все методы
+                          .AllowAnyHeader(); // Разрешает все заголовки
+                });
+            });
+
             var app = builder.Build();
+
+            app.UseCors("AllowAll");
 
             using (var scope = app.Services.CreateScope())
             {
@@ -65,22 +77,23 @@ namespace MoneyMasterService.WebAPI
             {
                 app.UseSwagger();
                 //app.UseSwaggerUI();
-                app.UseSwaggerUI(o =>
+                app.UseSwaggerUI(c =>
                 {
-                    o.InjectStylesheet("/css/swagger-custom.css");
+                    //o.InjectStylesheet("/css/swagger-custom.css");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MoneyMasterService v1");
+                    c.RoutePrefix = string.Empty;
                 });
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
-            app.UseAuthentication();   // добавление middleware аутентификации 
+            //app.UseAuthentication();   // добавление middleware аутентификации 
 
             app.UseAuthorization();   // добавление middleware авторизации 
 
-
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

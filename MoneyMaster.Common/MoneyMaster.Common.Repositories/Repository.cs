@@ -156,9 +156,9 @@ namespace MoneyMaster.Common.Repositories
         /// </summary>
         /// <param name="entity"> Сущность для добавления. </param>
         /// <returns> Добавленная сущность. </returns>
-        public virtual async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
         {
-            return (await _entitySet.AddAsync(entity)).Entity;
+            return (await _entitySet.AddAsync(entity, cancellationToken)).Entity;
         }
 
         /// <summary>
