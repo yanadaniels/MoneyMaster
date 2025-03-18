@@ -1,4 +1,4 @@
-networks:
+﻿networks:
   moneymaster_network:
     driver: bridge
 
@@ -41,3 +41,14 @@ services:
       - "19002:8080"
     networks:
       - moneymaster_network
+
+  # reactapp:
+  #   image: ${DOCKER_REGISTRY-}reactapp
+  #   container_name: reactapp
+  #   build:
+  #       context: ./MoneyMasterFrontend/frontend
+  #       dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   networks:
+  #     - moneymaster_network

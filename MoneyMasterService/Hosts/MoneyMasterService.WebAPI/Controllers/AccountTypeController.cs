@@ -9,7 +9,7 @@ namespace MoneyMasterService.WebAPI.Controllers
     /// Контроллер типа счета
     /// </summary>
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("/api/v1/accountType")]
     public class AccountTypeController : ControllerBase
     {
         private readonly ILogger<AccountTypeController> _logger;

@@ -32,5 +32,6 @@ namespace MoneyMasterService.Services.Implementations
             var accountType = await _accountTypeRepository.GetAsync(id, CancellationToken.None);
             return _mapper.Map<AccountType, AccountTypeDto>(accountType);
         }
+
     }
 }
