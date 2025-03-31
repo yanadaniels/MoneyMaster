@@ -6,13 +6,15 @@ using IdentityService.WebAPI.Validation.User;
 
 namespace IdentityService.WebAPI.Extensions
 {
+    /// <summary>
+    /// Класс для регистрации сервисов в контейнере зависимостей
+    /// </summary>
     public static class Registrator
     {
         public static IServiceCollection AddValidation(this IServiceCollection services) => services
-            .AddScoped<IValidator<CreatingUserModel>,CreatingUserValidation>()
-            .AddScoped<IValidator<UserAuthorizeModel>, UserAuthorizeValidation>()
-            .AddScoped<IValidator<UpdateUserModel>, UpdateUserValidation>()
-            ;
+            .AddScoped<IValidator<CreatingUserModelRequest>,CreatingUserValidation>()
+            .AddScoped<IValidator<UserAuthorizeModelRequest>, UserAuthorizeValidation>()
+            .AddScoped<IValidator<UserUpdateModelRequest>, UserUpdateValidation>();
 
     }
 }

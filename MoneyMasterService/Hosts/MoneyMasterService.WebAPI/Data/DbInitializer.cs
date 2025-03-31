@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyMasterService.Domain.Entities;
+using MoneyMasterService.Domain.Entities.Enums;
 using MoneyMasterService.Infrastructure.EntityFramework.Context;
 
 namespace MoneyMasterService.WebAPI.Data
@@ -35,24 +36,16 @@ namespace MoneyMasterService.WebAPI.Data
 
             await _db.Set<AccountType>().AddRangeAsync(accountTypes);
 
-            List<TransactionType> transactionTypes = new List<TransactionType>()
-            {
-                new TransactionType() { Name = "Доход", CreateAt = DateTime.Now },
-                new TransactionType() { Name = "Расход", CreateAt = DateTime.Now },
-                new TransactionType() { Name = "Перевод", CreateAt = DateTime.Now }
-            };
-            await _db.Set<TransactionType>().AddRangeAsync(transactionTypes);
-
             List<Category> categories = new List<Category>()
             {
-                 new Category() { Name = "Зарплата", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход") , CreateAt = DateTime.Now},
-            new Category() { Name = "Подработка" , TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Продажа", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Доход"), CreateAt = DateTime.Now},
+                 new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
+            new Category() { Name = "Подработка" , CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
+            new Category() { Name = "Продажа", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
 
-            new Category() { Name = "Еда", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Транспорт", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Спорт", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход"), CreateAt = DateTime.Now},
-            new Category() { Name = "Одежда", TransactionType = transactionTypes.FirstOrDefault(x=>x.Name=="Расход") , CreateAt = DateTime.Now},
+            new Category() { Name = "Еда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Транспорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Спорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+            new Category() { Name = "Одежда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
 
             };
             await _db.Set<Category>().AddRangeAsync(categories);

@@ -22,7 +22,7 @@ namespace MoneyMasterService.Services.Contracts.TransactionType
         public ICollection<CategoryDto>? Categories { get; set; }
 
         /// <summary>Коллекция транзакций</summary>
-        public ICollection<TransactionDto>? Transactions { get; set; }
+        public ICollection<TransactionResponse>? Transactions { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

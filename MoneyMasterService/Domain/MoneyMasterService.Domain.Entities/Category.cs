@@ -1,5 +1,6 @@
 ﻿using MoneyMaster.Common.Entities;
 using MoneyMaster.Common.Interfaces.Entities;
+using MoneyMasterService.Domain.Entities.Enums;
 
 namespace MoneyMasterService.Domain.Entities
 {
@@ -15,8 +16,8 @@ namespace MoneyMasterService.Domain.Entities
         /// <summary>Идентификатор типа транзакции</summary>
         public TKey? TransactionTypeId { get; set; }
 
-        /// <summary><inheritdoc cref="TransactionType{T}"/></summary>
-        public TransactionType? TransactionType { get; set; }
+        /// <summary>Тип категории</summary>
+        public CategoryType CategoryType { get; set; }
 
         /// <summary>Признак того что сущность удалена</summary>
         public bool IsDeleted { get; set; }

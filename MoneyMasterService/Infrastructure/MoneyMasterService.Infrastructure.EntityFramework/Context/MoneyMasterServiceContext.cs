@@ -24,7 +24,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Context
             builder.ApplyConfiguration(new ReportConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
-            builder.ApplyConfiguration(new TransactionTypeConfiguration());
 
             //Добавляет фильтр для всех сущностей, реализующих ISoftDeletable, исключая помеченные как удаленные.
             foreach (var entityType in builder.Model.GetEntityTypes())

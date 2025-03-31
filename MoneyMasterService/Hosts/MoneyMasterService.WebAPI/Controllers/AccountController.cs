@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common;
 using MoneyMasterService.Services.Abstractions;
@@ -14,7 +13,6 @@ namespace MoneyMasterService.WebAPI.Controllers
     /// Контроллер счета
     /// </summary>
     [ApiController]
-    [Authorize]
     [Route("api/v1/accounts/")]
     public class AccountController : BaseController
     {
@@ -38,6 +36,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// </summary>
         /// <remarks>Данный метод позволяет получить объект счет по её идентификатору</remarks>
         /// <param name="id">Идентификатор счета</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Возвращает счет</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
@@ -45,9 +44,9 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var account = await _accountService.GetByIdAsync(id);
+            var account = await _accountService.GetByIdAsync(id, cancellationToken);
 
             if (account is null)
                return NotFound($"Не удалось найти счет по указанному идентификатору");
@@ -56,12 +55,13 @@ namespace MoneyMasterService.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Получить все счета.
+        /// Получить все счета111.
         /// </summary>
         /// <remarks>
         /// Данный метод позволяет получить список всех счетов с пагинацией. 
         /// </remarks>
         /// <param name="parameters">Параметры пагинации и сортировки.</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Список аккаунтов и информация о пагинации.</returns>
         /// <response code="200">Возвращает список счетов</response>
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
@@ -70,15 +70,16 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<PaginationResponseModel<AccountModelResponse>>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [RequirePrivilege(Privileges.Administrator, Privileges.System)]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationParametersModel parameters)
+        //[RequirePrivilege(Privileges.Administrator, Privileges.System)]
+        public async Task<IActionResult> GetAll([FromQuery] 
+            PaginationParametersModel parameters, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var parameterDto = _mapper.Map<PaginationParameters>(parameters);
 
-            var (listAccountDto, totalCount) = await _accountService.GetAllAsync(parameterDto);
+            var (listAccountDto, totalCount) = await _accountService.GetAllAsync(parameterDto, cancellationToken);
             var listAccountModel = _mapper.Map<List<AccountModelResponse>>(listAccountDto);
              
             return Ok(new PaginationResponseModel<AccountModelResponse>
@@ -99,6 +100,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// Данный метод позволяет получить список всех удаленных счетов с пагинацией. 
         /// </remarks>
         /// <param name="parameters">Параметры пагинации и сортировки.</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Список аккаунтов и информация о пагинации.</returns>
         /// <response code="200">Возвращает список удаленных счетов</response>
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
@@ -107,13 +109,14 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<PaginationResponseModel<AccountModelResponse>>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllDeleted([FromQuery] PaginationParametersModel parameters)
+        public async Task<IActionResult> GetAllDeleted([FromQuery]
+            PaginationParametersModel parameters, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var parameterDto = _mapper.Map<PaginationParameters>(parameters);
-            var (listAccountDto, totalCount) = await _accountService.GetAllDeletedAsync(parameterDto);
+            var (listAccountDto, totalCount) = await _accountService.GetAllDeletedAsync(parameterDto, cancellationToken);
             var listAccountModel = _mapper.Map<List<AccountModelResponse>>(listAccountDto);
 
             return Ok(new PaginationResponseModel<AccountModelResponse>
@@ -138,9 +141,9 @@ namespace MoneyMasterService.WebAPI.Controllers
         [HttpGet("create")]
         [ProducesResponseType<CreatingAccountInfoModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCreateInfo()
+        public async Task<IActionResult> GetCreateInfo(CancellationToken cancellationToken)
         {
-            var creatingAccountInfoDto = await _accountService.GetInfoNeedToCreateAccountAsync();
+            var creatingAccountInfoDto = await _accountService.GetInfoNeedToCreateAccountAsync(cancellationToken);
             var creatingAccountInfoModel = _mapper.Map<CreatingAccountInfoModelResponse>(creatingAccountInfoDto);
             return Ok(creatingAccountInfoModel);
         }
@@ -158,7 +161,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<AccountModelResponse>(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] CreatingAccountModelRequest model)
+        public async Task<IActionResult> Create([FromBody] CreatingAccountModelRequest model, CancellationToken cancellationToken)
         {
             if (model == null)
                 return BadRequest("Отсутсвуют данные");
@@ -166,9 +169,9 @@ namespace MoneyMasterService.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            model.UserId = UserId;
+            //model.UserId = UserId;
             var newAccountDto = _mapper.Map<CreatingAccountDto>(model);
-            var accountDto = await _accountService.AddAsync(newAccountDto);
+            var accountDto = await _accountService.AddAsync(newAccountDto, cancellationToken);
             var accountModel = _mapper.Map<AccountModelResponse>(accountDto);
 
             var resourceUrl = Url.Action(nameof(Get), new { id = accountDto.Id });
@@ -182,16 +185,17 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// Данный метод позволяет редактировать данные счета.
         /// </remarks>
         /// <param name="model"></param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Возвращает отредактированный счет</response>
         /// <response code="400">Неверные данные, возвращается ValidationProblemDetails с указаниег где данные были некорретны</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update([FromBody] UpdatingAccountModelRequest model)
+        public async Task<IActionResult> Update([FromBody] UpdatingAccountModelRequest model, CancellationToken cancellationToken)
         {
             if (model == null)
                 return BadRequest("Отсутсвуют данные");
@@ -200,7 +204,7 @@ namespace MoneyMasterService.WebAPI.Controllers
                 return BadRequest(ModelState);
 
             var updatedAccountDto = _mapper.Map<UpdatingAccountDto>(model);
-            var updatingAccountDto = await _accountService.UpdateAsync(updatedAccountDto);
+            var updatingAccountDto = await _accountService.UpdateAsync(updatedAccountDto, cancellationToken);
             var AccountModel = _mapper.Map<AccountModelResponse>(updatingAccountDto);
 
             if (updatingAccountDto != null)
@@ -214,6 +218,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// </summary>
         /// <remarks>Данный метод позволяет пометить счет как удаленный по её ID</remarks>
         /// <param name="id">Идентификатор удаляемого счета</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="204">При успешном удалении счета</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
@@ -222,9 +227,9 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var deletedAccount = await _accountService.DeleteAsync(id);
+            var deletedAccount = await _accountService.DeleteAsync(id, cancellationToken);
 
             if (deletedAccount == null)
                 return StatusCode(StatusCodes.Status404NotFound, $"Не удалось удалить счет по указанному идентификатору");
@@ -237,6 +242,7 @@ namespace MoneyMasterService.WebAPI.Controllers
         /// </summary>
         /// <remarks>Данный метод позволяет восстановить по ID счет который помечен как удаленный</remarks>
         /// <param name="id">Идентификатор счета который нужно восстановить</param>
+        /// <param name="cancellationToken">Токен отмены</param>
         /// <response code="200">Возвращает восстановленный счет</response>
         /// <response code="404">Не удалось найти счет по указанному идентификатору</response>
         /// <response code="500">Внутренняя ошибка сервера, возвращает ProblemDetails</response>
@@ -245,9 +251,9 @@ namespace MoneyMasterService.WebAPI.Controllers
         [ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Restore([FromRoute] Guid id)
+        public async Task<IActionResult> Restore([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var restoredAccount = await _accountService.RestoreAsync(id);
+            var restoredAccount = await _accountService.RestoreAsync(id, cancellationToken);
 
             if (restoredAccount == null)
                 return NotFound($"Не удалось восстановить счет по указанному идентификатору");

@@ -14,9 +14,6 @@ namespace IdentityService.Services.Contracts.User
 
         /// <summary>Почтовый адрес пользователя</summary>
         public required string Email { get; set; }
-
-        /// <summary>Пароль</summary>
-        public required string PasswordHash { get; set; }
  
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }
@@ -26,6 +23,9 @@ namespace IdentityService.Services.Contracts.User
 
         /// <summary>Роли пользователя</summary>
         public required string Role { get; set; }
+
+        /// <summary>Токен для обновления Access Token</summary>
+        public string? RefreshToken { get; set; }
     }
 
     /// <summary>DTO пользователя</summary>

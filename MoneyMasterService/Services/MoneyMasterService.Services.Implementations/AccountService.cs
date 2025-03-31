@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MoneyMaster.Common;
 using MoneyMasterService.Domain.Entities;
+using MoneyMasterService.Domain.Entities.DomainExceptions;
 using MoneyMasterService.Domain.Entities.Enums;
 using MoneyMasterService.Services.Abstractions;
 using MoneyMasterService.Services.Contracts.Account;
@@ -30,7 +31,7 @@ namespace MoneyMasterService.Services.Implementations
             _accountTypeRepository = accountTypeRepository;
         }
 
-        public async Task<CreatingAccountInfoDto> GetInfoNeedToCreateAccountAsync(CancellationToken cancellationToken = default)
+        public async Task<CreatingAccountInfoDto> GetInfoNeedToCreateAccountAsync(CancellationToken cancellationToken)
         {
             try
             {
@@ -59,7 +60,7 @@ namespace MoneyMasterService.Services.Implementations
 
         public async Task<(ICollection<AccountDto> Data, int TotalCount)> GetAllAsync(
             PaginationParameters parameters, 
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -81,7 +82,7 @@ namespace MoneyMasterService.Services.Implementations
 
         public async Task<(ICollection<AccountDto> Data, int TotalCount)> GetAllDeletedAsync(
             PaginationParameters parameters,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -101,11 +102,12 @@ namespace MoneyMasterService.Services.Implementations
             }
         }
 
-        public async Task<AccountDto?> GetByIdAsync(Guid id)
+        public async Task<AccountDto?> GetByIdAsync(
+            Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var account = await _accountRepository.GetAsync(id, CancellationToken.None);
+                var account = await _accountRepository.GetAsync(id, cancellationToken);
                 return account is null ? null : _mapper.Map<Account, AccountDto>(account);
             }
             catch (DbUpdateException ex)
@@ -121,7 +123,7 @@ namespace MoneyMasterService.Services.Implementations
         }
 
         public async Task<AccountDto> AddAsync(
-            CreatingAccountDto newAccountDto, CancellationToken cancellationToken = default)
+            CreatingAccountDto newAccountDto, CancellationToken cancellationToken)
         {
             if (newAccountDto is null)
             {
@@ -151,7 +153,7 @@ namespace MoneyMasterService.Services.Implementations
         }
 
         public async Task<UpdatingAccountDto?> UpdateAsync(
-            UpdatingAccountDto updateAccountDto, CancellationToken cancellationToken = default)
+            UpdatingAccountDto updateAccountDto, CancellationToken cancellationToken)
         {
             var updateAccount = _mapper.Map<Account>(updateAccountDto);
 
@@ -174,7 +176,7 @@ namespace MoneyMasterService.Services.Implementations
 
         }
 
-        public async Task<AccountDto?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<AccountDto?> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
@@ -199,7 +201,7 @@ namespace MoneyMasterService.Services.Implementations
             }
         }
 
-        public async Task<AccountDto?> RestoreAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<AccountDto?> RestoreAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
@@ -221,6 +223,38 @@ namespace MoneyMasterService.Services.Implementations
                 _logger.LogError(ex, "Произошла ошибка при восстановлении счета");
                 throw;
             }
+        }
+
+        public async Task IncreaseBalanceAsync(
+            Guid accountId, decimal amount, CancellationToken cancellationToken)
+        {
+            var account = await _accountRepository.GetAsync(accountId, cancellationToken);
+
+            if (account == null)
+            {
+                throw new AccountNotFoundException();
+            }
+
+            account.Balance += amount;
+
+            _accountRepository.Update(account);
+            await _accountRepository.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DecreaseBalanceAsync(
+            Guid accountId, decimal amount, CancellationToken cancellationToken)
+        {
+            var account = await _accountRepository.GetAsync(accountId, cancellationToken);
+
+            if (account == null)
+            {
+                throw new AccountNotFoundException();
+            }
+
+            account.Balance -= amount;
+
+            _accountRepository.Update(account);
+            await _accountRepository.SaveChangesAsync(cancellationToken);
         }
     }
 }

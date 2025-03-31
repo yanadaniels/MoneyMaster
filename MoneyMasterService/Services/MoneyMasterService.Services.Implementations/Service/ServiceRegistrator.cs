@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using MoneyMasterService.Services.Abstractions;
+using MoneyMasterService.Services.Abstractions.Transaction;
 
 namespace MoneyMasterService.Services.Implementations.Service
 {
@@ -9,14 +10,16 @@ namespace MoneyMasterService.Services.Implementations.Service
     {
         public static IServiceCollection AddServices(this IServiceCollection services) =>
             services
+            .AddTransaction()
             .AddTransient<IAccountService, AccountService>()
             .AddTransient<IAccountTypeService, AccountTypeService>()
             .AddTransient<ICategoryService, CategoryService>()
             .AddTransient<IReportService, ReportService>()  
+            .AddTransient<IUserSettingService, UserSettingService>();
+
+        private static IServiceCollection AddTransaction(this IServiceCollection services) =>
+            services
             .AddTransient<ITransactionService, TransactionService>()
-            .AddTransient<ITransactionTypeService, TransactionTypeService>()
-            .AddTransient<IUserSettingService, UserSettingService>()
-            ;
-        
+            .AddTransient<IBalanceChanger, BalanceChanger>();
     }
 }

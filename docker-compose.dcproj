@@ -7,7 +7,7 @@
     <ProjectGuid>6fdd84fc-8795-4ac1-b740-934d970a5b69</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>identityservice.webapi</DockerServiceName>
+    <DockerServiceName>moneymaster.apigateway</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

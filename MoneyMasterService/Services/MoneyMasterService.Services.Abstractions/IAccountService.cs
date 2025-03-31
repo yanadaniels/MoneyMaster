@@ -11,7 +11,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
         /// <returns> ДТО счета. </returns>
-        Task<AccountDto?> GetByIdAsync(Guid id);
+        Task<AccountDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получить список счетов.
@@ -21,7 +21,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// <returns> Кортеж со списком ДТО счета и общим количеством </returns>
         Task<(ICollection<AccountDto> Data, int TotalCount)> GetAllAsync(
             PaginationParameters parameters,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Получить список удаленных счетов.
@@ -33,7 +33,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// </returns>
         Task<(ICollection<AccountDto> Data, int TotalCount)> GetAllDeletedAsync(
             PaginationParameters parameters,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавить новый счёт
@@ -42,7 +42,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns> DTO счёта </returns>
         Task<AccountDto> AddAsync(
-            CreatingAccountDto newAccountDto, CancellationToken cancellationToken = default);
+            CreatingAccountDto newAccountDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Для получения всей необходимой информации при создании счёта
@@ -50,7 +50,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns></returns>
         Task<CreatingAccountInfoDto> GetInfoNeedToCreateAccountAsync(
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Редактировать новый счёт
@@ -59,7 +59,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns></returns>
         Task<UpdatingAccountDto?> UpdateAsync(
-            UpdatingAccountDto updateAccountDto, CancellationToken cancellationToken = default);
+            UpdatingAccountDto updateAccountDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удалить счёт по id
@@ -67,7 +67,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// <param name="id"> Идентификатор </param>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns> Подтверждение удаления </returns>
-        Task<AccountDto?> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<AccountDto?> DeleteAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Востановить счёт по id
@@ -75,6 +75,30 @@ namespace MoneyMasterService.Services.Abstractions
         /// <param name="id"> Идентификатор </param>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns> Подтверждение востановления </returns>
-        Task<AccountDto?> RestoreAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<AccountDto?> RestoreAsync(Guid id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Прибавить к счету
+        /// </summary>
+        /// <param name="accountId">Идентификатор счета</param>
+        /// <param name="amount">Сумма</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <returns></returns>
+        Task IncreaseBalanceAsync(
+            Guid accountId,
+            decimal amount,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Снять с счета
+        /// </summary>
+        /// <param name="accountId">Идентификатор счета</param>
+        /// <param name="amount">Сумма</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <returns></returns>
+        Task DecreaseBalanceAsync(
+            Guid accountId,
+            decimal amount, 
+            CancellationToken cancellationToken);
     }
 }

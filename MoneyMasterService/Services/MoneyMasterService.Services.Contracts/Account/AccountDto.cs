@@ -38,7 +38,7 @@ namespace MoneyMasterService.Services.Contracts.Account
         public ICollection<ReportDto>? Reports { get; set; }
 
         /// <summary>Коллекция транзакций </summary>
-        public ICollection<TransactionDto>? Transactions { get; set; }
+        public ICollection<TransactionResponse>? Transactions { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }

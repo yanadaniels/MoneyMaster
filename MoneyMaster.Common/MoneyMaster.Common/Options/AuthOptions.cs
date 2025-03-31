@@ -18,8 +18,12 @@ namespace MoneyMaster.Common.Options
         /// </summary>
         public string Key { get; set; }
         /// <summary>
-        /// время жизни токена в минутах
+        /// Время жизни Access токена в минутах
         /// </summary>
         public int LifeTime { get; set; }
+        /// <summary>
+        /// Время жизни Refresh токена в минутах
+        /// </summary>
+        public int RefreshTokenTime { get; set; }
     }
 }

@@ -20,6 +20,6 @@ namespace IdentityService.Services.Repositories.Abstractions
         /// <param name="userName">Имя пользователя</param>
         /// <param name="password">Пароль</param>
         /// <returns></returns>
-        public Task<User?> AuthorizeUserAsync(string userName, string password);
+        public Task<User?> AuthorizeUserAsync(string userName, string password, CancellationToken cancellationToken);
     }
 }

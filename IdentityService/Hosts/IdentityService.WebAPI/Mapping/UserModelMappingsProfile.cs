@@ -10,12 +10,20 @@ namespace IdentityService.WebAPI.Mapping
         /// <summary><inheritdoc cref="UserModelMappingsProfile"/> </summary>
         public UserModelMappingsProfile()
         {
-            CreateMap<UserDto, UserModel>();
+            CreateMap<UserDto, UserModelResponse>();
 
-            CreateMap<CreatingUserModel, CreatingUserDto>();
-            CreateMap<CreatingUserDto, CreatingUserModel>();
+            CreateMap<CreatingUserModelRequest, CreatingUserDto>();
+            CreateMap<CreatingUserDto, CreatingUserModelRequest>();
 
-            CreateMap<UserAuthorizeModel, UserAuthorizeDto>().ReverseMap();
+            CreateMap<UserAuthorizeModelRequest, UserAuthorizeDto>().ReverseMap();
+
+            CreateMap<RefreshTokenRequest, UserRefreshTokenDto>();
+            CreateMap<UserRefreshJwtTokenDto, UserRefreshJwtTokenResponse>();
+
+            CreateMap<UserJwtTokenDto, UserJwtTokenResponse>();
+
+            CreateMap<UserUpdateModelRequest, UserUpdateDto>();
+            CreateMap<UserUpdateDto, UserModelResponse>();
         }
     }
 }

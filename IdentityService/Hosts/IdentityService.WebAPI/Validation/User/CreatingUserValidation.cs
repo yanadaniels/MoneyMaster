@@ -3,8 +3,16 @@ using IdentityService.WebAPI.Models.User;
 
 namespace IdentityService.WebAPI.Validation.User
 {
-    public class CreatingUserValidation : AbstractValidator<CreatingUserModel>
+    /// <summary>
+    /// Валидатор для создания нового пользователя.
+    /// Проверяет корректность введенных данных: email, имя пользователя и пароль.
+    /// </summary>
+    public class CreatingUserValidation : AbstractValidator<CreatingUserModelRequest>
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="CreatingUserValidation"/>.
+        /// Устанавливает правила валидации для email, имени пользователя и пароля.
+        /// </summary>
         public CreatingUserValidation()
         {
             RuleFor(x => x.Email)
@@ -18,7 +26,7 @@ namespace IdentityService.WebAPI.Validation.User
                 ;
 
 
-            RuleFor(p => p.PasswordHash).NotEmpty().WithMessage("Ваш пароль не может быть пустым")
+            RuleFor(p => p.Password).NotEmpty().WithMessage("Ваш пароль не может быть пустым")
                     .MinimumLength(8).WithMessage("Длина вашего пароля должна быть не менее 8.")
                     .MaximumLength(16).WithMessage("Длина вашего пароля не должна превышать 16.")
                     .Matches(@"[A-Z]+").WithMessage("Ваш пароль должен содержать хотя бы одну заглавную букву.")
