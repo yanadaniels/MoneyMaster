@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyMasterService.Services.Abstractions;
 using MoneyMasterService.WebAPI.Models.AccountType;
@@ -10,6 +11,7 @@ namespace MoneyMasterService.WebAPI.Controllers
     /// </summary>
     [ApiController]
     [Route("/api/v1/accountType")]
+    [Authorize]
     public class AccountTypeController : ControllerBase
     {
         private readonly ILogger<AccountTypeController> _logger;
