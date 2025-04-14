@@ -93,7 +93,113 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       }
+    },
+    //MoneyMaster Service API
+    //AccountController
+    // Получить счет, Обновить счет ,Удалить счет , Восстановить счет.
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/{id}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все счета, Создать новый счет
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts",
+      "UpstreamHttpMethod": [ "Get ", "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить информацию для создания нового счета
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/create",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/create",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все удаленные счета
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/deleted",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/deleted",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //AccountTypeController
+    // Получить счет по идентификатору
+    {
+      "UpstreamPathTemplate": "/api/v1/accountType/{id}",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accountType/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все счета 
+    {
+      "UpstreamPathTemplate": "/api/v1/accountType/",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accountType/",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:21002"
