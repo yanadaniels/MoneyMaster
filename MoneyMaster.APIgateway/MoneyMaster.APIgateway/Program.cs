@@ -4,15 +4,15 @@ using System.Reflection;
 namespace MoneyMaster.APIgateway
 {
     /// <summary>
-    /// Точка входа в API Gateway.
-    /// Отвечает за настройку и запуск веб-приложения
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ API Gateway.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// Главный методо который запускает API Gateway
+        /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ API Gateway
         /// </summary>
-        /// <param name="args">Аргумент командной строки</param>
+        /// <param name="args">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -40,14 +40,14 @@ namespace MoneyMaster.APIgateway
 
             builder.Services.AddCustomJWTAuthentification();
 
-            // Временно отключаем CORS
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.AllowAnyOrigin()  // Разрешает все домены
-                          .AllowAnyMethod()  // Разрешает все методы
-                          .AllowAnyHeader(); // Разрешает все заголовки
+                    policy.AllowAnyOrigin()  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                          .AllowAnyMethod()  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                          .AllowAnyHeader(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 });
             });
 
@@ -55,7 +55,7 @@ namespace MoneyMaster.APIgateway
 
             app.UseCors("AllowAll");
 
-            // Временно отключает редирект в https
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ https
             //app.UseHttpsRedirection();
 
             app.UseSwagger();

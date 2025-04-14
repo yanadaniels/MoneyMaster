@@ -1,0 +1,207 @@
+{
+  "Routes": [
+    //Identity service API
+    // Получение всех пользователей
+    {
+      "UpstreamPathTemplate": "/api/v1/users",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Регистрация нового пользователя
+    {
+      "UpstreamPathTemplate": "/api/v1/users",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users"
+    },
+    // Авторизация пользователя
+    {
+      "UpstreamPathTemplate": "/api/v1/users/login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users/login"
+    },
+    // Выйти из системы
+    {
+      "UpstreamPathTemplate": "/api/v1/users/logout/{id}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users/logout/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Обновить Access и Refresh токен
+    {
+      "UpstreamPathTemplate": "/api/v1/users/refresh/{id}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users/refresh/{id}"
+    },
+    // Обновить данные пользователя
+    {
+      "UpstreamPathTemplate": "/api/v1/users/{id}",
+      "UpstreamHttpMethod": [ "Patch" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/users/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //MoneyMaster Service API
+    //AccountController
+    // Получить счет, Обновить счет ,Удалить счет , Восстановить счет.
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/{id}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все счета, Создать новый счет
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts",
+      "UpstreamHttpMethod": [ "Get ", "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить информацию для создания нового счета
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/create",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/create",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все удаленные счета
+    {
+      "UpstreamPathTemplate": "/api/v1/accounts/deleted",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accounts/deleted",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //AccountTypeController
+    // Получить счет по идентификатору
+    {
+      "UpstreamPathTemplate": "/api/v1/accountType/{id}",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accountType/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    // Получить все счета 
+    {
+      "UpstreamPathTemplate": "/api/v1/accountType/",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/accountType/",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
+
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:21002"
+  }
+}
