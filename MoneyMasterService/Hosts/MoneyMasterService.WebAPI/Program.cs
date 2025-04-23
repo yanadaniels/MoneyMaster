@@ -51,7 +51,7 @@ namespace MoneyMasterService.WebAPI
                 opt.SupportNonNullableReferenceTypes();
             });
 
-            //Добавляем авторизацию
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             builder.Services.AddCustomJWTAuthentification();
 
 
@@ -59,9 +59,9 @@ namespace MoneyMasterService.WebAPI
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.AllowAnyOrigin()  // Разрешает все домены
-                          .AllowAnyMethod()  // Разрешает все методы
-                          .AllowAnyHeader(); // Разрешает все заголовки
+                    policy.AllowAnyOrigin()  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                          .AllowAnyMethod()  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                          .AllowAnyHeader(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 });
             });
 
@@ -72,7 +72,7 @@ namespace MoneyMasterService.WebAPI
             using (var scope = app.Services.CreateScope())
             {
                 var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-                await dbInitializer.InitializeAsync(); // Асинхронно инициализируем БД
+                await dbInitializer.InitializeAsync(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
             }
 
             app.UseExceptionHandlingMiddleware();
@@ -92,9 +92,9 @@ namespace MoneyMasterService.WebAPI
 
             //app.UseHttpsRedirection();
 
-            //app.UseAuthentication();   // добавление middleware аутентификации 
+            //app.UseAuthentication();   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ middleware пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 
-            app.UseAuthorization();   // добавление middleware авторизации 
+            app.UseAuthorization();   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ middleware пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 
             app.MapControllers();
 

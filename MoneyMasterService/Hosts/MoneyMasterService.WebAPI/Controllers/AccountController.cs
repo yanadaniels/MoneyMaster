@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common;
 using MoneyMasterService.Services.Abstractions;
@@ -14,6 +15,7 @@ namespace MoneyMasterService.WebAPI.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/accounts/")]
+    [Authorize]
     public class AccountController : BaseController
     {
         private readonly ILogger<AccountController> _logger;

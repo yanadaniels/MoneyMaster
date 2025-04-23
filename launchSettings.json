@@ -6,7 +6,8 @@
       "serviceActions": {
         "identityservice.webapi": "StartDebugging",
         "moneymasterservice.webapi": "StartDebugging",
-        "moneymaster.apigateway": "StartDebugging"
+        "moneymaster.apigateway": "StartDebugging",
+        "moneymaster.apigatewayocelot": "StartDebugging"
       }
     }
   }

@@ -1,8 +1,20 @@
-﻿networks:
+networks:
   moneymaster_network:
-    driver: bridge
+
 
 services:
+  moneymaster.apigatewayocelot:
+    image: ${DOCKER_REGISTRY-}moneymasterapigatewayocelot
+    container_name: apigatewayocelot
+    build:
+      context: .
+      dockerfile: MoneyMaster.APIgateway/MoneyMaster.APIGatewayOcelot/Dockerfile
+    ports:
+      - "21001:8081"
+      - "21002:8080"
+    networks:
+      - moneymaster_network
+
   moneymaster.apigateway:
     image: ${DOCKER_REGISTRY-}moneymasterapigateway
     container_name: apigateway
@@ -52,3 +64,6 @@ services:
   #     - "3000:80"
   #   networks:
   #     - moneymaster_network
+
+
+ 
