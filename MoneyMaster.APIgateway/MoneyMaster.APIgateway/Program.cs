@@ -4,15 +4,15 @@ using System.Reflection;
 namespace MoneyMaster.APIgateway
 {
     /// <summary>
-    /// ����� ����� � API Gateway.
-    /// �������� �� ��������� � ������ ���-����������
+    /// Точка входа в API Gateway.
+    /// Отвечает за настройку и запуск веб-приложения
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// ������� ������ ������� ��������� API Gateway
+        /// Главный методо который запускает API Gateway
         /// </summary>
-        /// <param name="args">�������� ��������� ������</param>
+        /// <param name="args">Аргумент командной строки</param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -40,14 +40,14 @@ namespace MoneyMaster.APIgateway
 
             builder.Services.AddCustomJWTAuthentification();
 
-            // �������� ��������� CORS
+            // Временно отключаем CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.AllowAnyOrigin()  // ��������� ��� ������
-                          .AllowAnyMethod()  // ��������� ��� ������
-                          .AllowAnyHeader(); // ��������� ��� ���������
+                    policy.AllowAnyOrigin()  // Разрешает все домены
+                          .AllowAnyMethod()  // Разрешает все методы
+                          .AllowAnyHeader(); // Разрешает все заголовки
                 });
             });
 
@@ -55,7 +55,7 @@ namespace MoneyMaster.APIgateway
 
             app.UseCors("AllowAll");
 
-            // �������� ��������� �������� � https
+            // Временно отключает редирект в https
             //app.UseHttpsRedirection();
 
             app.UseSwagger();

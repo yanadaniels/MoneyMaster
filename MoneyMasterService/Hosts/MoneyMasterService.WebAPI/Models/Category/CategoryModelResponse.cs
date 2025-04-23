@@ -1,11 +1,10 @@
-﻿using MoneyMasterService.WebAPI.Models.Transaction;
-using MoneyMasterService.WebAPI.Models.TransactionType;
+﻿using MoneyMasterService.Domain.Entities.Enums;
 
 namespace MoneyMasterService.WebAPI.Models.Category
 {
     /// <summary>Модель категорий</summary>
     /// <typeparam name="TKey">Тип первичного ключа</typeparam>
-    public class CategoryModel<TKey>
+    public class CategoryModelResponse<TKey>
     {
         /// <summary>Первичный ключ </summary>
         public TKey? Id { get; set; }
@@ -16,19 +15,19 @@ namespace MoneyMasterService.WebAPI.Models.Category
         /// <summary>Иконка</summary>
         public string? Icon { get; set; }
 
-        /// <summary>Идентификатор типа транзакции</summary>
-        public TKey? TransactionTypeId { get; set; }
+        /// <summary>Тип категории</summary>
+        public CategoryType CategoryType {get; set;}
 
-        /// <summary>Тип транзакции</summary>
-        public required TransactionTypeModel TransactionType { get; set; }
+        /// <summary></summary>
+        public bool IsSystem { get; set; }
 
-        /// <summary>Коллекция транзакций</summary>
-        public ICollection<TransactionModel>? Transactions { get; set; }
+        /// <summary>Признак того что сущность удалена</summary>
+        public bool IsDeleted { get; set; }
 
         /// <summary>Время</summary>
         public DateTime CreateAt { get; set; }
     }
 
     /// <summary>Модель категорий</summary>
-    public class CategoryModel : CategoryModel<Guid>;
+    public class CategoryModelResponse : CategoryModelResponse<Guid>;
 }

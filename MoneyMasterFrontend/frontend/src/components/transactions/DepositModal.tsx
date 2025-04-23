@@ -1,0 +1,140 @@
+import React, { useState } from "react";
+import Modal from "../Modal";
+import {
+  AccountResponse,
+  CategoryResponse,
+  CreateTransactionRequest,
+} from "@/types";
+import PlusIcon from "@/assets/icons/plus.svg?react";
+import MinusIcon from "@/assets/icons/minus.svg?react";
+import AddCategory from "../AddCategory";
+
+interface DepositModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  account: AccountResponse;
+  categories: CategoryResponse[];
+  onConfirm: (data: CreateTransactionRequest) => void;
+}
+
+const DepositModal: React.FC<DepositModalProps> = ({
+  isOpen,
+  onClose,
+  account,
+  categories,
+  onConfirm,
+}) => {
+  const [amount, setAmount] = useState<number | string>("");
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryResponse | null>(null);
+  const [description, setDescription] = useState<string>("");
+  const [addCategory, setAddCategory] = useState(false);
+
+  const filteredCategories = categories.filter(
+    (category) => category.categoryType === "Revenue"
+  );
+
+  const handleSubmit = () => {
+    const numericAmount = Number(amount || 0);
+    if (numericAmount > 0) {
+      onConfirm({
+        amount: numericAmount,
+        categoryId: selectedCategory?.id || "",
+        description,
+        accountId: account.id,
+      });
+
+      setAmount("");
+      setSelectedCategory(null);
+      setDescription("");
+      onClose();
+    }
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={`Пополнить ${account.name}`}
+    >
+      <div className="mb-4 space-y-4">
+        <input
+          type="number"
+          inputMode="numeric"
+          pattern="[0-9]"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="mt-2 p-2 w-full border border-gray-300 rounded-lg appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          placeholder="Сумма"
+        />
+
+        <div className="flex items-center space-x-2">
+          <select
+            value={selectedCategory?.id || ""}
+            onChange={(e) => {
+              const selectedCategory = filteredCategories.find(
+                (category) => category.id === e.target.value
+              );
+              setSelectedCategory(selectedCategory || null);
+            }}
+            className={`h-9 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600 ${
+              addCategory
+                ? "bg-gray-200 text-gray-500 opacity-50 cursor-not-allowed"
+                : "bg-white text-gray-900"
+            }`}
+            disabled={addCategory}
+          >
+            <option value="">Выберите категорию</option>
+            {filteredCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <button className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 cursor-pointer">
+            {addCategory ? (
+              <MinusIcon
+                className="w-7 h-7"
+                onClick={() => setAddCategory(false)}
+              />
+            ) : (
+              <PlusIcon
+                className="w-7 h-7"
+                onClick={() => setAddCategory(true)}
+              />
+            )}
+          </button>
+        </div>
+
+        {addCategory && (
+          <AddCategory onAddCategory={() => console.log("Add category")} />
+        )}
+
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="p-2 w-full border border-gray-300 rounded-lg"
+          placeholder="Описание пополнения"
+        />
+      </div>
+
+      <div className="flex justify-end gap-2 mt-8">
+        <button
+          onClick={onClose}
+          className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+        >
+          Отменить
+        </button>
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+        >
+          Пополнить
+        </button>
+      </div>
+    </Modal>
+  );
+};
+
+export default DepositModal;

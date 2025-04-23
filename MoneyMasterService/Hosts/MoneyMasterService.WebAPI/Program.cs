@@ -5,6 +5,7 @@ using MoneyMasterService.WebAPI.Data;
 using MoneyMasterService.WebAPI.Extensions;
 using MoneyMasterServiceService.Infrastructure.Repositories.Implementations.Service;
 using System.Reflection;
+using System.Text.Json.Serialization;
 namespace MoneyMasterService.WebAPI
 {
     public class Program
@@ -33,7 +34,11 @@ namespace MoneyMasterService.WebAPI
 
 
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 

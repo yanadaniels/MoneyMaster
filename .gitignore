@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/IdentityService/Hosts/IdentityService.WebAPI/Identity.db
+/MoneyMasterService/Hosts/MoneyMasterService.WebAPI/MoneyMasterService.db
+/IdentityService/Hosts/IdentityService.WebAPI/Identity.db-shm
+/IdentityService/Hosts/IdentityService.WebAPI/Identity.db-wal
+/MoneyMasterService/Hosts/MoneyMasterService.WebAPI/MoneyMasterService.db-shm
+/MoneyMasterService/Hosts/MoneyMasterService.WebAPI/MoneyMasterService.db-wal

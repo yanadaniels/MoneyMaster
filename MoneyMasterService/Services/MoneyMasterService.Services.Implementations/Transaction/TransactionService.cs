@@ -141,5 +141,36 @@ namespace MoneyMasterService.Services.Implementations
 
             return _mapper.Map<Transaction, TransactionResponse>(restoredTransaction);
         }
+
+        public async Task<IReadOnlyCollection<TransactionResponse>> GetByAccountIdAsync(Guid accountId, CancellationToken cancellationToken)
+        {
+            var transactions = await _transactionRepository.GetByAccountIdAsync(accountId, cancellationToken);
+
+            return _mapper.Map<IReadOnlyCollection<Transaction>, IReadOnlyCollection<TransactionResponse>>(transactions);
+        }
+
+        public async Task<Guid> CreateTransactionTransferAsync(CreateTransactionTransferRequest request, CancellationToken cancellationToken)
+        {
+            var fromTransfer = new CreatingTransactionRequest()
+            {
+                AccountId = request.FromAccountId,
+                Amount = request.Amount,
+                CategoryId = request.FromCategoryId,
+                Description = request.Description
+            };
+
+            var toTransfer = new CreatingTransactionRequest()
+            {
+                AccountId = request.ToAccountId,
+                Amount = request.Amount,
+                CategoryId = request.ToCategoryId,
+                Description = request.Description
+            };
+
+            var response = await CreateAsync(fromTransfer, cancellationToken);
+            await CreateAsync(toTransfer, cancellationToken);
+
+            return response;
+        }
     }
 }

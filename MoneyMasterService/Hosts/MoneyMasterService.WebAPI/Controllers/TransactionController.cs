@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using MoneyMasterService.Services.Abstractions.Transaction;
 using MoneyMasterService.Services.Contracts.Transaction;
+using MoneyMasterService.WebAPI.Models.Transaction;
+using System.Net.Http;
+using System.Text;
 
 namespace MoneyMasterService.WebAPI.Controllers;
 /// <summary>
@@ -105,5 +109,33 @@ public class TransactionController(ITransactionService transactionService) : Con
         var restoredTransaction = await transactionService.RestoreAsync(id, cancellationToken);
 
         return Ok(restoredTransaction);
+    }
+
+    /// <summary>
+    /// Получить транзакции по id счета
+    /// </summary>
+    /// <param name="id">Индентификатор счета</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    [HttpGet("account/{id:guid}")]
+    [ProducesResponseType<IReadOnlyCollection<TransactionResponse>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TransactionResponse>> GetTransactionByAccountIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var transactions = await transactionService.GetByAccountIdAsync(id, cancellationToken);
+        return Ok(transactions);
+    }
+
+    /// <summary>
+    /// Создать перевод с одного счета на другой
+    /// </summary>
+    /// <param name="request">Модель для создания перевода</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    [HttpPost("transfer")]
+    [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
+    public async Task<ActionResult<Guid>> CreateTransactionTransfer([FromBody] CreateTransactionTransferRequest request,
+        CancellationToken cancellationToken)
+    {
+        var transactionId = await transactionService.CreateTransactionTransferAsync(request, cancellationToken);
+        return Ok(transactionId);
     }
 }

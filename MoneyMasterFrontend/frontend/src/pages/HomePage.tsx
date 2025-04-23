@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import authService from "../services/authService";
 import { useAuth } from "../Context/AuthContext";
-import Transactions from "../components/Transactions";
-import Accounts from "../components/Accounts";
+import Accounts from "../components/accounts/Accounts";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
