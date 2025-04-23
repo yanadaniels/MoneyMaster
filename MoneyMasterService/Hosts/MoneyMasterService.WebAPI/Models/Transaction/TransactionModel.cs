@@ -18,7 +18,7 @@ namespace MoneyMasterService.WebAPI.Models.Transaction
         public TKey? CategoryId { get; set; }
 
         /// <summary>Модель категории</summary>
-        public required CategoryModel Category { get; set; }
+        public required CategoryModelResponse Category { get; set; }
 
         /// <summary>Описание</summary>
         public string? Description { get; set; }

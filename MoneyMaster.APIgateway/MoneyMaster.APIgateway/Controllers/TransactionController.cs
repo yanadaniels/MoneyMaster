@@ -39,7 +39,7 @@ namespace MoneyMaster.APIgateway.Controllers
         public async Task<ActionResult<TransactionResponse>> GetTransaction([FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
-            var response = await _httpClient.GetAsync($"{route}/{id}",cancellationToken);
+            var response = await _httpClient.GetAsync($"{route}/{id}", cancellationToken);
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         }
 
@@ -116,6 +116,35 @@ namespace MoneyMaster.APIgateway.Controllers
         {
             var content = new StringContent(JsonConvert.SerializeObject(null), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{route}/{id}", content, cancellationToken);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
+        }
+
+        /// <summary>
+        /// Получить транзакции по id счета
+        /// </summary>
+        /// <param name="id">Индентификатор счета</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        [HttpGet("account/{id:guid}")]
+        [ProducesResponseType<IReadOnlyCollection<TransactionResponse>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TransactionResponse>> GetTransactionByAccountIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _httpClient.GetAsync($"{route}/account/{id}", cancellationToken);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
+        }
+
+        /// <summary>
+        /// Создать перевод с одного счета на другой
+        /// </summary>
+        /// <param name="request">Модель для создания перевода</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        [HttpPost("transfer")]
+        [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
+        public async Task<ActionResult<Guid>> CreateTransactionTransfer([FromBody] CreateTransactionTransferRequest request,
+            CancellationToken cancellationToken)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{route}/transfer", content, cancellationToken);
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         }
     }

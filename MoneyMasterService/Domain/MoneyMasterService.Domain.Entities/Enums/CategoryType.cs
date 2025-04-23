@@ -6,6 +6,8 @@
         /// <summary>Поступление</summary>
         Revenue,
         /// <summary>Расход</summary>
-        Expenses
+        Expenses,
+        /// <summary>Перевод</summary>
+        Transfer
     }
 }

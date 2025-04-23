@@ -1,8 +1,13 @@
+import { AccountResponse } from "@/types";
 import api from "../api/api";
+import { authService } from "@/services/authService";
 
 export const accountService = {
-  getAccounts: async (accessToken: string) => {
+  getAccounts: async () => {
     try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return;
+
       const response = await api.get("/accounts", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -13,8 +18,11 @@ export const accountService = {
     }
   },
 
-  getCreateInfo: async (accessToken: string) => {
+  getCreateInfo: async () => {
     try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return;
+
       const response = await api.get("/accounts/create", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -30,15 +38,18 @@ export const accountService = {
   },
 
   createAccount: async (
-    accessToken: string,
     userId: string | undefined,
     name: string,
     balance: number,
     accountTypeId: string | undefined,
-    currency: string
+    currency: string,
+    icon: string
   ) => {
     try {
-      console.log({ userId, name, balance, accountTypeId, icon: "", currency });
+      const accessToken = authService.getToken();
+      if (!accessToken) return;
+
+      console.log({ userId, name, balance, accountTypeId, icon, currency });
       const response = await api.post(
         "/accounts",
         {
@@ -46,7 +57,7 @@ export const accountService = {
           name,
           balance,
           accountTypeId,
-          icon: "string",
+          icon,
           currency,
           createAt: "2025-03-04T12:43:03.438Z",
         },
@@ -59,7 +70,32 @@ export const accountService = {
     }
   },
 
-  deleteAccount: async (accessToken: string, accountId: string) => {
+  getAccountById: async (
+    accountId: string
+  ): Promise<AccountResponse | null> => {
+    try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return null;
+
+      const response = await api.get<AccountResponse>(
+        `/accounts/${accountId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка при получении транзакции по ID:", error);
+      throw error;
+    }
+  },
+
+  deleteAccount: async (accountId: string) => {
+    const accessToken = authService.getToken();
+    if (!accessToken) return;
+
     await api.delete(`/accounts/${accountId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });

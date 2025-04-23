@@ -10,7 +10,7 @@ namespace MoneyMasterService.WebAPI.Mapping
         /// <summary><inheritdoc cref="CategoryModelMappingsProfile"/> </summary>
         public CategoryModelMappingsProfile()
         {
-            CreateMap<CategoryDto, CategoryModel>();
+            CreateMap<CategoryDto, CategoryModelResponse>();
         }
     }
 }

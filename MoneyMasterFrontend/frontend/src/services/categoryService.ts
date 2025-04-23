@@ -1,58 +1,60 @@
-// import { useEffect, useState } from "react";
-// import { useAuth } from "../Context/AuthContext";
-// import authService from "../services/authService";
-// import { transactionService } from "../services/transactionService";
+import api from "../api/api";
+import { authService } from "@/services/authService";
 
-// interface Category {
-//   id: string;
-//   amount: number;
-//   categoryId: string;
-//   description: string;
-//   accountId: string;
-//   createAt: string;
-// }
+export const categoryService = {
+  getCategories: async () => {
+    try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return;
 
-// const Transactions: React.FC = () => {
-//   const { state } = useAuth();
-//   const [transactions, setTransactions] = useState<Transaction[]>([]);
-//   const [loading, setLoading] = useState<boolean>(true);
+      const response = await api.get("/categories", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка при получении счетов:", error);
+      throw error;
+    }
+  },
 
-//   useEffect(() => {
-//     const fetchTransactions = async () => {
-//       try {
-//         if (!state.user) return;
-//         const accessToken = authService.getToken();
-//         if (!accessToken) return;
+  createCategory: async (
+    userId: string | undefined,
+    name: string,
+    balance: number,
+    accountTypeId: string | undefined,
+    currency: string
+  ) => {
+    try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return;
 
-//         const data = await transactionService.getTransactions(accessToken);
-//         setTransactions(data);
-//       } catch (error) {
-//         console.error("Ошибка при запуске транзакции:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+      console.log({ userId, name, balance, accountTypeId, icon: "", currency });
+      const response = await api.post(
+        "/categories",
+        {
+          userId,
+          name,
+          balance,
+          accountTypeId,
+          icon: "string",
+          currency,
+          createAt: "2025-03-04T12:43:03.438Z",
+        },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка при создани счета:", error);
+      throw error;
+    }
+  },
 
-//     fetchTransactions();
-//   }, [state.user]);
+  deleteCategory: async (accountId: string) => {
+    const accessToken = authService.getToken();
+    if (!accessToken) return;
 
-//   if (loading) return <p>Загрузка</p>;
-//   if (transactions.length === 0) return <p>Транзакций пока нет</p>;
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-bold mb-4">Мои транзакции</h2>
-//       <ul className="bg-white shadow-md rounded-lg p-4">
-//         {transactions.map((transaction) => (
-//           <li key={transaction.id} className="border-b last:border-none p-2">
-//             <span className="font-semibold">{transaction.categoryId}</span>:{" "}
-//             {transaction.amount} ₽ (
-//             {new Date(transaction.createAt).toLocaleDateString()})
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Transactions;
+    await api.delete(`/categories/${accountId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+  },
+};

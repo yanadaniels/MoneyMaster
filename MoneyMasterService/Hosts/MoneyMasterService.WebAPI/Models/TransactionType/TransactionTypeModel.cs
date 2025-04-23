@@ -17,7 +17,7 @@ namespace MoneyMasterService.WebAPI.Models.TransactionType
         public string? Description { get; set; }
 
         /// <summary>Коллекция категорий</summary>
-        public ICollection<CategoryModel>? Categories { get; set; }
+        public ICollection<CategoryModelResponse>? Categories { get; set; }
 
         /// <summary>Коллекция транзакций</summary>
         public ICollection<TransactionModel>? Transactions { get; set; }

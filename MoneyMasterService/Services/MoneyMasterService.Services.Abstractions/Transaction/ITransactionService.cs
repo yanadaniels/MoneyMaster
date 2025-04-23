@@ -13,6 +13,14 @@ namespace MoneyMasterService.Services.Abstractions.Transaction
         Task<TransactionResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Получить все транзакции по Id счета
+        /// </summary>
+        /// <param name="accountId">Идентификатор счета</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Список DTO транзакций</returns>
+        Task<IReadOnlyCollection<TransactionResponse>> GetByAccountIdAsync(Guid accountId, CancellationToken cancellationToken);
+
+        /// <summary>
         /// Получить список транзакций.
         /// </summary>
         /// <returns> Список DTO транзакций. </returns>
@@ -37,5 +45,10 @@ namespace MoneyMasterService.Services.Abstractions.Transaction
         /// Восстановить транзакцию.
         /// </summary>
         Task<TransactionResponse> RestoreAsync(Guid id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Перевод между счетами
+        /// </summary>
+        Task<Guid> CreateTransactionTransferAsync(CreateTransactionTransferRequest request, CancellationToken cancellationToken);
     }
 }

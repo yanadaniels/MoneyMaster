@@ -2,6 +2,7 @@
 using MoneyMasterService.Domain.Entities;
 using MoneyMasterService.Domain.Entities.Enums;
 using MoneyMasterService.Infrastructure.EntityFramework.Context;
+using System.Data;
 
 namespace MoneyMasterService.WebAPI.Data
 {
@@ -38,14 +39,16 @@ namespace MoneyMasterService.WebAPI.Data
 
             List<Category> categories = new List<Category>()
             {
-                 new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
-            new Category() { Name = "Подработка" , CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
-            new Category() { Name = "Продажа", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now},
+                new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Подработка" , CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Продажа", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Перевод", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
 
-            new Category() { Name = "Еда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
-            new Category() { Name = "Транспорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
-            new Category() { Name = "Спорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
-            new Category() { Name = "Одежда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now},
+                new Category() { Name = "Еда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Транспорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Спорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Одежда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
+                new Category() { Name = "Перевод", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
 
             };
             await _db.Set<Category>().AddRangeAsync(categories);

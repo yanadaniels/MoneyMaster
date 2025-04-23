@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoneyMasterService.Domain.Entities;
+using MoneyMasterService.Domain.Entities.Enums;
 using MoneyMasterService.Services.Abstractions;
 using MoneyMasterService.Services.Contracts.Category;
 using MoneyMasterService.Services.Repositories.Abstractions;
@@ -24,6 +25,7 @@ namespace MoneyMasterService.Services.Implementations
         public async Task<ICollection<CategoryDto>> GetAllAsync()
         {
             ICollection<Category> entities = _categoryRepository.GetAll().ToList();
+            var categoryType = Enum.GetNames(typeof(CategoryType)).ToList();
             return _mapper.Map<ICollection<Category>, ICollection<CategoryDto>>(entities);
         }
 

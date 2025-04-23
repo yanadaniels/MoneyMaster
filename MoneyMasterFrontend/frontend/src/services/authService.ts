@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "https://localhost:20001/api/v1/users";
 
-const authService = {
+export const authService = {
   login: async (email: string, password: string, dispatch: any) => {
     const response = await axios.post(`${API_URL}/login`, {
       userName: email,
@@ -29,5 +29,3 @@ const authService = {
     return localStorage.getItem("accsessToken");
   },
 };
-
-export default authService;
