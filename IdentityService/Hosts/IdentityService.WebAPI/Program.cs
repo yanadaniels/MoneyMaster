@@ -12,14 +12,14 @@ using System.Reflection;
 namespace IdentityService.WebAPI
 {
     /// <summary>
-    /// �������� ����� ���������� IdentityService.
-    /// �������� �� ������������� � ������ ���-����������.
+    /// Основной класс приложения IdentityService.
+    /// Отвечает за инициализацию и запуск веб-приложения.
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// ����� ����� � ����������.
-        /// ������������� �������, middleware � ��������� ���-����������.
+        /// Точка входа в приложение.
+        /// Конфигурирует сервисы, middleware и запускает веб-приложение.
         /// </summary>
         public static void Main(string[] args)
         {
@@ -53,23 +53,23 @@ namespace IdentityService.WebAPI
                 opt.SupportNonNullableReferenceTypes();
             });
 
-            //��������� �����������
+            //Добавляем авторизацию
             builder.Services.AddCustomJWTAuthentification();
 
-            //�������� ��������� CORS
+            //Временно отключаем CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
-                    policy.AllowAnyOrigin()  // ��������� ��� ������
-                          .AllowAnyMethod()  // ��������� ��� ������
-                          .AllowAnyHeader(); // ��������� ��� ���������
+                    policy.AllowAnyOrigin()  // Разрешает все домены
+                          .AllowAnyMethod()  // Разрешает все методы
+                          .AllowAnyHeader(); // Разрешает все заголовки
                 });
             });
 
             var app = builder.Build();
 
-            //�������� ��������� CORS
+            //Временно отключаем CORS
             app.UseCors("AllowAll");
 
             // Configure the HTTP request pipeline.
