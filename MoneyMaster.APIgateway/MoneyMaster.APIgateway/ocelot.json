@@ -1,0 +1,19 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identityservice.webapi",
+          "Port": 18002
+        }
+      ],
+      "UpstreamPathTemplate": "/identityservice/swagger/v1/swagger.json",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://moneymaster.apigateway:20002"
+  }
+}

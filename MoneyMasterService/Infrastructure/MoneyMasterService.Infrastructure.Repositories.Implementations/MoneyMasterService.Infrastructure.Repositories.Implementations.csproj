@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MoneyMaster.Common\MoneyMaster.Common.Repositories\MoneyMaster.Common.Repositories.csproj" />
+    <ProjectReference Include="..\..\Domain\MoneyMasterService.Domain.Entities\MoneyMasterService.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\Services\MoneyMasterService.Services.Repositories.Abstractions\MoneyMasterService.Services.Repositories.Abstractions.csproj" />
+    <ProjectReference Include="..\MoneyMasterService.Infrastructure.EntityFramework\MoneyMasterService.Infrastructure.EntityFramework.csproj" />
+  </ItemGroup>
+
+
+
+</Project>
