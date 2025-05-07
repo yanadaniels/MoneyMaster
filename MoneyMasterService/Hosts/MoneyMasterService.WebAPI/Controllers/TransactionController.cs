@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMasterService.Services.Abstractions.Transaction;
 using MoneyMasterService.Services.Contracts.Transaction;
-using MoneyMasterService.WebAPI.Models.Transaction;
-using System.Net.Http;
-using System.Text;
 
 namespace MoneyMasterService.WebAPI.Controllers;
 /// <summary>
@@ -12,6 +9,7 @@ namespace MoneyMasterService.WebAPI.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/v1/transactions")]
+[Authorize]
 public class TransactionController(ITransactionService transactionService) : ControllerBase
 {
     /// <summary>
