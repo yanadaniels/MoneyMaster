@@ -182,7 +182,7 @@
         "AuthenticationProviderKey": "Bearer"
       }
     },
-    // Получить все счета 
+    // Получить все счета
     {
       "UpstreamPathTemplate": "/api/v1/accountType/",
       "UpstreamHttpMethod": [ "Get " ],
@@ -198,8 +198,76 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       }
-    }
+    },
+    //TransactionController
+    //Получение всех транзакций.
+    {
+      "UpstreamPathTemplate": "/api/v1/transactions",
+      "UpstreamHttpMethod": [ "Get ", "Post" ],
+      "DownstreamScheme": "http",
 
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/transactions",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //Изменение транкзакции
+    {
+      "UpstreamPathTemplate": "/api/v1/transactions/{id}",
+      "UpstreamHttpMethod": [ "Put ", "Delete", "Get", "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/transactions/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //Получить транзакции по id счета
+    {
+      "UpstreamPathTemplate": "/api/v1/transactions/account/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/transactions/account/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    //Получить транзакции по id счета
+    {
+      "UpstreamPathTemplate": "/api/v1/transactions/transfer",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/transactions/transfer",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:21002"
