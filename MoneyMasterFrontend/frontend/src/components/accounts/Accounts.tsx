@@ -6,6 +6,7 @@ import AccountDetails from "./AccountDetails";
 import AccountList from "./AccountList";
 import AccountAddModal from "@components/accounts/AccountAddModal";
 import { useTransactionContext } from "@/Context/TransactionContext";
+import CategoryModal from "@components/accounts/CategoryModal";
 
 const AccountListSkeleton = () => (
   <div className="space-y-2">
@@ -40,7 +41,9 @@ const Accounts: React.FC = () => {
   
   const { transactions } = useTransactionContext();
   const [isAccountAddModalOpen, setIsAccountAddModalOpen] = useState<boolean>(false);
-  const [accountCreateInfo, setAccountCreateInfo] = useState<AccountCreateInfo | null>(null);
+    const [accountCreateInfo, setAccountCreateInfo] = useState<AccountCreateInfo | null>(null);
+    const [CategoryModalOpen, OpenCategory] =
+        useState<boolean>(false);
 
 const updateAccountBalances = useCallback(async () => {
   try {
@@ -128,13 +131,18 @@ const updateAccountBalances = useCallback(async () => {
         <div className="sticky top-0 z-20">
                   <h2 className="text-xl font-bold mb-4">Мои счета</h2>
 
-        <button
-          onClick={() => setIsAccountAddModalOpen(true)}
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 cursor-pointer"
-        >
-          Добавить новый счет
-        </button>
-
+                <button
+                    onClick={() => setIsAccountAddModalOpen(true)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 cursor-pointer"
+                >
+                    Добавить новый счет
+                </button>
+                  <button
+                      onClick={() => OpenCategory(true)}
+                      className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 cursor-pointer"
+                  >
+                      Мои категории
+                  </button>
         <AccountAddModal
           isOpen={isAccountAddModalOpen}
           onClose={() => setIsAccountAddModalOpen(false)}
@@ -142,8 +150,11 @@ const updateAccountBalances = useCallback(async () => {
           onCreateAccount={(newAccount) =>
             addAccount(newAccount)
           }
-        />
-
+                  />
+         <CategoryModal
+           isOpen={CategoryModalOpen}
+           onClose={() => OpenCategory(false)}
+          />
         <AccountList
           accounts={accounts}
           accountTypes={accountCreateInfo?.accountTypes || []}

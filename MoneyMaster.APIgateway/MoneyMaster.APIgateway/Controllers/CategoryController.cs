@@ -33,7 +33,7 @@ namespace MoneyMaster.APIgateway.Controllers
         [HttpGet("{id:guid}")]
         [ProducesResponseType<CategoryModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CategoryModelResponse>> GetTransaction([FromRoute] Guid id,
+        public async Task<ActionResult<CategoryModelResponse>> GetCategory([FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
             var response = await _httpClient.GetAsync($"{route}/{id}",cancellationToken);
