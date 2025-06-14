@@ -1,0 +1,19 @@
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.d-flex-category {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.icon-button {
+    margin-left: 5px;
+}
+
+li {
+    padding: 5px;
+}

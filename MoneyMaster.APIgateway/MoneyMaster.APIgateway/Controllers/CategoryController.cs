@@ -101,19 +101,5 @@ namespace MoneyMaster.APIgateway.Controllers
         //    var response = await _httpClient.DeleteAsync($"{route}/{id}", cancellationToken);
         //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         //}
-
-        ///// <summary>
-        ///// Восстановление транзакции.
-        ///// </summary>
-        //[HttpPost("{id:guid}")]
-        //[ProducesResponseType<TransactionResponse>(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<TransactionResponse>> RestoreTransaction([FromRoute] Guid id,
-        //    CancellationToken cancellationToken)
-        //{
-        //    var content = new StringContent(JsonConvert.SerializeObject(null), Encoding.UTF8, "application/json");
-        //    var response = await _httpClient.PostAsync($"{route}/{id}", content, cancellationToken);
-        //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
-        //}
     }
 }
