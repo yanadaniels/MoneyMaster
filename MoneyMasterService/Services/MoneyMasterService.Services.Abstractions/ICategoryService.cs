@@ -22,15 +22,15 @@ namespace MoneyMasterService.Services.Abstractions
         /// <summary>
         /// Добавить новую категорию
         /// </summary>
-        /// <param name="newCategoryDto"> Принимает DTO в качестве нового счёта </param>
+        /// <param name="newCategoryDto"> Принимает DTO в качестве новой категории </param>
         /// <param name="cancellationToken"> Токен отмены </param>
-        /// <returns> DTO счёта </returns>
+        /// <returns> DTO категории </returns>
         Task<CategoryDto> AddAsync(CreatingCategoryDto newCategoryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// Редактировать категорию
         /// </summary>
-        /// <param name="updateCategoryDto"> Принимает DTO в качестве обновленного счёта</param>
+        /// <param name="updateCategoryDto"> Принимает DTO в качестве обновленной категории</param>
         /// <param name="cancellationToken"> Токен отмены </param>
         /// <returns></returns>
         Task<UpdatingCategoryDto?> UpdateAsync(UpdatingCategoryDto updateCategoryDto, CancellationToken cancellationToken);
