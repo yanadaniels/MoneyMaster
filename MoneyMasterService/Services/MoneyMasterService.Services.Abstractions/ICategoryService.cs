@@ -11,7 +11,7 @@ namespace MoneyMasterService.Services.Abstractions
         /// </summary>
         /// <param name="id"> Идентификатор. </param>
         /// <returns> ДТО категории. </returns>
-        Task<CategoryDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<CategoryDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получить список категорий.
