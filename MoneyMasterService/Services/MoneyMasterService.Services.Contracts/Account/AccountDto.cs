@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: Dto
 
 using MoneyMasterService.Services.Contracts.AccountType;
-using MoneyMasterService.Services.Contracts.Report;
 using MoneyMasterService.Services.Contracts.Transaction;
 
 namespace MoneyMasterService.Services.Contracts.Account
@@ -34,8 +33,6 @@ namespace MoneyMasterService.Services.Contracts.Account
         /// <summary>Тип счета</summary>
         public AccountTypeDto? AccountType { get; set; }
 
-        /// <summary>Коллекция отчетов </summary>
-        public ICollection<ReportDto>? Reports { get; set; }
 
         /// <summary>Коллекция транзакций </summary>
         public ICollection<TransactionResponse>? Transactions { get; set; }

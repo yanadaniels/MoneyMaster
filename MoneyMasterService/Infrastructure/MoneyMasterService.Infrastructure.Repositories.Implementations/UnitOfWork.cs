@@ -11,7 +11,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
         private readonly IAccountRepository _accountRepository;
         private readonly IAccountTypeRepository _accountTypeRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IReportRepository _reportRepository;
         private readonly ITransactionRepository _transactionRepository;
 
         private readonly MoneyMasterServiceContext _context;
@@ -27,7 +26,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
 
         public ITransactionRepository TransactionRepository => _transactionRepository;
 
-        public IReportRepository ReportRepository => _reportRepository;
 
         /// <summary><inheritdoc cref="IUnitOfWork"/></summary>
         /// <param name="context">Контекст БД</param>
@@ -39,7 +37,6 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations
             _categoryRepository = new CategoryRepository(context);
             _accountTypeRepository = new AccountTypeRepository(context);
             _transactionRepository = new TransactionRepository(context);
-            _reportRepository = new ReportRepository(context);
         }
 
         public async Task SaveChangesAsync()
