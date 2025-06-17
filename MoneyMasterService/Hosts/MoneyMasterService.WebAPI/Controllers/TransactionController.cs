@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyMasterService.Services.Abstractions.Transaction;
 using MoneyMasterService.Services.Contracts.Transaction;
@@ -135,5 +136,25 @@ public class TransactionController(ITransactionService transactionService) : Con
     {
         var transactionId = await transactionService.CreateTransactionTransferAsync(request, cancellationToken);
         return Ok(transactionId);
+    }
+
+    /// <summary>
+    /// Получение  транзакций за период.
+    /// </summary>
+    /// <remarks>
+    /// Данный метод позволяет получить список всех транзакций за выбранный период. 
+    /// </remarks>
+    /// <param name="startDate">Начало периода</param>
+    /// <param name="endDate">Конец периода</param>
+    /// <param name="cancellationToken"></param>
+    /// <response code = "200" > Получение списка всех транзакций за период</response>
+    /// <returns></returns>
+    [HttpGet("GetByDataRange/{id:guid}")]
+    [ProducesResponseType<IReadOnlyCollection<TransactionResponse>>(StatusCodes.Status200OK)]
+    public async Task<ActionResult<TransactionResponse>> GetByDataRange([FromRoute] Guid id, [FromQuery] DateTime startDate , [FromQuery] DateTime endDate,CancellationToken cancellationToken)
+    {
+        var transactions = await transactionService.GetByDataRange(id,startDate,endDate, cancellationToken);
+
+        return Ok(transactions);
     }
 }

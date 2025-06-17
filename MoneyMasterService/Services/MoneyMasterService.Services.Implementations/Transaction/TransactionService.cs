@@ -57,8 +57,13 @@ namespace MoneyMasterService.Services.Implementations
                 false,
                 cancellationToken
             );
+            var t = _transactionRepository.GetAll().ToList();
 
             await _transactionRepository.SaveChangesAsync(cancellationToken);
+
+            var tq = _transactionRepository.GetAll().ToList();
+
+            _transactionRepository.SaveChanges();
 
             return transaction.Id;
         }
@@ -171,6 +176,13 @@ namespace MoneyMasterService.Services.Implementations
             await CreateAsync(toTransfer, cancellationToken);
 
             return response;
+        }
+
+        public async Task<IReadOnlyCollection<TransactionResponse?>> GetByDataRange(Guid accountId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+        {
+            var transactions = await _transactionRepository.GetByDataRange(accountId,startDate,endDate, cancellationToken);
+
+            return _mapper.Map<IReadOnlyCollection<Transaction>, IReadOnlyCollection<TransactionResponse>>(transactions);
         }
     }
 }
