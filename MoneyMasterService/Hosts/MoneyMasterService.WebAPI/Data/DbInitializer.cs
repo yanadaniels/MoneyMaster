@@ -37,6 +37,8 @@ namespace MoneyMasterService.WebAPI.Data
 
             await _db.Set<AccountType>().AddRangeAsync(accountTypes);
 
+            
+
             List<Category> categories = new List<Category>()
             {
                 new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},

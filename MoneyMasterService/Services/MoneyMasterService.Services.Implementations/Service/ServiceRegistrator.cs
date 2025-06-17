@@ -14,7 +14,6 @@ namespace MoneyMasterService.Services.Implementations.Service
             .AddTransient<IAccountService, AccountService>()
             .AddTransient<IAccountTypeService, AccountTypeService>()
             .AddTransient<ICategoryService, CategoryService>()
-            .AddTransient<IReportService, ReportService>()  
             .AddTransient<IUserSettingService, UserSettingService>();
 
         private static IServiceCollection AddTransaction(this IServiceCollection services) =>

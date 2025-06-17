@@ -267,6 +267,23 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       }
+    },
+    //Получение всех транзакций за период.
+    {
+      "UpstreamPathTemplate": "/api/v1/transactions/GetByDataRange/{id}",
+      "UpstreamHttpMethod": [ "Get " ],
+      "DownstreamScheme": "http",
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moneymaster-api",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/transactions/GetByDataRange/{id}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
     }
   ],
   "GlobalConfiguration": {

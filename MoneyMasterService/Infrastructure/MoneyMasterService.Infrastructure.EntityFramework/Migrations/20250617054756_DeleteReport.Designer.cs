@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyMasterService.Infrastructure.EntityFramework.Context;
 
@@ -10,9 +11,11 @@ using MoneyMasterService.Infrastructure.EntityFramework.Context;
 namespace MoneyMasterService.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(MoneyMasterServiceContext))]
-    partial class MoneyMasterServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20250617054756_DeleteReport")]
+    partial class DeleteReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");

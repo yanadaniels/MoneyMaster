@@ -16,5 +16,11 @@ namespace MoneyMasterService.Services.Repositories.Abstractions
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Коллекция транзакций для данного счета</returns>
         Task<IReadOnlyCollection<Transaction>> GetByAccountIdAsync(Guid accountId, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Получить список транзакций по диапазону дат.
+        /// </summary>
+        /// <returns> Список DTO транзакций. </returns>
+        Task<IReadOnlyCollection<Transaction?>> GetByDataRange(Guid accountId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
     }
 }

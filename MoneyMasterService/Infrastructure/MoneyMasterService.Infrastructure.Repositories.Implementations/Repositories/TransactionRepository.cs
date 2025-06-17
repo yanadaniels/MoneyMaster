@@ -20,5 +20,14 @@ namespace MoneyMasterServiceService.Infrastructure.Repositories.Implementations.
                 .Where(t => t.AccountId == accountId)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<IReadOnlyCollection<Transaction?>> GetByDataRange(Guid accountId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+        {
+            return await Context
+               .Set<Transaction>()
+               .Where(t => t.AccountId == accountId)
+               .Where(d => d.CreateAt >= startDate && d.CreateAt <= endDate)
+               .ToListAsync(cancellationToken);
+        }
     }
 }
