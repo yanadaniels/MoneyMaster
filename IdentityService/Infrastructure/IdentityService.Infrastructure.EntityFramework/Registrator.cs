@@ -30,10 +30,12 @@ namespace IdentityService.Infrastructure.EntityFramework
                        break;
 
                    case "SQLite":
-                       opt.UseSqlite(connectionString, b =>
+                       opt.UseSqlite(Configuration.GetConnectionString(type), b =>
                            b.MigrationsAssembly("IdentityService.Infrastructure.EntityFramework"));
                        break;
-
+                   case "Postrge":
+                       opt.UseNpgsql(Configuration.GetConnectionString(type), x => x.MigrationsHistoryTable("__MigrationHistory", "identity"));
+                       break;
                    default:
                        throw new InvalidOperationException($"Тип подключения {type} не поддерживается.");
                }
