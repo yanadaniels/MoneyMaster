@@ -12,7 +12,8 @@ namespace MoneyMasterService.Services.Implementations.Mapping
         public CategoryMappingsProfile()
         {
             CreateMap<Category, CategoryDto>();
-            CreateMap<UpdatingCategoryDto, Category>();
+            CreateMap<UpdatingCategoryDto, Category>()
+                .ForMember(category => category.CreateAt, opt => opt.MapFrom(src => DateTime.UtcNow));
 
             CreateMap<CreatingCategoryDto, Category>()
                 .ForMember(category => category.Id, memberConfiguration => memberConfiguration.Ignore())

@@ -11,6 +11,14 @@ namespace MoneyMasterService.WebAPI.Mapping
         public CategoryModelMappingsProfile()
         {
             CreateMap<CategoryDto, CategoryModelResponse>();
+
+            CreateMap<CreatingCategoryModelRequest, CreatingCategoryDto>();
+
+            CreateMap<CreatingCategoryDto, CategoryModelResponse>();
+
+            CreateMap<UpdatingCategoryDto, CategoryModelResponse>();
+
+            CreateMap<UpdatingCategoryModelRequest, UpdatingCategoryDto>();
         }
     }
 }
