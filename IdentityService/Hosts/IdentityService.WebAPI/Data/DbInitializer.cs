@@ -49,9 +49,9 @@ namespace IdentityService.WebAPI.Data
 
 
 
-            User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = UserHelper.GenerateHash("!gGGGG!1"), Role = nameof(Privileges.Administrator), CreateAt = DateTime.Now };
-            User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = UserHelper.GenerateHash("Ivan"), Role = nameof(Privileges.System), CreateAt = DateTime.Now };
-            User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = UserHelper.GenerateHash("Basia"), Role = nameof(Privileges.User), CreateAt = DateTime.Now };
+            User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = UserHelper.GenerateHash("!gGGGG!1"), Role = nameof(Privileges.Administrator), CreateAt = DateTime.UtcNow };
+            User user2 = new User() { UserName = "Иван", Email = "Ivan@Gmail.com", PasswordHash = UserHelper.GenerateHash("Ivan"), Role = nameof(Privileges.System), CreateAt = DateTime.UtcNow };
+            User user3 = new User() { UserName = "Вася", Email = "Basia@Gmail.com", PasswordHash = UserHelper.GenerateHash("Basia"), Role = nameof(Privileges.User), CreateAt = DateTime.UtcNow };
 
             await _db.Set<User>().AddAsync(user1);
             await _db.Set<User>().AddAsync(user2);

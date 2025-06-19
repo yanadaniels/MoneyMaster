@@ -1,5 +1,9 @@
 networks:
   moneymaster_network:
+volumes:
+  identityservicedb_data:
+  moneymasterservicedb_data:
+  pgadminvol:
 
 
 services:
@@ -51,6 +55,71 @@ services:
     ports:
       - "19001:8081"
       - "19002:8080"
+    networks:
+      - moneymaster_network
+
+  # DB for MICROSERVICES
+  moneymasterservice.db:
+    image: "postgres:latest"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: moneymasterservice.db
+    restart: always
+    ports:
+      - "5433:5432"
+    environment: 
+      POSTGRES_DB: "moneymasterservice"
+      POSTGRES_USER: "postrgesuser"
+      POSTGRES_PASSWORD: "12345678"
+      PGDATA: /var/lib/potgresql/core
+    volumes:
+      - moneymasterservicedb_data:/var/lib/potgresql/moneymasterservice
+    networks:
+      - moneymaster_network
+  
+  identityservice.db:
+    image: "postgres:latest"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: 'identityservice.db'
+    restart: always
+    ports:
+     - "5434:5432"
+    environment: 
+      POSTGRES_DB: "identityservice"
+      POSTGRES_USER: "postrgesuser"
+      POSTGRES_PASSWORD: "12345678"
+      PGDATA: /var/lib/postgresql/identityservice
+    volumes:
+      - identityservicedb_data:/var/lib/postgresql/identityservice 
+    networks:
+      - moneymaster_network
+
+
+
+  moneymaster.db.admin:
+    image: dpage/pgadmin4
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@mail.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678
+    ports:
+      - "8889:80"
+    volumes:
+      - pgadminvol:/var/lib/postgresql/pgadmin
     networks:
       - moneymaster_network
 
