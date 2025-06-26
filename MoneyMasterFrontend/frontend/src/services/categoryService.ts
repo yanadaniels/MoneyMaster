@@ -1,3 +1,4 @@
+import { CategoryCreate, CategoryResponse } from "@/types";
 import api from "../api/api";
 import { authService } from "@/services/authService";
 
@@ -17,34 +18,20 @@ export const categoryService = {
     }
   },
 
-  createCategory: async (
-    userId: string | undefined,
-    name: string,
-    balance: number,
-    accountTypeId: string | undefined,
-    currency: string
-  ) => {
+  createCategory: async ( newCategory: CategoryCreate): Promise<CategoryResponse | null> => {
     try {
       const accessToken = authService.getToken();
-      if (!accessToken) return;
+      if (!accessToken) return null;
 
-      console.log({ userId, name, balance, accountTypeId, icon: "", currency });
+      console.log(newCategory.name, newCategory.icon, newCategory.categoryType );
       const response = await api.post(
         "/categories",
-        {
-          userId,
-          name,
-          balance,
-          accountTypeId,
-          icon: "string",
-          currency,
-          createAt: "2025-03-04T12:43:03.438Z",
-        },
+        newCategory,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       return response.data;
     } catch (error) {
-      console.error("Ошибка при создани счета:", error);
+      console.error("Ошибка при создани категории:", error);
       throw error;
     }
   },

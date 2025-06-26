@@ -1,34 +1,13 @@
 import React from "react";
 import { formatCurrency } from "@/utils/format";
 import IconRenderer from "@/components/IconRenderer";
-
-// Типы
-export interface Account {
-  id: string;
-  name: string;
-  balance: number;
-  currency: string;
-  icon: string;
-  userId: string;
-  accountTypeId: string;
-  createAt: string;
-}
-
-export interface AccountType {
-  id: string;
-  name: string;
-  icon: string;
-  isSystem: boolean;
-  isDelete: boolean;
-  createAt: string;
-}
+import { AccountResponse, AccountType } from "@/types";
 
 interface Props {
-  account: Account;
+  account: AccountResponse;
   accountTypes: AccountType[];
-  selectedAccount: Account | null;
-  setSelectedAccount: (account: Account | null) => void;
-  handleDeleteAccount: (id: string) => void;
+  selectedAccount: AccountResponse | null;
+  setSelectedAccount: (account: AccountResponse | null) => void;
 }
 
 const AccountItem: React.FC<Props> = ({
@@ -36,7 +15,6 @@ const AccountItem: React.FC<Props> = ({
   accountTypes,
   selectedAccount,
   setSelectedAccount,
-  handleDeleteAccount,
 }) => {
   const isSelected = selectedAccount?.id === account.id;
   const accountTypeName =
@@ -68,16 +46,6 @@ const AccountItem: React.FC<Props> = ({
         <span className="font-semibold">{account.name}</span>
         <span>{formatCurrency(account.balance)}</span>
       </div>
-
-      {/* <button
-        onClick={(e) => {
-          e.stopPropagation();
-          handleDeleteAccount(account.id);
-        }}
-        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-      >
-        Удалить
-      </button> */}
     </li>
   );
 };

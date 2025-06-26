@@ -7,3 +7,9 @@ export interface CategoryResponse {
   isDeleted: boolean;
   createAt: string;
 }
+
+export interface CategoryCreate {
+  name: string;
+  icon: string;
+  categoryType: string;
+}

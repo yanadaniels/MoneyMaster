@@ -11,11 +11,9 @@ const HomePage: React.FC = () => {
   //     authService.logout();
   //     navigate("/login");
   //   };
-
   return (
-    <div className="flex items-beetwen w-full h-screen bg-gray-100">
+    <div className="flex items-beetwen w-full bg-gray-100">
       <Accounts />
-      {/* <Transactions /> */}
     </div>
   );
 };

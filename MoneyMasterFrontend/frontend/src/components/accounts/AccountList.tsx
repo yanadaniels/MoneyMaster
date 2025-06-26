@@ -1,12 +1,12 @@
 import React from "react";
-import AccountItem, { Account, AccountType } from "./AccountItem";
+import { AccountResponse, AccountType } from "@/types/account";
+import AccountItem from "@/components/accounts/AccountItem"
 
 interface Props {
-  accounts: Account[];
+  accounts: AccountResponse[];
   accountTypes: AccountType[];
-  selectedAccount: Account | null;
-  setSelectedAccount: (account: Account | null) => void;
-  handleDeleteAccount: (id: string) => void;
+  selectedAccount: AccountResponse | null;
+  setSelectedAccount: (account: AccountResponse | null) => void;
 }
 
 const AccountList: React.FC<Props> = ({
@@ -14,7 +14,6 @@ const AccountList: React.FC<Props> = ({
   accountTypes,
   selectedAccount,
   setSelectedAccount,
-  handleDeleteAccount,
 }) => {
   if (accounts.length === 0) {
     return <p className="text-gray-500">Счетов пока нет.</p>;
@@ -29,7 +28,6 @@ const AccountList: React.FC<Props> = ({
           accountTypes={accountTypes}
           selectedAccount={selectedAccount}
           setSelectedAccount={setSelectedAccount}
-          handleDeleteAccount={handleDeleteAccount}
         />
       ))}
     </ul>

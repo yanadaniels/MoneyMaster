@@ -22,3 +22,10 @@ export interface CreateTransactionTransferRequest {
   toCategoryId: string;
   description: string;
 }
+
+export interface UpdateTransactionRequest {
+  amount: number;
+  categoryId: string;
+  description: string;
+  accountId: string;
+}
