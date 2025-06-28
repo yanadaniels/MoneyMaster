@@ -90,7 +90,6 @@ namespace IdentityService.WebAPI
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();

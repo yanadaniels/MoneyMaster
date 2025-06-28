@@ -1,4 +1,4 @@
-import { AccountResponse } from "@/types";
+import { AccountResponse, UpdatingAccountRequest } from "@/types";
 import api from "../api/api";
 import { authService } from "@/services/authService";
 
@@ -100,4 +100,21 @@ export const accountService = {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
   },
+
+  updateAccount: async (updatedAccount: UpdatingAccountRequest): Promise<AccountResponse | null> => {
+    try {
+      const accessToken = authService.getToken();
+      if (!accessToken) return null;
+
+      const response = await api.put(
+        `/accounts/${updatedAccount.id}`, updatedAccount,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка при обновлении счета:", error);
+      throw error;
+    }
+  }
+
 };

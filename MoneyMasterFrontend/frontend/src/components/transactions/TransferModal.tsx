@@ -90,7 +90,7 @@ const TransferModal: React.FC<TransferModalProps> = ({
             );
             setToAccountId(selectedToAccountId?.id || null);
           }}
-          className="h-9 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600"
+          className="mt-1 block w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="" disabled hidden>
             Счет зачисления
@@ -113,7 +113,7 @@ const TransferModal: React.FC<TransferModalProps> = ({
           pattern="[0-9]"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="mt-2 p-2 w-full border border-gray-300 rounded-lg appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Сумма"
         />
 
@@ -121,8 +121,8 @@ const TransferModal: React.FC<TransferModalProps> = ({
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="p-2 w-full border border-gray-300 rounded-lg"
-          placeholder="Описание пополнения"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Описание"
         />
       </div>
 
@@ -137,7 +137,7 @@ const TransferModal: React.FC<TransferModalProps> = ({
           onClick={handleSubmit}
           className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
         >
-          Пополнить
+          Перевести
         </button>
       </div>
     </Modal>

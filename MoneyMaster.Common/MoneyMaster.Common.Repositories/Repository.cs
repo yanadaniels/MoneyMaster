@@ -92,18 +92,30 @@ namespace MoneyMaster.Common.Repositories
         public virtual async Task<(List<T> Items, int TotalCount)> GetAllAsync(
             PaginationParameters parameters, CancellationToken cancellationToken, bool asNoTracking = false)
         {
+            //var query = _entitySet.AsQueryable();
+
+            //if (asNoTracking)
+            //    query = query.AsNoTracking();
+
+            //query = query.Sort(parameters.SortBy, parameters.IsDescending);
+            //var totalCountTask = query.CountAsync(cancellationToken);
+            //var itemsTask = query.Paginate(parameters.PageNumber, parameters.PageSize).ToListAsync(cancellationToken);
+
+            //await Task.WhenAll(totalCountTask, itemsTask);
+
+            //return (itemsTask.Result, totalCountTask.Result);
+
             var query = _entitySet.AsQueryable();
 
             if (asNoTracking)
                 query = query.AsNoTracking();
 
             query = query.Sort(parameters.SortBy, parameters.IsDescending);
-            var totalCountTask = query.CountAsync(cancellationToken);
-            var itemsTask = query.Paginate(parameters.PageNumber, parameters.PageSize).ToListAsync(cancellationToken);
 
-            await Task.WhenAll(totalCountTask, itemsTask);
-
-            return (itemsTask.Result, totalCountTask.Result);
+            return (
+                await query.Paginate(parameters.PageNumber, parameters.PageSize).ToListAsync(cancellationToken),
+                await query.CountAsync(cancellationToken)
+            );
         }
 
         /// <summary>

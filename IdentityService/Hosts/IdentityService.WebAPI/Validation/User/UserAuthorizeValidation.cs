@@ -15,8 +15,8 @@ namespace IdentityService.WebAPI.Validation.User
         /// </summary>
         public UserAuthorizeValidation()
         {
-            RuleFor(x => x.UserName)
-                .NotEmpty().WithMessage("Имя пользователя не может быть пустым");
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email не может быть пустым");
 
 
             RuleFor(p => p.Password).NotEmpty().WithMessage("Ваш пароль не может быть пустым");

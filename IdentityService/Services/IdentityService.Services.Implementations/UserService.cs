@@ -48,7 +48,7 @@ namespace IdentityService.Services.Implementations
         {
             if (userAuthorize == null) return null;
 
-            var user = await _userRepository.AuthorizeUserAsync(userAuthorize.UserName, userAuthorize.Password, cancellationToken);
+            var user = await _userRepository.AuthorizeUserAsync(userAuthorize.Email, userAuthorize.Password, cancellationToken);
             if (user == null) return null;
 
             var userJwtToken = new UserJwtToken() { Id = user.Id, UserName = user.UserName, Email = user.Email, Role = user.Role };
