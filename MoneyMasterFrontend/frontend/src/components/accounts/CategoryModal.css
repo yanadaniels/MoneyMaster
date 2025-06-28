@@ -17,3 +17,21 @@
 li {
     padding: 5px;
 }
+
+.modal-content {
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 20px;
+}
+
+.modal-container {
+    margin-top: 10px;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+
+.cancel-button {
+    text-align: right;
+}

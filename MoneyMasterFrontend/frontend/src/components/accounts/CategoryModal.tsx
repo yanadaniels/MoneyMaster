@@ -13,6 +13,25 @@ interface CategoryModalProps {
 
 const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
     const [categories, setCategories] = useState<CategoryResponse[]>([]);
+    const [showModalExpenses, setShowModalExpenses] = useState(false);
+    const [showModalRevenue, setShowModalRevenue] = useState(false);
+    const [revenueСategoryName, setRevenueCategoryName] = useState('');
+
+
+    const openModalExpenses = () => {
+        setShowModalExpenses(true);
+    }
+    const closeModalExpenses = () => {
+        setShowModalExpenses(false);
+    }
+
+    const openModalRevenue = () => {
+        setShowModalRevenue(true);
+    }
+    const closeModalRevenue = () => {
+        setShowModalRevenue(false);
+        setRevenueCategoryName("");
+    }
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -27,10 +46,18 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
         fetchCategories();
     }, []);
 
+    const addRevenueCategory = async (categoryName: string) => {
+        const responseData = await categoryService.createCategory(categoryName, "Revenue");
+        console.log("Данные, возвращенные из createCategory:", responseData);
+
+        const updatedData = await categoryService.getCategories();
+        setCategories(updatedData);
+    };
+
     const renderCategoriesByType = (categoryType: string) => {
         const filteredCategories = categories.filter(category => category.categoryType === categoryType);
 
-        function press() { console.log("Button clicked!"); }
+        function deleteCategory() { console.log("Button clicked!"); }
 
         return (
             <ul>
@@ -39,7 +66,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                         <li key={index}>
                             <div className="d-flex">
                                 {category.name}
-                                <button className="icon-button" onClick={press}>
+                                <button className="icon-button" onClick={deleteCategory}>
                                     <FontAwesomeIcon
                                         icon={faTrash}
                                         className="text-2xl text-gray-700 transition-transform duration-300 hover:scale-120"
@@ -55,13 +82,9 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
         );
     };
 
-    const handleAddExpenseCategory = () => {
-        console.log("Кнопка 'добавить категорию трат' нажата");
-    };
-
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div>
+            <div className="modal-content">
                 <h3 className="p-4 pb-2 text-lg font-medium border-1 border-white border-b-gray-200 mb-2 flex items-center justify-between">
                     Мои категории
                 </h3>
@@ -72,7 +95,30 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                     {renderCategoriesByType('Revenue')}
                 </div>
                 <div className="d-flex-category">
-                    <button className="bg-green-500 text-white px-4 py-2 rounded">добавить категорию пополнения</button>
+                    <button onClick={openModalRevenue} className="bg-green-500 text-white px-4 py-2 rounded">добавить категорию пополнения</button>
+                </div>
+                <div>
+                    {showModalRevenue && (
+                        <div className="modal-container">
+                            <div className="input-container">
+                                <input
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
+                                    type="text"
+                                    placeholder="Введите текст"
+                                    value={revenueСategoryName}
+                                    onChange={(e) => setRevenueCategoryName(e.target.value)}
+                                />
+                            </div>
+                            <div className="cancel-button">
+                                <span className="bg-gray-400 text-white px-4 py-2 rounded"
+                                    onClick={closeModalRevenue}>Отмена
+                                </span>
+                                <span className="bg-green-500 text-white px-4 py-2 rounded"
+                                    onClick={() => addRevenueCategory(revenueСategoryName)}>Добавить
+                                </span>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="mt-4 pb-4 bg-white rounded-md shadow-md overflow-hidden">
                     <h2 className="p-4 pb-2 text-lg font-medium border-1 border-white border-b-gray-200 mb-2 flex items-center justify-between">
@@ -81,7 +127,22 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                     {renderCategoriesByType('Expenses')}
                 </div>
                 <div className="d-flex-category">
-                    <button onClick={handleAddExpenseCategory} className="bg-green-500 text-white px-4 py-2 rounded">добавить категорию трат</button>
+                    <button onClick={openModalExpenses} className="bg-green-500 text-white px-4 py-2 rounded">добавить категорию трат</button>
+                </div>
+                <div>
+                    {showModalExpenses && (
+                        <div className="modal-container">
+                            <div className="input-container">
+                                <input className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
+                                    type="text"
+                                    placeholder="Введите текст"/>
+                            </div>
+                            <div className="cancel-button">
+                                <span className="bg-gray-400 text-white px-4 py-2 rounded" onClick={closeModalExpenses}>Отмена</span>
+                                <span className="bg-green-500 text-white px-4 py-2 rounded" onClick={closeModalExpenses}>Добавить</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </Modal>
