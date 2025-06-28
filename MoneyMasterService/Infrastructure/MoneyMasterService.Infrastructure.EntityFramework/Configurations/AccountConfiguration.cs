@@ -11,11 +11,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Configurations
         {
             builder.ToTable("Accounts").HasKey(x => x.Id);
 
-            //Связь с таблицей Report один к многим
-            builder.HasMany(x => x.Reports)
-                   .WithOne(x => x.Account)
-                   .HasForeignKey(x => x.AccountId)
-                   .OnDelete(DeleteBehavior.Cascade);
 
             //Связь с таблицей Transaction один к многим
             builder.HasMany(x => x.Transactions)

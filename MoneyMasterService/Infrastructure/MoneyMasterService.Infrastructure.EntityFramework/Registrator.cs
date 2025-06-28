@@ -33,7 +33,11 @@ namespace MoneyMasterService.Infrastructure.EntityFramework
                    case "SQLite":
                        opt.UseSqlite(Configuration.GetConnectionString(type), b => b.MigrationsAssembly("MoneyMasterService.Infrastructure.EntityFramework"));
                        break;
-               };
+                   case "Postrge":
+                       opt.UseNpgsql(Configuration.GetConnectionString(type), x => x.MigrationsHistoryTable("__MigrationHistory", "identity"));
+                       break;
+               }
+               ;
                opt.EnableSensitiveDataLogging(false);
            })
         ;

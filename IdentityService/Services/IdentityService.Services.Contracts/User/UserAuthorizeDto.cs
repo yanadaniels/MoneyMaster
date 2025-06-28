@@ -6,7 +6,7 @@ namespace IdentityService.Services.Contracts.User
     public class UserAuthorizeDto
     {
         /// <summary>Имя пользователя</summary>
-        public required string UserName { get; set; }
+        public required string Email { get; set; }
 
         /// <summary>Пароль</summary>
         public required string Password { get; set; }

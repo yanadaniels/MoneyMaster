@@ -14,8 +14,6 @@
         /// <summary><inheritdoc cref="ICategoryRepository"/></summary>
         ICategoryRepository CategoryRepository { get; }
 
-        /// <summary><inheritdoc cref="IReportRepository"/></summary>
-        IReportRepository ReportRepository { get; }
 
         /// <summary><inheritdoc cref="ITransactionRepository"/></summary>
         ITransactionRepository TransactionRepository { get; }

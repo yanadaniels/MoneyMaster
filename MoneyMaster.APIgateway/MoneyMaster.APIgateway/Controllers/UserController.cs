@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MoneyMaster.APIgateway.Models.Account;
 using MoneyMaster.APIgateway.Models.User;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -150,5 +151,24 @@ namespace IdentityService.WebAPI.Controllers
 
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         }
+
+        /// <summary>
+        /// Получить пользователя по идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор счета</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        /// <response code="200">Возвращает информацию о счете</response>
+        /// <response code="404">Не найден счет</response>
+        /// <response code="500">Ошибка сервера</response>
+        //[HttpGet("{id}")]
+        //[ProducesResponseType<AccountModelResponse>(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        //[Authorize]
+        //public async Task<IActionResult> GetAccount([FromRoute] Guid id, CancellationToken cancellationToken)
+        //{
+        //    var response = await _httpClient.GetAsync($"{route}/{id}", cancellationToken);
+        //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
+        //}
     }
 }

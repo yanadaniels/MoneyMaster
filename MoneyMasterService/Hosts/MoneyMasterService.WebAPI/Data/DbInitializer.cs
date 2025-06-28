@@ -2,6 +2,8 @@
 using MoneyMasterService.Domain.Entities;
 using MoneyMasterService.Domain.Entities.Enums;
 using MoneyMasterService.Infrastructure.EntityFramework.Context;
+using MoneyMasterService.Services.Abstractions;
+using MoneyMasterService.Services.Contracts.Category;
 using System.Data;
 
 namespace MoneyMasterService.WebAPI.Data
@@ -9,10 +11,12 @@ namespace MoneyMasterService.WebAPI.Data
     public class DbInitializer
     {
         private readonly MoneyMasterServiceContext _db;
+        private readonly ICategoryService _categoryService;
 
-        public DbInitializer(MoneyMasterServiceContext db)
+        public DbInitializer(MoneyMasterServiceContext db, ICategoryService categoryService)
         {
             _db = db;
+            _categoryService = categoryService;
         }
 
         public async Task InitializeAsync()
@@ -37,23 +41,29 @@ namespace MoneyMasterService.WebAPI.Data
 
             await _db.Set<AccountType>().AddRangeAsync(accountTypes);
 
-            List<Category> categories = new List<Category>()
-            {
-                new Category() { Name = "Зарплата", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Подработка" , CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Продажа", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Перевод", CategoryType = CategoryType.Revenue, CreateAt = DateTime.Now, IsSystem = true},
+            
 
-                new Category() { Name = "Еда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Транспорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Спорт", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Одежда", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
-                new Category() { Name = "Перевод", CategoryType = CategoryType.Expenses, CreateAt = DateTime.Now, IsSystem = true},
+            List<CreatingCategoryDto> categories = new List<CreatingCategoryDto>()
+            {
+                new CreatingCategoryDto() { Name = "Зарплата", CategoryType = CategoryType.Revenue},
+                new CreatingCategoryDto() {Name = "Подработка", CategoryType = CategoryType.Revenue},
+                new CreatingCategoryDto() {Name = "Продажа", CategoryType = CategoryType.Revenue},
+                new CreatingCategoryDto() {Name = "Перевод", CategoryType = CategoryType.Revenue},
+
+                new CreatingCategoryDto() {Name = "Еда", CategoryType = CategoryType.Expenses},
+                new CreatingCategoryDto() {Name = "Транспорт", CategoryType = CategoryType.Expenses},
+                new CreatingCategoryDto() {Name = "Спорт", CategoryType = CategoryType.Expenses},
+                new CreatingCategoryDto() { Name = "Одежда", CategoryType = CategoryType.Expenses },
+                new CreatingCategoryDto() { Name = "Перевод", CategoryType = CategoryType.Expenses },
 
             };
-            await _db.Set<Category>().AddRangeAsync(categories);
+           
+            CancellationToken cancellationToken = new CancellationToken();
+            foreach (var category in categories)
+            {
+                await _categoryService.AddAsync(category,cancellationToken);
+            }
 
-            _db.SaveChanges();
 
 
             //User user1 = new User() { UserName = "Петр", Email = "Peter@Gmail.com", PasswordHash = "GGGG", CreateAt = DateTime.Now };

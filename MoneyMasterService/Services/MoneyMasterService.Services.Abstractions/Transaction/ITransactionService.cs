@@ -50,5 +50,11 @@ namespace MoneyMasterService.Services.Abstractions.Transaction
         /// Перевод между счетами
         /// </summary>
         Task<Guid> CreateTransactionTransferAsync(CreateTransactionTransferRequest request, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Получить список транзакций по диапазону дат.
+        /// </summary>
+        /// <returns> Список DTO транзакций. </returns>
+        Task<IReadOnlyCollection<TransactionResponse?>> GetByDataRange(Guid accountId,DateTime startDate , DateTime endDate, CancellationToken cancellationToken);
     }
 }

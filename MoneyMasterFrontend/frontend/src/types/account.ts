@@ -22,3 +22,13 @@ export interface AccountCreateInfo {
   accountTypes: AccountType[];
   currentCode: string[];
 }
+
+export interface UpdatingAccountRequest {
+  id: string;
+  name: string;
+  balance: number;
+  currency: string;
+  icon: string;
+  userId: string;
+  accountTypeId: string;
+}

@@ -28,8 +28,6 @@ namespace MoneyMasterService.Domain.Entities
         /// <summary><inheritdoc cref="Domain.Entities.AccountType"/></summary>
         public AccountType? AccountType { get; set; }
 
-        /// <summary>Коллекция отчетов </summary>
-        public ICollection<Report>? Reports { get; set; }
 
         /// <summary>Коллекция транзакций </summary>
         public ICollection<Transaction>? Transactions { get; set; }

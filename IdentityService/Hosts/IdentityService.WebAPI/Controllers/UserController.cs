@@ -122,7 +122,7 @@ namespace IdentityService.WebAPI.Controllers
         {
             var userJwtTokenDto = await _userService.SignIn(_mapper.Map<UserAuthorizeDto>(user), cancellationToken);
             if (userJwtTokenDto == null)
-                return BadRequest(new { errorText = "Неверное имя пользователя или пароль" });
+                return Unauthorized(new { errorText = "Неверное имя пользователя или пароль" });
 
             var response = _mapper.Map<UserJwtTokenResponse>(userJwtTokenDto);
 

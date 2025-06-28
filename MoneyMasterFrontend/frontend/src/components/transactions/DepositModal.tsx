@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../Modal";
 import {
   AccountResponse,
@@ -7,7 +7,7 @@ import {
 } from "@/types";
 import PlusIcon from "@/assets/icons/plus.svg?react";
 import MinusIcon from "@/assets/icons/minus.svg?react";
-import AddCategory from "../AddCategory";
+import AddCategory from "../categories/AddCategory";
 
 interface DepositModalProps {
   isOpen: boolean;
@@ -51,6 +51,11 @@ const DepositModal: React.FC<DepositModalProps> = ({
     }
   };
 
+  const handleAddNewCategory = (newCategory : CategoryResponse | null) => {
+    setAddCategory(false);
+    setSelectedCategory(newCategory);
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -64,7 +69,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
           pattern="[0-9]"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="mt-2 p-2 w-full border border-gray-300 rounded-lg appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Сумма"
         />
 
@@ -77,7 +82,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
               );
               setSelectedCategory(selectedCategory || null);
             }}
-            className={`h-9 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600 ${
+            className={`mt-1 block w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               addCategory
                 ? "bg-gray-200 text-gray-500 opacity-50 cursor-not-allowed"
                 : "bg-white text-gray-900"
@@ -107,15 +112,15 @@ const DepositModal: React.FC<DepositModalProps> = ({
         </div>
 
         {addCategory && (
-          <AddCategory onAddCategory={() => console.log("Add category")} />
+          <AddCategory categoryType="Revenue" onCategoryAdded={handleAddNewCategory} />
         )}
 
         <input
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="p-2 w-full border border-gray-300 rounded-lg"
-          placeholder="Описание пополнения"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Описание"
         />
       </div>
 

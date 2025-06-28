@@ -21,7 +21,6 @@ namespace MoneyMasterService.Infrastructure.EntityFramework.Context
             builder.ApplyConfiguration(new AccountConfiguration());
             builder.ApplyConfiguration(new AccountTypeConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new ReportConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new UserSettingConfiguration());
 

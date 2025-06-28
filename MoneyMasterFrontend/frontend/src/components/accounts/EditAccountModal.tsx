@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import IconPicker from "@/components/IconPicker";
-import { AccountResponse, AccountType } from "@/types";
+import { UpdatingAccountRequest, AccountResponse, AccountType } from "@/types";
 import Modal from "@/components/Modal";
 
 interface EditAccountModalProps {
@@ -8,8 +8,8 @@ interface EditAccountModalProps {
   onClose: () => void;
   account: AccountResponse;
   accountTypes: AccountType[];
-  onSave: (data: AccountResponse) => void;
-  handleDeleteAccount: (id: string) => void;
+  onUpdateAccount: (accountId: UpdatingAccountRequest) => void;
+  onDeleteAccount: (id: string) => void;
 }
 
 const EditAccountModal: React.FC<EditAccountModalProps> = ({
@@ -17,8 +17,8 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
   onClose,
   account,
   accountTypes,
-  onSave,
-  handleDeleteAccount,
+  onUpdateAccount,
+  onDeleteAccount,
 }) => {
   const [name, setName] = useState(account.name);
   const [balance, setBalance] = useState(account.balance);
@@ -35,15 +35,22 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
   }, [account, isOpen]);
 
   const handleSubmit = () => {
-    onSave({
-      ...account,
+    onUpdateAccount({
+      id: account.id,
       name,
       balance,
+      currency: account.currency,
       icon,
       accountTypeId: accountType,
+      userId: account.userId
     });
     onClose();
   };
+
+  const handleDelete = (accountId: string) => {
+    onDeleteAccount(accountId);
+    onClose();
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Редактировать счёт">
@@ -52,7 +59,7 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
           <label className="block text-sm font-medium">Название</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -64,7 +71,7 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
           <label className="block text-sm font-medium">Баланс</label>
           <input
             type="number"
-            className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={balance}
             onChange={(e) => setBalance(Number(e.target.value))}
           />
@@ -73,7 +80,7 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
         <div>
           <label className="block text-sm font-medium">Тип счета</label>
           <select
-            className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+            className="mt-1 block w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={accountType}
             onChange={(e) => setAccountType(e.target.value)}
           >
@@ -86,25 +93,24 @@ const EditAccountModal: React.FC<EditAccountModalProps> = ({
           </select>
         </div>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDeleteAccount(account.id);
-          }}
-          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-        >
-          Удалить
-        </button>
-
         <div className="flex justify-end gap-2 mt-6">
           <button
-            className="px-4 py-2 bg-gray-200 rounded-lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(account.id);
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition mr-auto"
+          >
+            Удалить
+          </button>
+          <button
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
             onClick={onClose}
           >
             Отмена
           </button>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800"
             onClick={handleSubmit}
           >
             Сохранить
