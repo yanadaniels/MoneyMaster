@@ -47,17 +47,23 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
     }, []);
 
     const addRevenueCategory = async (categoryName: string) => {
-        const responseData = await categoryService.createCategory(categoryName, "Revenue");
-        console.log("Данные, возвращенные из createCategory:", responseData);
+        await categoryService.createCategory(categoryName, "Revenue");
 
         const updatedData = await categoryService.getCategories();
         setCategories(updatedData);
     };
 
+    const deleteCategory = async (categoryId: string) => {
+        await categoryService.deleteCategory(categoryId);
+
+        const updatedData = await categoryService.getCategories();
+        setCategories(updatedData);
+    }
+
+
     const renderCategoriesByType = (categoryType: string) => {
         const filteredCategories = categories.filter(category => category.categoryType === categoryType);
 
-        function deleteCategory() { console.log("Button clicked!"); }
 
         return (
             <ul>
@@ -66,7 +72,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                         <li key={index}>
                             <div className="d-flex">
                                 {category.name}
-                                <button className="icon-button" onClick={deleteCategory}>
+                                <button className="icon-button" onClick={() => deleteCategory(category.id)}>
                                     <FontAwesomeIcon
                                         icon={faTrash}
                                         className="text-2xl text-gray-700 transition-transform duration-300 hover:scale-120"
@@ -135,7 +141,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                             <div className="input-container">
                                 <input className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
                                     type="text"
-                                    placeholder="Введите текст"/>
+                                    placeholder="Введите текст" />
                             </div>
                             <div className="cancel-button">
                                 <span className="bg-gray-400 text-white px-4 py-2 rounded" onClick={closeModalExpenses}>Отмена</span>
