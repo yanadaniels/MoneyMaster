@@ -27,11 +27,7 @@ const AddCategory: React.FC<AddCategoryFormProps> = ({categoryType, onCategoryAd
     setError(null);
 
     try {
-      const newCategory = await categoryService.createCategory({ 
-        name: categoryName,
-        icon: "",
-        categoryType: categoryType  
-      });
+      const newCategory = await categoryService.createCategory(categoryName,categoryType);
       
       if (newCategory) {
         onCategoryAdded(newCategory);

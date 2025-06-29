@@ -1,4 +1,4 @@
-import { CategoryCreate, CategoryResponse } from "@/types";
+//import { CategoryCreate, CategoryResponse } from "@/types";
 import api from "../api/api";
 import { authService } from "@/services/authService";
 
@@ -36,7 +36,7 @@ export const categoryService = {
             );
             return response.data;
         } catch (error) {
-            console.error("Ошибка при создани категории!:", error);
+            console.error("Ошибка при создани категории:", error);
             throw error;
         }
     },

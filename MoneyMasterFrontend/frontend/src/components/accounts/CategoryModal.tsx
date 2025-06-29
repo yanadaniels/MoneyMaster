@@ -16,13 +16,14 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
     const [showModalExpenses, setShowModalExpenses] = useState(false);
     const [showModalRevenue, setShowModalRevenue] = useState(false);
     const [revenueСategoryName, setRevenueCategoryName] = useState('');
-
+    const [expensesСategoryName, setExpensesCategoryName] = useState('');
 
     const openModalExpenses = () => {
         setShowModalExpenses(true);
     }
     const closeModalExpenses = () => {
         setShowModalExpenses(false);
+        setExpensesCategoryName("");
     }
 
     const openModalRevenue = () => {
@@ -36,21 +37,34 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const data = await categoryService.getCategories();
-                setCategories(data);
+                if (isOpen) {
+                    const data = await categoryService.getCategories();
+                    setCategories(data);
+                }
             } catch (error) {
                 console.error("Ошибка при загрузке категорий:", error);
             }
         };
 
         fetchCategories();
-    }, []);
+    }, [isOpen]);
 
     const addRevenueCategory = async (categoryName: string) => {
         await categoryService.createCategory(categoryName, "Revenue");
 
         const updatedData = await categoryService.getCategories();
         setCategories(updatedData);
+
+        setRevenueCategoryName("");
+    };
+
+    const addExpensesCategory = async (categoryName: string) => {
+        await categoryService.createCategory(categoryName, "Expenses");
+
+        const updatedData = await categoryService.getCategories();
+        setCategories(updatedData);
+
+        setExpensesCategoryName("");
     };
 
     const deleteCategory = async (categoryId: string) => {
@@ -60,10 +74,8 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
         setCategories(updatedData);
     }
 
-
     const renderCategoriesByType = (categoryType: string) => {
         const filteredCategories = categories.filter(category => category.categoryType === categoryType);
-
 
         return (
             <ul>
@@ -141,11 +153,16 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                             <div className="input-container">
                                 <input className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600"
                                     type="text"
-                                    placeholder="Введите текст" />
+                                    placeholder="Введите текст"
+                                    value={expensesСategoryName}
+                                    onChange={(e) => setExpensesCategoryName(e.target.value)} />
                             </div>
                             <div className="cancel-button">
-                                <span className="bg-gray-400 text-white px-4 py-2 rounded" onClick={closeModalExpenses}>Отмена</span>
-                                <span className="bg-green-500 text-white px-4 py-2 rounded" onClick={closeModalExpenses}>Добавить</span>
+                                <span className="bg-gray-400 text-white px-4 py-2 rounded"
+                                      onClick={closeModalExpenses}>Отмена</span>
+                                <span className="bg-green-500 text-white px-4 py-2 rounded"
+                                      onClick={() => addExpensesCategory(expensesСategoryName)}>Добавить
+                                </span>
                             </div>
                         </div>
                     )}
