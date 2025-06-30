@@ -137,12 +137,12 @@ const updateAccountBalances = useCallback(async () => {
                 >
                     Добавить новый счет
                 </button>
-                  <button
+                  {/* <button
                       onClick={() => OpenCategory(true)}
                       className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 cursor-pointer"
                   >
                       Мои категории
-                  </button>
+                  </button> */}
         <AccountAddModal
           isOpen={isAccountAddModalOpen}
           onClose={() => setIsAccountAddModalOpen(false)}
@@ -151,10 +151,10 @@ const updateAccountBalances = useCallback(async () => {
             addAccount(newAccount)
           }
                   />
-         <CategoryModal
+         {/* <CategoryModal
            isOpen={CategoryModalOpen}
            onClose={() => OpenCategory(false)}
-          />
+          /> */}
         <AccountList
           accounts={accounts}
           accountTypes={accountCreateInfo?.accountTypes || []}

@@ -81,7 +81,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
             <ul>
                 {filteredCategories && filteredCategories.length > 0 ? (
                     filteredCategories.map((category, index) => (
-                        <li key={index}>
+                        <li key={index} className="p-1">
                             <div className="d-flex">
                                 {category.name}
                                 <button className="icon-button" onClick={() => deleteCategory(category.id)}>
@@ -128,7 +128,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                                 />
                             </div>
                             <div className="cancel-button">
-                                <span className="bg-gray-400 text-white px-4 py-2 rounded"
+                                <span className="bg-gray-400 text-white px-4 py-2 rounded mr-2"
                                     onClick={closeModalRevenue}>Отмена
                                 </span>
                                 <span className="bg-green-500 text-white px-4 py-2 rounded"
@@ -158,7 +158,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
                                     onChange={(e) => setExpensesCategoryName(e.target.value)} />
                             </div>
                             <div className="cancel-button">
-                                <span className="bg-gray-400 text-white px-4 py-2 rounded"
+                                <span className="bg-gray-400 text-white px-4 py-2 rounded mr-2"
                                       onClick={closeModalExpenses}>Отмена</span>
                                 <span className="bg-green-500 text-white px-4 py-2 rounded"
                                       onClick={() => addExpensesCategory(expensesСategoryName)}>Добавить
