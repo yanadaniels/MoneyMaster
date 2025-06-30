@@ -8,11 +8,13 @@ import IconRenderer from "./IconRenderer";
 import avatarImg from "@/assets/images/Neirokot.jpg";
 import { useState } from "react";
 import ProfileModal from "./user/ProfileModal";
+import CategoryModal from "@components/accounts/CategoryModal";
 
 const Header: React.FC = () => {
   const { state, dispatch } = useAuth();
   const { user, isLoading } = state;
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [CategoryModalOpen, OpenCategory] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -41,35 +43,44 @@ const Header: React.FC = () => {
   return (
     <>
     <header className="bg-blue-500 text-white py-4 drop-shadow-md">
-      <div className="flex justify-between items-center px-4">
-        <div className="flex items-center">
+      <div className="flex items-center px-4">
+        <div className="flex items-center w-5/32">
           <IconRenderer
             iconName="faPiggyBank"
             className="text-3xl text-white mr-3"
           />
           <h1 className="text-3x1 font-bold">Money Master</h1>
         </div>
-        
-        <nav>
+          {user ? (              
+            <div className="">
+              <span 
+                className="cursor-pointer"
+                onClick={() => OpenCategory(true)
+              }>
+                  Мои категории
+              </span>
+            </div>)
+            : <></>}
+        <nav className="ml-auto">
           <ul className="flex items-center space-x-4">
             <li></li>
           </ul>
           {user ? (
-            <div className="flex items-center gap-2">
-              <span>{user.userName}</span>
-              <DropdownMenu
-                items={[
-                  { label: "Профиль", onClick: () => setIsProfileModalOpen(true) },
-                  { label: "Выйти", onClick: handleLogout },
-                ]}
-              >
-                <img
-                  src={avatarImg}
-                  className="w-9 h-9 fill-none stroke-2 stroke-current radius rounded-full"
-                  alt="User avatar"
-                />
-              </DropdownMenu>
-            </div>
+              <div className="flex items-center gap-2">
+                <span>{user.userName}</span>
+                <DropdownMenu
+                  items={[
+                    { label: "Профиль", onClick: () => setIsProfileModalOpen(true) },
+                    { label: "Выйти", onClick: handleLogout },
+                  ]}
+                >
+                  <img
+                    src={avatarImg}
+                    className="w-9 h-9 fill-none stroke-2 stroke-current radius rounded-full"
+                    alt="User avatar"
+                  />
+                </DropdownMenu>
+              </div>
           ) : (
             <Link
               to="/login"
@@ -82,6 +93,11 @@ const Header: React.FC = () => {
         </nav>
       </div>
     </header>
+
+    <CategoryModal
+      isOpen={CategoryModalOpen}
+      onClose={() => OpenCategory(false)}
+    />
     
     <ProfileModal
       isOpen={isProfileModalOpen}
