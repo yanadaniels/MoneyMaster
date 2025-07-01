@@ -25,6 +25,16 @@ namespace MoneyMasterService.Services.Implementations
             _categoryRepository = categoryRepository;
         }
 
+        public void DeleteAsync(Guid id)
+        {
+            var category = _categoryRepository.Get(id);
+            if (category != null)
+            {
+                category.IsDeleted = true;
+            }
+            else throw new Exception("Данная категория не найдена");
+        }
+
         public async Task<ICollection<CategoryDto>> GetAllAsync()
         {
             ICollection<Category> entities = await _categoryRepository.GetAll().ToListAsync();

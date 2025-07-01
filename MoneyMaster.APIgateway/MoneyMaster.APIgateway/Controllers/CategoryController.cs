@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.APIgateway.Models.Category;
+using MoneyMaster.APIgateway.Models.Transaction;
+using Newtonsoft.Json;
 
 namespace MoneyMaster.APIgateway.Controllers
 {
@@ -33,7 +36,7 @@ namespace MoneyMaster.APIgateway.Controllers
         [HttpGet("{id:guid}")]
         [ProducesResponseType<CategoryModelResponse>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CategoryModelResponse>> GetTransaction([FromRoute] Guid id,
+        public async Task<ActionResult<CategoryModelResponse>> GetCategory([FromRoute] Guid id,
             CancellationToken cancellationToken)
         {
             var response = await _httpClient.GetAsync($"{route}/{id}",cancellationToken);
@@ -41,38 +44,37 @@ namespace MoneyMaster.APIgateway.Controllers
         }
 
         /// <summary>
-        /// Получение всех категории.
+        /// Создание транзакции.
         /// </summary>
         /// <remarks>
-        /// Данный метод позволяет получить список всех категории. 
+        /// Данный метод позволяет создать новую транзакцию. 
         /// </remarks>
-        /// <response code="200">Получение списка всех категории</response>
-        [HttpGet]
-        [ProducesResponseType<IReadOnlyCollection<CategoryModelResponse>>(StatusCodes.Status200OK)]
-        public async Task<ActionResult<CategoryModelResponse>> GetAllTransactions(CancellationToken cancellationToken)
+        /// <response code="201">Транзакция успешно создана</response>
+        [HttpPost]
+        [ProducesResponseType<Guid>(StatusCodes.Status201Created)]
+        public async Task<ActionResult<Guid>> CreateTransaction([FromBody] CreatingTransactionRequest request,
+            CancellationToken cancellationToken)
         {
-            var response = await _httpClient.GetAsync($"{route}", cancellationToken);
+            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{route}", content, cancellationToken);
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         }
 
-        ///// <summary>
-        ///// Создание транзакции.
-        ///// </summary>
-        ///// <remarks>
-        ///// Данный метод позволяет создать новую транзакцию. 
-        ///// </remarks>
-        ///// <response code="201">Транзакция успешно создана</response>
-        //[HttpPost]
-        //[ProducesResponseType<Guid>(StatusCodes.Status201Created)]
-        //public async Task<ActionResult<Guid>> CreateTransaction([FromBody] CreatingTransactionRequest request,
-        //    CancellationToken cancellationToken)
-        //{
-        //    var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-        //    var response = await _httpClient.PostAsync($"{route}", content, cancellationToken);
-        //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
-        //}
+        /// <summary>
+        /// Удаление категории
+        /// </summary>
+        /// <param name="id">Идентификатор транзакции</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteCategory([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _httpClient.DeleteAsync($"{route}/{id}", cancellationToken);
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
+        }
 
-        ///// <summary>
+        ///// <summary> 
         ///// Изменение транкзакции.
         ///// </summary>
         //[HttpPut("{id:guid}")]
@@ -85,34 +87,6 @@ namespace MoneyMaster.APIgateway.Controllers
         //{
         //    var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
         //    var response = await _httpClient.PutAsync($"{route}/{id}", content, cancellationToken);
-        //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
-        //}
-
-        ///// <summary>
-        ///// Удаление транзакции.
-        ///// </summary>
-        ///// <param name="id">Идентификатор транзакции</param>
-        ///// <param name="cancellationToken">Токен отмены операции</param>
-        //[HttpDelete("{id:guid}")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult> DeleteTransaction([FromRoute] Guid id, CancellationToken cancellationToken)
-        //{
-        //    var response = await _httpClient.DeleteAsync($"{route}/{id}", cancellationToken);
-        //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
-        //}
-
-        ///// <summary>
-        ///// Восстановление транзакции.
-        ///// </summary>
-        //[HttpPost("{id:guid}")]
-        //[ProducesResponseType<TransactionResponse>(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<TransactionResponse>> RestoreTransaction([FromRoute] Guid id,
-        //    CancellationToken cancellationToken)
-        //{
-        //    var content = new StringContent(JsonConvert.SerializeObject(null), Encoding.UTF8, "application/json");
-        //    var response = await _httpClient.PostAsync($"{route}/{id}", content, cancellationToken);
         //    return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync(cancellationToken));
         //}
     }

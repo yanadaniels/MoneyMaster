@@ -17,6 +17,11 @@ namespace MoneyMaster.APIgateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddHeaderPropagation(c =>
+            {
+                c.Headers.Add("authorization");
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -31,7 +36,7 @@ namespace MoneyMaster.APIgateway
             builder.Services.AddHttpClient("MoneyMasterService", client =>
             {
                 client.BaseAddress = new Uri("http://moneymasterservice.webapi:8080/api/v1/");
-            });
+            }).AddHeaderPropagation();
 
             builder.Services.AddHttpClient("IdentityService", client =>
             {
@@ -54,6 +59,8 @@ namespace MoneyMaster.APIgateway
             var app = builder.Build();
 
             app.UseCors("AllowAll");
+
+            app.UseHeaderPropagation();
 
             // Временно отключает редирект в https
             //app.UseHttpsRedirection();

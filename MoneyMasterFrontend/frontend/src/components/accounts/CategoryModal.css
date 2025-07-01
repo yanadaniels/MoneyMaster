@@ -1,0 +1,37 @@
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.d-flex-category {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.icon-button {
+    margin-left: 5px;
+}
+
+/* li {
+    padding: 5px;
+} */
+
+.modal-content {
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 20px;
+}
+
+.modal-container {
+    margin-top: 10px;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+
+.cancel-button {
+    text-align: right;
+}
